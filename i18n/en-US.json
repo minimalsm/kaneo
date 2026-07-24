@@ -1548,7 +1548,8 @@
 						"blockquote": "Quote",
 						"code-block": "Code block",
 						"table": "Table",
-						"file": "File"
+						"file": "File",
+						"board": "Board"
 					}
 				},
 				"languages": {
@@ -2102,6 +2103,25 @@
 				"list": "List view"
 			},
 			"unavailable": "This board can't be shown — you may not have access, or it may have been removed."
+		},
+		"boardPicker": {
+			"title": "Embed a board",
+			"description": "Pick a project to embed its live board in this doc.",
+			"searchLabel": "Search projects",
+			"searchPlaceholder": "Search projects...",
+			"listLabel": "Projects",
+			"noResults": "No projects match your search.",
+			"loadFailed": "Couldn't load projects.",
+			"empty": "This workspace has no projects yet.",
+			"createButton": "Create new project",
+			"create": {
+				"prompt": "This workspace has no projects yet. Create one to embed its board.",
+				"nameLabel": "Project name",
+				"namePlaceholder": "Project name",
+				"submit": "Create and embed",
+				"back": "Back",
+				"error": "Couldn't create the project. Please try again."
+			}
 		},
 		"versionHistory": {
 			"trigger": "History",

@@ -1128,7 +1128,8 @@
 						"blockquote": "Citaat",
 						"code-block": "Codeblok",
 						"table": "Tabel",
-						"file": "Bestand"
+						"file": "Bestand",
+						"board": "Bord"
 					}
 				},
 				"languages": {
@@ -1661,6 +1662,25 @@
 				"list": "Lijstweergave"
 			},
 			"unavailable": "Dit bord kan niet worden weergegeven — mogelijk heb je geen toegang of is het verwijderd."
+		},
+		"boardPicker": {
+			"title": "Bord insluiten",
+			"description": "Kies een project om zijn live bord in dit document in te sluiten.",
+			"searchLabel": "Projecten zoeken",
+			"searchPlaceholder": "Projecten zoeken...",
+			"listLabel": "Projecten",
+			"noResults": "Geen projecten komen overeen met je zoekopdracht.",
+			"loadFailed": "Projecten konden niet worden geladen.",
+			"empty": "Deze werkruimte heeft nog geen projecten.",
+			"createButton": "Nieuw project aanmaken",
+			"create": {
+				"prompt": "Deze werkruimte heeft nog geen projecten. Maak er een aan om zijn bord in te sluiten.",
+				"nameLabel": "Projectnaam",
+				"namePlaceholder": "Projectnaam",
+				"submit": "Aanmaken en insluiten",
+				"back": "Terug",
+				"error": "Project kon niet worden aangemaakt. Probeer het opnieuw."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Geschiedenis",

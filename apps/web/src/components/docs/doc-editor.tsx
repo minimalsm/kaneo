@@ -45,6 +45,7 @@ import useDocument from "@/hooks/queries/document/use-document";
 import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { cn } from "@/lib/cn";
 import { debounceWithFlush } from "@/lib/debounce";
+import { BoardPickerDialog } from "./board-picker-dialog";
 import { DocVersionHistory } from "./doc-version-history";
 import { KaneoBoard } from "./extensions/kaneo-board";
 
@@ -164,6 +165,17 @@ const SLASH_COMMANDS: Omit<SlashCommand, "label">[] = [
         .run();
     },
   },
+  {
+    // The board command only clears the slash text here; runSlashCommand
+    // opens the project picker (which needs component state) and remembers
+    // range.from as the insertion position.
+    id: "board",
+    group: "insert",
+    search: "board kanban project database",
+    run: (editor, range) => {
+      editor.chain().focus().deleteRange(range).run();
+    },
+  },
 ];
 
 type BubbleAction = {
@@ -272,6 +284,8 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
   const [title, setTitle] = useState("");
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [slashMenu, setSlashMenu] = useState<SlashMenuState | null>(null);
+  // Doc position where /board was typed; non-null while the picker is open.
+  const [boardPickerPos, setBoardPickerPos] = useState<number | null>(null);
   // The editor only accepts commands once its view is mounted (onCreate).
   const [isEditorReady, setIsEditorReady] = useState(false);
 
@@ -503,9 +517,36 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
       const current = slashMenuRef.current;
       if (!editor || !current) return;
       command.run(editor, { from: current.from, to: current.to });
+      if (command.id === "board") {
+        // run() already deleted the slash range, so range.from is where the
+        // embed should be inserted once the picker resolves.
+        setBoardPickerPos(current.from);
+      }
       setSlashMenu(null);
     },
     [editor],
+  );
+
+  const closeBoardPicker = useCallback(() => {
+    setBoardPickerPos(null);
+    editor?.commands.focus();
+  }, [editor]);
+
+  const insertBoardEmbed = useCallback(
+    (projectId: string) => {
+      if (editor && boardPickerPos !== null) {
+        editor
+          .chain()
+          .focus()
+          .insertContentAt(boardPickerPos, {
+            type: "kaneoBoard",
+            attrs: { projectId, view: "board" },
+          })
+          .run();
+      }
+      setBoardPickerPos(null);
+    },
+    [editor, boardPickerPos],
   );
 
   const syncSlashMenu = useCallback((activeEditor: Editor) => {
@@ -787,6 +828,17 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
 
         <EditorContent className="kaneo-tiptap-content" editor={editor} />
       </section>
+
+      {canEdit && (
+        <BoardPickerDialog
+          onOpenChange={(pickerOpen) => {
+            if (!pickerOpen) closeBoardPicker();
+          }}
+          onSelect={insertBoardEmbed}
+          open={boardPickerPos !== null}
+          workspaceId={document.workspaceId}
+        />
+      )}
     </div>
   );
 }

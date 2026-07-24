@@ -1127,7 +1127,8 @@
 						"blockquote": "Cita",
 						"code-block": "Bloque de código",
 						"table": "Tabla",
-						"file": "Fichero"
+						"file": "Fichero",
+						"board": "Tablero"
 					}
 				},
 				"languages": {
@@ -1660,6 +1661,25 @@
 				"list": "Vista de lista"
 			},
 			"unavailable": "Este tablero no se puede mostrar: puede que no tengas acceso o que se haya eliminado."
+		},
+		"boardPicker": {
+			"title": "Incrustar un tablero",
+			"description": "Elige un proyecto para incrustar su tablero en vivo en este documento.",
+			"searchLabel": "Buscar proyectos",
+			"searchPlaceholder": "Buscar proyectos...",
+			"listLabel": "Proyectos",
+			"noResults": "Ningún proyecto coincide con tu búsqueda.",
+			"loadFailed": "No se pudieron cargar los proyectos.",
+			"empty": "Este espacio de trabajo aún no tiene proyectos.",
+			"createButton": "Crear nuevo proyecto",
+			"create": {
+				"prompt": "Este espacio de trabajo aún no tiene proyectos. Crea uno para incrustar su tablero.",
+				"nameLabel": "Nombre del proyecto",
+				"namePlaceholder": "Nombre del proyecto",
+				"submit": "Crear e incrustar",
+				"back": "Atrás",
+				"error": "No se pudo crear el proyecto. Inténtalo de nuevo."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Historial",

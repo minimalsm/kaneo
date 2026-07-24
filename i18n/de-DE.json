@@ -1384,7 +1384,8 @@
 						"blockquote": "Zitat",
 						"code-block": "Codeblock",
 						"table": "Tabelle",
-						"file": "Datei"
+						"file": "Datei",
+						"board": "Board"
 					}
 				},
 				"languages": {
@@ -1928,6 +1929,25 @@
 				"list": "Listenansicht"
 			},
 			"unavailable": "Dieses Board kann nicht angezeigt werden — möglicherweise fehlt dir der Zugriff oder es wurde entfernt."
+		},
+		"boardPicker": {
+			"title": "Board einbetten",
+			"description": "Wähle ein Projekt, um dessen Live-Board in dieses Dokument einzubetten.",
+			"searchLabel": "Projekte durchsuchen",
+			"searchPlaceholder": "Projekte durchsuchen...",
+			"listLabel": "Projekte",
+			"noResults": "Keine Projekte entsprechen deiner Suche.",
+			"loadFailed": "Projekte konnten nicht geladen werden.",
+			"empty": "Dieser Workspace hat noch keine Projekte.",
+			"createButton": "Neues Projekt erstellen",
+			"create": {
+				"prompt": "Dieser Workspace hat noch keine Projekte. Erstelle eines, um sein Board einzubetten.",
+				"nameLabel": "Projektname",
+				"namePlaceholder": "Projektname",
+				"submit": "Erstellen und einbetten",
+				"back": "Zurück",
+				"error": "Projekt konnte nicht erstellt werden. Bitte versuche es erneut."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Verlauf",

@@ -1344,7 +1344,8 @@
 						"blockquote": "인용",
 						"code-block": "코드 블록",
 						"table": "표",
-						"file": "파일"
+						"file": "파일",
+						"board": "보드"
 					}
 				},
 				"languages": {
@@ -1888,6 +1889,25 @@
 				"list": "목록 보기"
 			},
 			"unavailable": "이 보드를 표시할 수 없습니다. 접근 권한이 없거나 보드가 삭제되었을 수 있습니다."
+		},
+		"boardPicker": {
+			"title": "보드 삽입",
+			"description": "이 문서에 라이브 보드를 삽입할 프로젝트를 선택하세요.",
+			"searchLabel": "프로젝트 검색",
+			"searchPlaceholder": "프로젝트 검색...",
+			"listLabel": "프로젝트",
+			"noResults": "검색과 일치하는 프로젝트가 없습니다.",
+			"loadFailed": "프로젝트를 불러오지 못했습니다.",
+			"empty": "이 워크스페이스에는 아직 프로젝트가 없습니다.",
+			"createButton": "새 프로젝트 만들기",
+			"create": {
+				"prompt": "이 워크스페이스에는 아직 프로젝트가 없습니다. 프로젝트를 만들어 보드를 삽입하세요.",
+				"nameLabel": "프로젝트 이름",
+				"namePlaceholder": "프로젝트 이름",
+				"submit": "만들고 삽입",
+				"back": "뒤로",
+				"error": "프로젝트를 만들지 못했습니다. 다시 시도해 주세요."
+			}
 		},
 		"versionHistory": {
 			"trigger": "기록",

@@ -1350,7 +1350,8 @@
 						"blockquote": "Citation",
 						"code-block": "Bloc de code",
 						"table": "Tableau",
-						"file": "Fichier"
+						"file": "Fichier",
+						"board": "Tableau"
 					}
 				},
 				"languages": {
@@ -1904,6 +1905,25 @@
 				"list": "Vue liste"
 			},
 			"unavailable": "Ce tableau ne peut pas être affiché — vous n'y avez peut-être pas accès, ou il a été supprimé."
+		},
+		"boardPicker": {
+			"title": "Intégrer un tableau",
+			"description": "Choisissez un projet pour intégrer son tableau en direct dans ce document.",
+			"searchLabel": "Rechercher des projets",
+			"searchPlaceholder": "Rechercher des projets...",
+			"listLabel": "Projets",
+			"noResults": "Aucun projet ne correspond à votre recherche.",
+			"loadFailed": "Impossible de charger les projets.",
+			"empty": "Cet espace de travail n'a pas encore de projets.",
+			"createButton": "Créer un nouveau projet",
+			"create": {
+				"prompt": "Cet espace de travail n'a pas encore de projets. Créez-en un pour intégrer son tableau.",
+				"nameLabel": "Nom du projet",
+				"namePlaceholder": "Nom du projet",
+				"submit": "Créer et intégrer",
+				"back": "Retour",
+				"error": "Impossible de créer le projet. Veuillez réessayer."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Historique",

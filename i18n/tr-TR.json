@@ -1349,7 +1349,8 @@
 						"blockquote": "Alıntı",
 						"code-block": "Kod bloğu",
 						"table": "Tablo",
-						"file": "Dosya"
+						"file": "Dosya",
+						"board": "Pano"
 					}
 				},
 				"languages": {
@@ -1888,6 +1889,25 @@
 				"list": "Liste görünümü"
 			},
 			"unavailable": "Bu pano gösterilemiyor — erişiminiz olmayabilir veya kaldırılmış olabilir."
+		},
+		"boardPicker": {
+			"title": "Pano yerleştir",
+			"description": "Canlı panosunu bu belgeye yerleştirmek için bir proje seçin.",
+			"searchLabel": "Projelerde ara",
+			"searchPlaceholder": "Projelerde ara...",
+			"listLabel": "Projeler",
+			"noResults": "Aramanızla eşleşen proje yok.",
+			"loadFailed": "Projeler yüklenemedi.",
+			"empty": "Bu çalışma alanında henüz proje yok.",
+			"createButton": "Yeni proje oluştur",
+			"create": {
+				"prompt": "Bu çalışma alanında henüz proje yok. Panosunu yerleştirmek için bir proje oluşturun.",
+				"nameLabel": "Proje adı",
+				"namePlaceholder": "Proje adı",
+				"submit": "Oluştur ve yerleştir",
+				"back": "Geri",
+				"error": "Proje oluşturulamadı. Lütfen tekrar deneyin."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Geçmiş",

@@ -42,6 +42,33 @@ vi.mock("./doc-version-history", () => ({
   DocVersionHistory: () => null,
 }));
 
+// The board embed node view mounts router-coupled hooks (useNavigate etc.);
+// it has its own colocated tests. A NodeViewWrapper root is still required so
+// ReactNodeViewRenderer can mount the node.
+vi.mock("./doc-board-embed", async () => {
+  const { NodeViewWrapper } = await import("@tiptap/react");
+  return {
+    DocBoardEmbed: () => <NodeViewWrapper data-testid="doc-board-embed-stub" />,
+  };
+});
+
+// The picker has its own colocated tests; here we only exercise the wiring:
+// capture the props DocEditor passes so tests can drive select/cancel.
+const pickerPropsRef = vi.hoisted(() => ({
+  current: null as {
+    open: boolean;
+    workspaceId: string;
+    onSelect: (projectId: string) => void;
+    onOpenChange: (open: boolean) => void;
+  } | null,
+}));
+vi.mock("./board-picker-dialog", () => ({
+  BoardPickerDialog: (props: NonNullable<typeof pickerPropsRef.current>) => {
+    pickerPropsRef.current = props;
+    return props.open ? <div data-testid="board-picker-open" /> : null;
+  },
+}));
+
 // Floating-UI positioning is meaningless in jsdom; the bubble menu is not
 // under test here.
 vi.mock("@tiptap/react/menus", () => ({
@@ -145,6 +172,7 @@ async function advance(ms: number) {
 beforeEach(() => {
   vi.useFakeTimers();
   vi.clearAllMocks();
+  pickerPropsRef.current = null;
   permissions.canUpdateDocuments.mockReturnValue(true);
   mutateAsync.mockResolvedValue(makeDoc());
   mockDocument();
@@ -296,5 +324,67 @@ describe("DocEditor", () => {
     const payload = mutateAsync.mock.calls[0]?.[0];
     expect(payload.title).toBe("Renamed doc");
     expect(payload.content).toBeDefined();
+  });
+
+  it("opens the picker from /board and inserts the node at the slash position on select", async () => {
+    const { editor } = await renderEditor();
+
+    act(() => {
+      editor.commands.focus("end");
+    });
+    typeText(editor, " /board");
+
+    const item = await vi.waitFor(() =>
+      screen.getByRole("button", {
+        name: "tasks:detail.editor.slash.commands.board",
+      }),
+    );
+    fireEvent.mouseDown(item);
+
+    expect(pickerPropsRef.current?.open).toBe(true);
+    expect(pickerPropsRef.current?.workspaceId).toBe("ws-1");
+    // The slash range was deleted when the picker opened.
+    expect(editor.getText()).not.toContain("/board");
+
+    act(() => {
+      pickerPropsRef.current?.onSelect("proj-1");
+    });
+
+    const json = editor.getJSON();
+    expect((json.content ?? []).map((node) => node.type)).toEqual([
+      "paragraph",
+      "kaneoBoard",
+    ]);
+    expect(json.content?.[1]?.attrs).toMatchObject({
+      projectId: "proj-1",
+      view: "board",
+    });
+    expect(pickerPropsRef.current?.open).toBe(false);
+  });
+
+  it("cancelling the picker inserts nothing and leaves the slash text deleted", async () => {
+    const { editor } = await renderEditor();
+
+    act(() => {
+      editor.commands.focus("end");
+    });
+    typeText(editor, " /board");
+
+    const item = await vi.waitFor(() =>
+      screen.getByRole("button", {
+        name: "tasks:detail.editor.slash.commands.board",
+      }),
+    );
+    fireEvent.mouseDown(item);
+    expect(pickerPropsRef.current?.open).toBe(true);
+
+    act(() => {
+      pickerPropsRef.current?.onOpenChange(false);
+    });
+
+    expect(pickerPropsRef.current?.open).toBe(false);
+    const json = JSON.stringify(editor.getJSON());
+    expect(json).not.toContain("kaneoBoard");
+    expect(editor.getText()).not.toContain("/board");
   });
 });

@@ -1487,7 +1487,8 @@
 						"blockquote": "Kutipan",
 						"code-block": "Blok kode",
 						"table": "Tabel",
-						"file": "File"
+						"file": "File",
+						"board": "Papan"
 					}
 				},
 				"languages": {
@@ -2036,6 +2037,25 @@
 				"list": "Tampilan daftar"
 			},
 			"unavailable": "Papan ini tidak dapat ditampilkan — Anda mungkin tidak memiliki akses, atau papan telah dihapus."
+		},
+		"boardPicker": {
+			"title": "Sematkan papan",
+			"description": "Pilih proyek untuk menyematkan papan langsungnya di dokumen ini.",
+			"searchLabel": "Cari proyek",
+			"searchPlaceholder": "Cari proyek...",
+			"listLabel": "Proyek",
+			"noResults": "Tidak ada proyek yang cocok dengan pencarian Anda.",
+			"loadFailed": "Tidak dapat memuat proyek.",
+			"empty": "Ruang kerja ini belum memiliki proyek.",
+			"createButton": "Buat proyek baru",
+			"create": {
+				"prompt": "Ruang kerja ini belum memiliki proyek. Buat satu untuk menyematkan papannya.",
+				"nameLabel": "Nama proyek",
+				"namePlaceholder": "Nama proyek",
+				"submit": "Buat dan sematkan",
+				"back": "Kembali",
+				"error": "Tidak dapat membuat proyek. Silakan coba lagi."
+			}
 		},
 		"versionHistory": {
 			"trigger": "Riwayat",

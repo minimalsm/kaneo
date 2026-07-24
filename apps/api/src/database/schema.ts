@@ -1,5 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
+import type { AnyPgColumn } from "drizzle-orm/pg-core";
 import {
   boolean,
   foreignKey,
@@ -929,6 +930,77 @@ export const deviceCodeTable = pgTable(
     uniqueIndex("device_code_device_code_uidx").on(table.deviceCode),
     uniqueIndex("device_code_user_code_uidx").on(table.userCode),
     index("device_code_user_id_idx").on(table.userId),
+  ],
+);
+
+export const documentTable = pgTable(
+  "document",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => workspaceTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    projectId: text("project_id").references(() => projectTable.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
+    parentId: text("parent_id").references(
+      (): AnyPgColumn => documentTable.id,
+      {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
+    ),
+    title: text("title").notNull().default("Untitled"),
+    icon: text("icon"),
+    content: jsonb("content"),
+    contentText: text("content_text"),
+    sortOrder: integer("sort_order").notNull().default(0),
+    archivedAt: timestamp("archived_at", { mode: "date" }),
+    createdBy: text("created_by")
+      .notNull()
+      .references(() => userTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { mode: "date" })
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("document_workspaceId_idx").on(table.workspaceId),
+    index("document_parentId_idx").on(table.parentId),
+  ],
+);
+
+export const documentVersionTable = pgTable(
+  "document_version",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    documentId: text("document_id")
+      .notNull()
+      .references(() => documentTable.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    content: jsonb("content").notNull(),
+    createdBy: text("created_by").notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("document_version_documentId_createdAt_idx").on(
+      table.documentId,
+      table.createdAt,
+    ),
   ],
 );
 

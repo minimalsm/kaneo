@@ -1066,7 +1066,8 @@
 			"members": "Mitglieder",
 			"invitations": "Einladungen",
 			"more": "Mehr",
-			"backToBoard": "Zurück zum Board"
+			"backToBoard": "Zurück zum Board",
+			"docs": "Dokumente"
 		},
 		"projectList": {
 			"viewProject": "Projekt ansehen",
@@ -1861,6 +1862,52 @@
 		},
 		"branding": {
 			"poweredBy": "Bereitgestellt von"
+		}
+	},
+	"documents": {
+		"pageTitle": "Dokumente",
+		"tree": {
+			"label": "Dokumente",
+			"createDocument": "Neues Dokument",
+			"renameLabel": "Dokumenttitel",
+			"expand": "Ausklappen",
+			"collapse": "Einklappen",
+			"actions": {
+				"menu": "Dokumentaktionen",
+				"createChild": "Neues Unterdokument",
+				"rename": "Umbenennen",
+				"moveUp": "Nach oben",
+				"moveDown": "Nach unten",
+				"archive": "Archivieren"
+			}
+		},
+		"empty": {
+			"title": "Noch keine Dokumente",
+			"description": "Erstelle dein erstes Dokument, um das Wissen deines Teams festzuhalten.",
+			"descriptionReadOnly": "In diesem Workspace erstellte Dokumente erscheinen hier.",
+			"action": "Dokument erstellen"
+		},
+		"archived": {
+			"show": "Archivierte anzeigen",
+			"hide": "Archivierte ausblenden",
+			"listLabel": "Archivierte Dokumente",
+			"empty": "Keine archivierten Dokumente",
+			"unarchive": "Wiederherstellen",
+			"delete": "Löschen"
+		},
+		"deleteConfirm": {
+			"title": "Dokument löschen?",
+			"description": "„{{title}}“ und sein Versionsverlauf werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden."
+		},
+		"errors": {
+			"actionFailed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+			"loadFailed": "Dokumente konnten nicht geladen werden."
+		},
+		"index": {
+			"selectPrompt": "Wähle ein Dokument aus der Liste oder erstelle ein neues."
+		},
+		"editor": {
+			"readOnlyNote": "Der Editor kommt bald. Dieses Dokument ist vorerst schreibgeschützt."
 		}
 	}
 }

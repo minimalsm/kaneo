@@ -834,7 +834,8 @@
 			"members": "Leden",
 			"invitations": "Uitnodigingen",
 			"more": "Meer",
-			"backToBoard": "Terug naar bord"
+			"backToBoard": "Terug naar bord",
+			"docs": "Documenten"
 		},
 		"projectList": {
 			"viewProject": "Project bekijken",
@@ -1594,6 +1595,52 @@
 		},
 		"branding": {
 			"poweredBy": "Mogelijk gemaakt door"
+		}
+	},
+	"documents": {
+		"pageTitle": "Documenten",
+		"tree": {
+			"label": "Documenten",
+			"createDocument": "Nieuw document",
+			"renameLabel": "Documenttitel",
+			"expand": "Uitklappen",
+			"collapse": "Inklappen",
+			"actions": {
+				"menu": "Documentacties",
+				"createChild": "Nieuw subdocument",
+				"rename": "Hernoemen",
+				"moveUp": "Omhoog verplaatsen",
+				"moveDown": "Omlaag verplaatsen",
+				"archive": "Archiveren"
+			}
+		},
+		"empty": {
+			"title": "Nog geen documenten",
+			"description": "Maak je eerste document om de kennis van je team vast te leggen.",
+			"descriptionReadOnly": "Documenten die in deze werkruimte worden gemaakt, verschijnen hier.",
+			"action": "Document maken"
+		},
+		"archived": {
+			"show": "Gearchiveerde tonen",
+			"hide": "Gearchiveerde verbergen",
+			"listLabel": "Gearchiveerde documenten",
+			"empty": "Geen gearchiveerde documenten",
+			"unarchive": "Herstellen",
+			"delete": "Verwijderen"
+		},
+		"deleteConfirm": {
+			"title": "Document verwijderen?",
+			"description": "\"{{title}}\" en de versiegeschiedenis worden permanent verwijderd. Dit kan niet ongedaan worden gemaakt."
+		},
+		"errors": {
+			"actionFailed": "Er is iets misgegaan. Probeer het opnieuw.",
+			"loadFailed": "Documenten laden mislukt."
+		},
+		"index": {
+			"selectPrompt": "Selecteer een document uit de lijst of maak een nieuw document."
+		},
+		"editor": {
+			"readOnlyNote": "De editor komt binnenkort. Dit document is voorlopig alleen-lezen."
 		}
 	}
 }

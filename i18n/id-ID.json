@@ -1189,7 +1189,8 @@
 			"members": "Anggota",
 			"invitations": "Undangan",
 			"more": "Lainnya",
-			"backToBoard": "Kembali ke papan"
+			"backToBoard": "Kembali ke papan",
+			"docs": "Dokumen"
 		},
 		"projectList": {
 			"viewProject": "Lihat Proyek",
@@ -1969,6 +1970,52 @@
 		},
 		"branding": {
 			"poweredBy": "Didukung oleh"
+		}
+	},
+	"documents": {
+		"pageTitle": "Dokumen",
+		"tree": {
+			"label": "Dokumen",
+			"createDocument": "Dokumen baru",
+			"renameLabel": "Judul dokumen",
+			"expand": "Perluas",
+			"collapse": "Ciutkan",
+			"actions": {
+				"menu": "Tindakan dokumen",
+				"createChild": "Subdokumen baru",
+				"rename": "Ubah nama",
+				"moveUp": "Pindah ke atas",
+				"moveDown": "Pindah ke bawah",
+				"archive": "Arsipkan"
+			}
+		},
+		"empty": {
+			"title": "Belum ada dokumen",
+			"description": "Buat dokumen pertama Anda untuk merekam pengetahuan tim Anda.",
+			"descriptionReadOnly": "Dokumen yang dibuat di ruang kerja ini akan muncul di sini.",
+			"action": "Buat dokumen"
+		},
+		"archived": {
+			"show": "Tampilkan arsip",
+			"hide": "Sembunyikan arsip",
+			"listLabel": "Dokumen terarsip",
+			"empty": "Tidak ada dokumen terarsip",
+			"unarchive": "Pulihkan",
+			"delete": "Hapus"
+		},
+		"deleteConfirm": {
+			"title": "Hapus dokumen?",
+			"description": "\"{{title}}\" dan riwayat versinya akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan."
+		},
+		"errors": {
+			"actionFailed": "Terjadi kesalahan. Silakan coba lagi.",
+			"loadFailed": "Gagal memuat dokumen."
+		},
+		"index": {
+			"selectPrompt": "Pilih dokumen dari daftar atau buat yang baru."
+		},
+		"editor": {
+			"readOnlyNote": "Editor segera hadir. Untuk saat ini dokumen ini hanya-baca."
 		}
 	}
 }

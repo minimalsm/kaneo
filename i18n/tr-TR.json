@@ -1051,7 +1051,8 @@
 			"members": "Üyeler",
 			"invitations": "Davetler",
 			"more": "Daha fazla",
-			"backToBoard": "Panoya dön"
+			"backToBoard": "Panoya dön",
+			"docs": "Belgeler"
 		},
 		"projectList": {
 			"viewProject": "Projeyi Görüntüle",
@@ -1821,6 +1822,52 @@
 		},
 		"branding": {
 			"poweredBy": "Tarafından desteklenmektedir"
+		}
+	},
+	"documents": {
+		"pageTitle": "Belgeler",
+		"tree": {
+			"label": "Belgeler",
+			"createDocument": "Yeni belge",
+			"renameLabel": "Belge başlığı",
+			"expand": "Genişlet",
+			"collapse": "Daralt",
+			"actions": {
+				"menu": "Belge işlemleri",
+				"createChild": "Yeni alt belge",
+				"rename": "Yeniden adlandır",
+				"moveUp": "Yukarı taşı",
+				"moveDown": "Aşağı taşı",
+				"archive": "Arşivle"
+			}
+		},
+		"empty": {
+			"title": "Henüz belge yok",
+			"description": "Ekibinizin bilgisini kaydetmek için ilk belgenizi oluşturun.",
+			"descriptionReadOnly": "Bu çalışma alanında oluşturulan belgeler burada görünecek.",
+			"action": "Belge oluştur"
+		},
+		"archived": {
+			"show": "Arşivlenenleri göster",
+			"hide": "Arşivlenenleri gizle",
+			"listLabel": "Arşivlenmiş belgeler",
+			"empty": "Arşivlenmiş belge yok",
+			"unarchive": "Geri yükle",
+			"delete": "Sil"
+		},
+		"deleteConfirm": {
+			"title": "Belge silinsin mi?",
+			"description": "\"{{title}}\" ve sürüm geçmişi kalıcı olarak silinecek. Bu işlem geri alınamaz."
+		},
+		"errors": {
+			"actionFailed": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+			"loadFailed": "Belgeler yüklenemedi."
+		},
+		"index": {
+			"selectPrompt": "Listeden bir belge seçin veya yeni bir belge oluşturun."
+		},
+		"editor": {
+			"readOnlyNote": "Düzenleyici yakında geliyor. Bu belge şimdilik salt okunur."
 		}
 	}
 }

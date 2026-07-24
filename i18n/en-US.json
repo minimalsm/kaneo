@@ -1230,7 +1230,8 @@
 			"members": "Members",
 			"invitations": "Invitations",
 			"more": "More",
-			"backToBoard": "Back to board"
+			"backToBoard": "Back to board",
+			"docs": "Docs"
 		},
 		"projectList": {
 			"viewProject": "View Project",
@@ -2035,6 +2036,52 @@
 		},
 		"branding": {
 			"poweredBy": "Powered by"
+		}
+	},
+	"documents": {
+		"pageTitle": "Docs",
+		"tree": {
+			"label": "Documents",
+			"createDocument": "New doc",
+			"renameLabel": "Doc title",
+			"expand": "Expand",
+			"collapse": "Collapse",
+			"actions": {
+				"menu": "Doc actions",
+				"createChild": "New sub-doc",
+				"rename": "Rename",
+				"moveUp": "Move up",
+				"moveDown": "Move down",
+				"archive": "Archive"
+			}
+		},
+		"empty": {
+			"title": "No docs yet",
+			"description": "Create your first doc to capture your team's knowledge.",
+			"descriptionReadOnly": "Docs created in this workspace will show up here.",
+			"action": "Create a doc"
+		},
+		"archived": {
+			"show": "Show archived",
+			"hide": "Hide archived",
+			"listLabel": "Archived documents",
+			"empty": "No archived docs",
+			"unarchive": "Restore",
+			"delete": "Delete"
+		},
+		"deleteConfirm": {
+			"title": "Delete doc?",
+			"description": "\"{{title}}\" and its version history will be permanently deleted. This cannot be undone."
+		},
+		"errors": {
+			"actionFailed": "Something went wrong. Please try again.",
+			"loadFailed": "Failed to load docs."
+		},
+		"index": {
+			"selectPrompt": "Select a doc from the list or create a new one."
+		},
+		"editor": {
+			"readOnlyNote": "The editor is coming soon. This doc is read-only for now."
 		}
 	}
 }

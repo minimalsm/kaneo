@@ -834,7 +834,8 @@
 			"members": "Miembros",
 			"invitations": "Invitaciones",
 			"more": "Más",
-			"backToBoard": "Volver al tablero"
+			"backToBoard": "Volver al tablero",
+			"docs": "Documentos"
 		},
 		"projectList": {
 			"viewProject": "Ver Proyecto",
@@ -1593,6 +1594,52 @@
 		},
 		"branding": {
 			"poweredBy": "Powered by"
+		}
+	},
+	"documents": {
+		"pageTitle": "Documentos",
+		"tree": {
+			"label": "Documentos",
+			"createDocument": "Nuevo documento",
+			"renameLabel": "Título del documento",
+			"expand": "Expandir",
+			"collapse": "Contraer",
+			"actions": {
+				"menu": "Acciones del documento",
+				"createChild": "Nuevo subdocumento",
+				"rename": "Renombrar",
+				"moveUp": "Mover arriba",
+				"moveDown": "Mover abajo",
+				"archive": "Archivar"
+			}
+		},
+		"empty": {
+			"title": "Aún no hay documentos",
+			"description": "Crea tu primer documento para recoger el conocimiento de tu equipo.",
+			"descriptionReadOnly": "Los documentos creados en este espacio de trabajo aparecerán aquí.",
+			"action": "Crear un documento"
+		},
+		"archived": {
+			"show": "Mostrar archivados",
+			"hide": "Ocultar archivados",
+			"listLabel": "Documentos archivados",
+			"empty": "No hay documentos archivados",
+			"unarchive": "Restaurar",
+			"delete": "Eliminar"
+		},
+		"deleteConfirm": {
+			"title": "¿Eliminar el documento?",
+			"description": "«{{title}}» y su historial de versiones se eliminarán permanentemente. Esto no se puede deshacer."
+		},
+		"errors": {
+			"actionFailed": "Algo salió mal. Inténtalo de nuevo.",
+			"loadFailed": "No se pudieron cargar los documentos."
+		},
+		"index": {
+			"selectPrompt": "Selecciona un documento de la lista o crea uno nuevo."
+		},
+		"editor": {
+			"readOnlyNote": "El editor llegará pronto. Por ahora este documento es de solo lectura."
 		}
 	}
 }

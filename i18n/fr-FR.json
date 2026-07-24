@@ -1052,7 +1052,8 @@
 			"members": "Membres",
 			"invitations": "Invitations",
 			"more": "Plus",
-			"backToBoard": "Retour au tableau"
+			"backToBoard": "Retour au tableau",
+			"docs": "Documents"
 		},
 		"projectList": {
 			"viewProject": "Voir le projet",
@@ -1837,6 +1838,52 @@
 		},
 		"branding": {
 			"poweredBy": "Propulsé par"
+		}
+	},
+	"documents": {
+		"pageTitle": "Documents",
+		"tree": {
+			"label": "Documents",
+			"createDocument": "Nouveau document",
+			"renameLabel": "Titre du document",
+			"expand": "Développer",
+			"collapse": "Réduire",
+			"actions": {
+				"menu": "Actions du document",
+				"createChild": "Nouveau sous-document",
+				"rename": "Renommer",
+				"moveUp": "Monter",
+				"moveDown": "Descendre",
+				"archive": "Archiver"
+			}
+		},
+		"empty": {
+			"title": "Pas encore de documents",
+			"description": "Créez votre premier document pour rassembler les connaissances de votre équipe.",
+			"descriptionReadOnly": "Les documents créés dans cet espace de travail apparaîtront ici.",
+			"action": "Créer un document"
+		},
+		"archived": {
+			"show": "Afficher les archivés",
+			"hide": "Masquer les archivés",
+			"listLabel": "Documents archivés",
+			"empty": "Aucun document archivé",
+			"unarchive": "Restaurer",
+			"delete": "Supprimer"
+		},
+		"deleteConfirm": {
+			"title": "Supprimer le document ?",
+			"description": "« {{title}} » et son historique de versions seront définitivement supprimés. Cette action est irréversible."
+		},
+		"errors": {
+			"actionFailed": "Une erreur s'est produite. Veuillez réessayer.",
+			"loadFailed": "Échec du chargement des documents."
+		},
+		"index": {
+			"selectPrompt": "Sélectionnez un document dans la liste ou créez-en un nouveau."
+		},
+		"editor": {
+			"readOnlyNote": "L'éditeur arrive bientôt. Ce document est en lecture seule pour le moment."
 		}
 	}
 }

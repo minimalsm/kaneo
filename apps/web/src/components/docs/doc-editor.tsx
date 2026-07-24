@@ -37,6 +37,7 @@ import useDocument from "@/hooks/queries/document/use-document";
 import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { cn } from "@/lib/cn";
 import { debounceWithFlush } from "@/lib/debounce";
+import { DocVersionHistory } from "./doc-version-history";
 
 const SAVE_DEBOUNCE_MS = 700;
 
@@ -568,6 +569,10 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
             {saveStatus === "error" && t("documents:editor.save.error")}
           </span>
         )}
+        <DocVersionHistory
+          documentId={documentId}
+          workspaceId={document.workspaceId}
+        />
       </div>
 
       <section

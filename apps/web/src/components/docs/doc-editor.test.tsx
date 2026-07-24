@@ -34,6 +34,11 @@ vi.mock("@/hooks/use-workspace-permission", () => ({
   useWorkspacePermission: () => permissions,
 }));
 
+// Version history has its own colocated tests; keep the editor tests focused.
+vi.mock("./doc-version-history", () => ({
+  DocVersionHistory: () => null,
+}));
+
 // Floating-UI positioning is meaningless in jsdom; the bubble menu is not
 // under test here.
 vi.mock("@tiptap/react/menus", () => ({

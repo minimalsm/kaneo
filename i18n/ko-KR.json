@@ -1877,6 +1877,26 @@
 				"saved": "저장됨",
 				"error": "저장에 실패했습니다. 다음 편집 시 다시 시도합니다."
 			}
+		},
+		"versionHistory": {
+			"trigger": "기록",
+			"title": "버전 기록",
+			"description": "이 문서를 이전 버전으로 복원합니다. 현재 콘텐츠는 먼저 새 버전으로 저장됩니다.",
+			"descriptionReadOnly": "이 문서의 이전 버전입니다.",
+			"listLabel": "문서 버전",
+			"restore": "복원",
+			"unknownUser": "알 수 없는 사용자",
+			"loadFailed": "버전 기록을 불러오지 못했습니다.",
+			"restoreSuccess": "버전이 복원되었습니다",
+			"empty": {
+				"title": "아직 버전이 없습니다",
+				"description": "이 문서를 편집하면 버전이 자동으로 기록됩니다."
+			},
+			"restoreConfirm": {
+				"title": "이 버전을 복원할까요?",
+				"description": "복원하기 전에 문서의 현재 콘텐츠가 새 버전으로 저장됩니다.",
+				"confirm": "복원"
+			}
 		}
 	}
 }

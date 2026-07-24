@@ -2025,6 +2025,26 @@
 				"saved": "Tersimpan",
 				"error": "Gagal menyimpan – akan dicoba lagi saat Anda mengedit berikutnya."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Riwayat",
+			"title": "Riwayat versi",
+			"description": "Pulihkan dokumen ini ke versi sebelumnya. Konten saat ini disimpan terlebih dahulu sebagai versi baru.",
+			"descriptionReadOnly": "Versi sebelumnya dari dokumen ini.",
+			"listLabel": "Versi dokumen",
+			"restore": "Pulihkan",
+			"unknownUser": "Pengguna tidak dikenal",
+			"loadFailed": "Gagal memuat riwayat versi.",
+			"restoreSuccess": "Versi dipulihkan",
+			"empty": {
+				"title": "Belum ada versi",
+				"description": "Versi dicatat secara otomatis saat dokumen ini diedit."
+			},
+			"restoreConfirm": {
+				"title": "Pulihkan versi ini?",
+				"description": "Konten dokumen saat ini akan disimpan sebagai versi baru sebelum pemulihan.",
+				"confirm": "Pulihkan"
+			}
 		}
 	}
 }

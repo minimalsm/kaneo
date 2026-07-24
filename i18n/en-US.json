@@ -2091,6 +2091,26 @@
 				"saved": "Saved",
 				"error": "Couldn't save — will retry on your next edit."
 			}
+		},
+		"versionHistory": {
+			"trigger": "History",
+			"title": "Version history",
+			"description": "Restore this doc to an earlier version. The current content is saved as a new version first.",
+			"descriptionReadOnly": "Earlier versions of this doc.",
+			"listLabel": "Document versions",
+			"restore": "Restore",
+			"unknownUser": "Unknown user",
+			"loadFailed": "Failed to load version history.",
+			"restoreSuccess": "Version restored",
+			"empty": {
+				"title": "No versions yet",
+				"description": "Versions are captured automatically when this doc is edited."
+			},
+			"restoreConfirm": {
+				"title": "Restore this version?",
+				"description": "The doc's current content will be saved as a new version before restoring.",
+				"confirm": "Restore"
+			}
 		}
 	}
 }

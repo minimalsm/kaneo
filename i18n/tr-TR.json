@@ -1877,6 +1877,26 @@
 				"saved": "Kaydedildi",
 				"error": "Kaydedilemedi – bir sonraki düzenlemenizde yeniden denenecek."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Geçmiş",
+			"title": "Sürüm geçmişi",
+			"description": "Bu belgeyi önceki bir sürüme geri yükleyin. Mevcut içerik önce yeni bir sürüm olarak kaydedilir.",
+			"descriptionReadOnly": "Bu belgenin önceki sürümleri.",
+			"listLabel": "Belge sürümleri",
+			"restore": "Geri yükle",
+			"unknownUser": "Bilinmeyen kullanıcı",
+			"loadFailed": "Sürüm geçmişi yüklenemedi.",
+			"restoreSuccess": "Sürüm geri yüklendi",
+			"empty": {
+				"title": "Henüz sürüm yok",
+				"description": "Bu belge düzenlendiğinde sürümler otomatik olarak kaydedilir."
+			},
+			"restoreConfirm": {
+				"title": "Bu sürüm geri yüklensin mi?",
+				"description": "Geri yüklemeden önce belgenin mevcut içeriği yeni bir sürüm olarak kaydedilecek.",
+				"confirm": "Geri yükle"
+			}
 		}
 	}
 }

@@ -1917,6 +1917,26 @@
 				"saved": "Gespeichert",
 				"error": "Speichern fehlgeschlagen – beim nächsten Bearbeiten wird es erneut versucht."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Verlauf",
+			"title": "Versionsverlauf",
+			"description": "Dieses Dokument auf eine frühere Version zurücksetzen. Der aktuelle Inhalt wird zuerst als neue Version gespeichert.",
+			"descriptionReadOnly": "Frühere Versionen dieses Dokuments.",
+			"listLabel": "Dokumentversionen",
+			"restore": "Wiederherstellen",
+			"unknownUser": "Unbekannter Benutzer",
+			"loadFailed": "Versionsverlauf konnte nicht geladen werden.",
+			"restoreSuccess": "Version wiederhergestellt",
+			"empty": {
+				"title": "Noch keine Versionen",
+				"description": "Versionen werden automatisch erfasst, wenn dieses Dokument bearbeitet wird."
+			},
+			"restoreConfirm": {
+				"title": "Diese Version wiederherstellen?",
+				"description": "Der aktuelle Inhalt des Dokuments wird vor der Wiederherstellung als neue Version gespeichert.",
+				"confirm": "Wiederherstellen"
+			}
 		}
 	}
 }

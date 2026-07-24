@@ -1649,6 +1649,26 @@
 				"saved": "Guardado",
 				"error": "No se pudo guardar: se reintentará con tu próxima edición."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Historial",
+			"title": "Historial de versiones",
+			"description": "Restaura este documento a una versión anterior. El contenido actual se guarda primero como una nueva versión.",
+			"descriptionReadOnly": "Versiones anteriores de este documento.",
+			"listLabel": "Versiones del documento",
+			"restore": "Restaurar",
+			"unknownUser": "Usuario desconocido",
+			"loadFailed": "No se pudo cargar el historial de versiones.",
+			"restoreSuccess": "Versión restaurada",
+			"empty": {
+				"title": "Aún no hay versiones",
+				"description": "Las versiones se registran automáticamente cuando se edita este documento."
+			},
+			"restoreConfirm": {
+				"title": "¿Restaurar esta versión?",
+				"description": "El contenido actual del documento se guardará como una nueva versión antes de restaurar.",
+				"confirm": "Restaurar"
+			}
 		}
 	}
 }

@@ -1650,6 +1650,26 @@
 				"saved": "Opgeslagen",
 				"error": "Opslaan mislukt – bij je volgende bewerking wordt het opnieuw geprobeerd."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Geschiedenis",
+			"title": "Versiegeschiedenis",
+			"description": "Herstel dit document naar een eerdere versie. De huidige inhoud wordt eerst als nieuwe versie opgeslagen.",
+			"descriptionReadOnly": "Eerdere versies van dit document.",
+			"listLabel": "Documentversies",
+			"restore": "Herstellen",
+			"unknownUser": "Onbekende gebruiker",
+			"loadFailed": "Versiegeschiedenis kon niet worden geladen.",
+			"restoreSuccess": "Versie hersteld",
+			"empty": {
+				"title": "Nog geen versies",
+				"description": "Versies worden automatisch vastgelegd wanneer dit document wordt bewerkt."
+			},
+			"restoreConfirm": {
+				"title": "Deze versie herstellen?",
+				"description": "De huidige inhoud van het document wordt vóór het herstellen als nieuwe versie opgeslagen.",
+				"confirm": "Herstellen"
+			}
 		}
 	}
 }

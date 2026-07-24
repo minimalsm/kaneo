@@ -1893,6 +1893,26 @@
 				"saved": "Enregistré",
 				"error": "Échec de l'enregistrement – nouvelle tentative à votre prochaine modification."
 			}
+		},
+		"versionHistory": {
+			"trigger": "Historique",
+			"title": "Historique des versions",
+			"description": "Restaurez ce document vers une version antérieure. Le contenu actuel est d'abord enregistré comme nouvelle version.",
+			"descriptionReadOnly": "Versions antérieures de ce document.",
+			"listLabel": "Versions du document",
+			"restore": "Restaurer",
+			"unknownUser": "Utilisateur inconnu",
+			"loadFailed": "Impossible de charger l'historique des versions.",
+			"restoreSuccess": "Version restaurée",
+			"empty": {
+				"title": "Aucune version pour le moment",
+				"description": "Les versions sont enregistrées automatiquement lorsque ce document est modifié."
+			},
+			"restoreConfirm": {
+				"title": "Restaurer cette version ?",
+				"description": "Le contenu actuel du document sera enregistré comme nouvelle version avant la restauration.",
+				"confirm": "Restaurer"
+			}
 		}
 	}
 }

@@ -44,6 +44,7 @@ import { Route as LayoutAuthenticatedDashboardSettingsWorkspaceGeneralRouteImpor
 import { Route as LayoutAuthenticatedDashboardSettingsWorkspaceLabelsRouteImport } from './routes/_layout/_authenticated/dashboard/settings/workspace/labels'
 import { Route as LayoutAuthenticatedDashboardSettingsWorkspaceRolesRouteImport } from './routes/_layout/_authenticated/dashboard/settings/workspace/roles'
 import { Route as LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRouteImport } from './routes/_layout/_authenticated/dashboard/workspace/$workspaceId/index'
+import { Route as LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteImport } from './routes/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/route'
 import { Route as LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRouteImport } from './routes/_layout/_authenticated/dashboard/workspace/$workspaceId/members'
 import { Route as LayoutAuthenticatedDashboardWorkspaceWorkspaceIdSearchRouteImport } from './routes/_layout/_authenticated/dashboard/workspace/$workspaceId/search'
 import { Route as LayoutAuthenticatedDashboardSettingsProjectsProjectIdGeneralRouteImport } from './routes/_layout/_authenticated/dashboard/settings/projects/$projectId/general'
@@ -252,6 +253,12 @@ const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRoute =
     path: '/',
     getParentRoute: () => LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute,
   } as any)
+const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute =
+  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteImport.update({
+    id: '/docs',
+    path: '/docs',
+    getParentRoute: () => LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute,
+  } as any)
 const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRoute =
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRouteImport.update({
     id: '/members',
@@ -298,17 +305,18 @@ const LayoutAuthenticatedDashboardSettingsProjectsProjectIdWorkflowRoute =
   )
 const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute =
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRouteImport.update({
-    id: '/docs/',
-    path: '/docs/',
-    getParentRoute: () => LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () =>
+      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute,
   } as any)
 const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute =
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRouteImport.update(
     {
-      id: '/docs/$documentId',
-      path: '/docs/$documentId',
+      id: '/$documentId',
+      path: '/$documentId',
       getParentRoute: () =>
-        LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute,
+        LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute,
     } as any,
   )
 const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdIndexRoute =
@@ -383,6 +391,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/settings/workspace': typeof LayoutAuthenticatedDashboardSettingsWorkspaceRouteWithChildren
   '/dashboard/workspace/$workspaceId': typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteWithChildren
   '/dashboard/workspace/create': typeof LayoutAuthenticatedDashboardWorkspaceCreateRoute
+  '/dashboard/workspace/$workspaceId/docs': typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteWithChildren
   '/dashboard/settings/account/developer': typeof LayoutAuthenticatedDashboardSettingsAccountDeveloperRoute
   '/dashboard/settings/account/information': typeof LayoutAuthenticatedDashboardSettingsAccountInformationRoute
   '/dashboard/settings/account/notifications': typeof LayoutAuthenticatedDashboardSettingsAccountNotificationsRoute
@@ -479,6 +488,7 @@ export interface FileRoutesById {
   '/_layout/_authenticated/dashboard/settings/workspace': typeof LayoutAuthenticatedDashboardSettingsWorkspaceRouteWithChildren
   '/_layout/_authenticated/dashboard/workspace/$workspaceId': typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteWithChildren
   '/_layout/_authenticated/dashboard/workspace/create': typeof LayoutAuthenticatedDashboardWorkspaceCreateRoute
+  '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs': typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteWithChildren
   '/_layout/_authenticated/dashboard/settings/account/developer': typeof LayoutAuthenticatedDashboardSettingsAccountDeveloperRoute
   '/_layout/_authenticated/dashboard/settings/account/information': typeof LayoutAuthenticatedDashboardSettingsAccountInformationRoute
   '/_layout/_authenticated/dashboard/settings/account/notifications': typeof LayoutAuthenticatedDashboardSettingsAccountNotificationsRoute
@@ -529,6 +539,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/workspace'
     | '/dashboard/workspace/$workspaceId'
     | '/dashboard/workspace/create'
+    | '/dashboard/workspace/$workspaceId/docs'
     | '/dashboard/settings/account/developer'
     | '/dashboard/settings/account/information'
     | '/dashboard/settings/account/notifications'
@@ -624,6 +635,7 @@ export interface FileRouteTypes {
     | '/_layout/_authenticated/dashboard/settings/workspace'
     | '/_layout/_authenticated/dashboard/workspace/$workspaceId'
     | '/_layout/_authenticated/dashboard/workspace/create'
+    | '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs'
     | '/_layout/_authenticated/dashboard/settings/account/developer'
     | '/_layout/_authenticated/dashboard/settings/account/information'
     | '/_layout/_authenticated/dashboard/settings/account/notifications'
@@ -905,6 +917,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRouteImport
       parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute
     }
+    '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs': {
+      id: '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs'
+      path: '/docs'
+      fullPath: '/dashboard/workspace/$workspaceId/docs'
+      preLoaderRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteImport
+      parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute
+    }
     '/_layout/_authenticated/dashboard/workspace/$workspaceId/members': {
       id: '/_layout/_authenticated/dashboard/workspace/$workspaceId/members'
       path: '/members'
@@ -949,17 +968,17 @@ declare module '@tanstack/react-router' {
     }
     '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/': {
       id: '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/'
-      path: '/docs'
+      path: '/'
       fullPath: '/dashboard/workspace/$workspaceId/docs/'
       preLoaderRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRouteImport
-      parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute
+      parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute
     }
     '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/$documentId': {
       id: '/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/$documentId'
-      path: '/docs/$documentId'
+      path: '/$documentId'
       fullPath: '/dashboard/workspace/$workspaceId/docs/$documentId'
       preLoaderRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRouteImport
-      parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRoute
+      parentRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute
     }
     '/_layout/_authenticated/dashboard/workspace/$workspaceId/project/$projectId/': {
       id: '/_layout/_authenticated/dashboard/workspace/$workspaceId/project/$projectId/'
@@ -1089,12 +1108,29 @@ const LayoutAuthenticatedDashboardSettingsRouteWithChildren =
     LayoutAuthenticatedDashboardSettingsRouteChildren,
   )
 
+interface LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteChildren {
+  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute
+  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute
+}
+
+const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteChildren: LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteChildren =
+  {
+    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute:
+      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute,
+    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute:
+      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute,
+  }
+
+const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteWithChildren =
+  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute._addFileChildren(
+    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteChildren,
+  )
+
 interface LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteChildren {
+  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteWithChildren
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRoute
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdSearchRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdSearchRoute
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRoute
-  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute
-  LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBacklogRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBacklogRoute
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBoardRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBoardRoute
   LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdGanttRoute: typeof LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdGanttRoute
@@ -1104,16 +1140,14 @@ interface LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteChildren {
 
 const LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteChildren: LayoutAuthenticatedDashboardWorkspaceWorkspaceIdRouteChildren =
   {
+    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRoute:
+      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsRouteRouteWithChildren,
     LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRoute:
       LayoutAuthenticatedDashboardWorkspaceWorkspaceIdMembersRoute,
     LayoutAuthenticatedDashboardWorkspaceWorkspaceIdSearchRoute:
       LayoutAuthenticatedDashboardWorkspaceWorkspaceIdSearchRoute,
     LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRoute:
       LayoutAuthenticatedDashboardWorkspaceWorkspaceIdIndexRoute,
-    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute:
-      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsDocumentIdRoute,
-    LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute:
-      LayoutAuthenticatedDashboardWorkspaceWorkspaceIdDocsIndexRoute,
     LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBacklogRoute:
       LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBacklogRoute,
     LayoutAuthenticatedDashboardWorkspaceWorkspaceIdProjectProjectIdBoardRoute:

@@ -12,6 +12,7 @@ export const statement = {
   task: ["create", "read", "update", "delete", "assign"],
   label: ["create", "read", "update", "delete"],
   workspace: ["read", "update", "delete", "manage_settings"],
+  document: ["create", "read", "update", "delete"],
 } as const;
 
 export const ac = createAccessControl(statement);
@@ -22,6 +23,7 @@ export const viewer = ac.newRole({
   task: ["read"],
   label: ["read"],
   workspace: ["read"],
+  document: ["read"],
 });
 
 export const member = ac.newRole({
@@ -30,6 +32,7 @@ export const member = ac.newRole({
   task: ["create", "read", "update"],
   label: ["create", "read", "update", "delete"],
   workspace: ["read"],
+  document: ["create", "read", "update"],
 });
 
 export const admin = ac.newRole({
@@ -38,6 +41,7 @@ export const admin = ac.newRole({
   task: ["create", "read", "update", "delete", "assign"],
   label: ["create", "read", "update", "delete"],
   workspace: ["read", "update", "manage_settings"],
+  document: ["create", "read", "update", "delete"],
 });
 
 export const owner = ac.newRole({
@@ -46,6 +50,7 @@ export const owner = ac.newRole({
   task: ["create", "read", "update", "delete", "assign"],
   label: ["create", "read", "update", "delete"],
   workspace: ["read", "update", "delete", "manage_settings"],
+  document: ["create", "read", "update", "delete"],
 });
 
 export const builtInRoles = { viewer, member, admin, owner } as const;

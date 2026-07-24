@@ -1,6 +1,43 @@
-import { DEFAULT_ROLE_NAMES, defaultRolePayloads } from "@kaneo/permissions";
-import { and, inArray, sql } from "drizzle-orm";
+import {
+  DEFAULT_ROLE_NAMES,
+  type DefaultRoleName,
+  defaultRolePayloads,
+} from "@kaneo/permissions";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import db, { schema } from "../database";
+
+/**
+ * Merge resource keys that exist in the compiled payload but are absent from
+ * a stored permissions JSON. Existing keys are never overwritten — an admin
+ * may have customized their action arrays, and those edits must survive.
+ * Returns the merged permission JSON string, or null when nothing changed
+ * (including when the stored value isn't a JSON object — a malformed row is
+ * left alone for `require-workspace-permission` to reject at read time).
+ */
+function mergeMissingResources(
+  storedPermission: string,
+  compiled: Record<string, string[]>,
+): string | null {
+  let stored: unknown;
+  try {
+    stored = JSON.parse(storedPermission);
+  } catch {
+    return null;
+  }
+  if (!stored || typeof stored !== "object" || Array.isArray(stored)) {
+    return null;
+  }
+
+  const merged = stored as Record<string, unknown>;
+  let changed = false;
+  for (const [resource, actions] of Object.entries(compiled)) {
+    if (resource in merged) continue;
+    merged[resource] = [...actions];
+    changed = true;
+  }
+
+  return changed ? JSON.stringify(merged) : null;
+}
 
 /**
  * Backfill the editable default roles (viewer/member/admin) for every
@@ -14,7 +51,13 @@ import db, { schema } from "../database";
  * better-auth's dynamic-access-control resolution would treat them as
  * having an empty permission set on existing workspaces.
  *
- * Idempotent: only inserts rows that aren't already present.
+ * Also forward-fills existing default-role rows when a NEW resource is
+ * added to the compiled payloads (e.g. `document`): any resource key
+ * present in the compiled payload but missing from a stored row is merged
+ * in. Existing keys are never overwritten (customizations survive) and
+ * non-default (custom) roles are never touched.
+ *
+ * Idempotent: only inserts missing rows / merges missing resource keys.
  */
 export async function seedDefaultWorkspaceRoles() {
   try {
@@ -48,8 +91,10 @@ export async function seedDefaultWorkspaceRoles() {
 
     const existingRows = await db
       .select({
+        id: schema.workspaceRoleTable.id,
         workspaceId: schema.workspaceRoleTable.workspaceId,
         role: schema.workspaceRoleTable.role,
+        permission: schema.workspaceRoleTable.permission,
       })
       .from(schema.workspaceRoleTable)
       .where(
@@ -65,6 +110,28 @@ export async function seedDefaultWorkspaceRoles() {
     const present = new Set(
       existingRows.map((r) => `${r.workspaceId}:${r.role}`),
     );
+
+    // Merge resource keys the compiled payloads have gained since the row
+    // was seeded (never overwriting existing keys). The WHERE above already
+    // restricts `existingRows` to DEFAULT_ROLE_NAMES, so custom roles are
+    // never considered here.
+    let mergedCount = 0;
+    for (const row of existingRows) {
+      const compiled = defaultRolePayloads[row.role as DefaultRoleName];
+      if (!compiled) continue;
+      const merged = mergeMissingResources(row.permission, compiled);
+      if (merged === null) continue;
+      await db
+        .update(schema.workspaceRoleTable)
+        .set({ permission: merged, updatedAt: new Date() })
+        .where(eq(schema.workspaceRoleTable.id, row.id));
+      mergedCount += 1;
+    }
+    if (mergedCount > 0) {
+      console.log(
+        `✅ Merged new resource permissions into ${mergedCount} existing default workspace role row(s).`,
+      );
+    }
 
     const now = new Date();
     const rows: Array<typeof schema.workspaceRoleTable.$inferInsert> = [];

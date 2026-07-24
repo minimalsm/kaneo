@@ -1867,7 +1867,16 @@
 			"selectPrompt": "Listeden bir belge seçin veya yeni bir belge oluşturun."
 		},
 		"editor": {
-			"readOnlyNote": "Düzenleyici yakında geliyor. Bu belge şimdilik salt okunur."
+			"ariaLabel": "Belge düzenleyici",
+			"contentLabel": "Belge içeriği",
+			"titleLabel": "Belge başlığı",
+			"titlePlaceholder": "Adsız",
+			"placeholder": "Yazmaya başlayın veya komutlar için '/' yazın…",
+			"save": {
+				"saving": "Kaydediliyor…",
+				"saved": "Kaydedildi",
+				"error": "Kaydedilemedi – bir sonraki düzenlemenizde yeniden denenecek."
+			}
 		}
 	}
 }

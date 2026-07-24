@@ -1867,7 +1867,16 @@
 			"selectPrompt": "목록에서 문서를 선택하거나 새로 만드세요."
 		},
 		"editor": {
-			"readOnlyNote": "편집기는 곧 제공됩니다. 이 문서는 현재 읽기 전용입니다."
+			"ariaLabel": "문서 편집기",
+			"contentLabel": "문서 내용",
+			"titleLabel": "문서 제목",
+			"titlePlaceholder": "제목 없음",
+			"placeholder": "글을 작성하거나 '/'를 입력해 명령어를 사용하세요…",
+			"save": {
+				"saving": "저장 중…",
+				"saved": "저장됨",
+				"error": "저장에 실패했습니다. 다음 편집 시 다시 시도합니다."
+			}
 		}
 	}
 }

@@ -1883,7 +1883,16 @@
 			"selectPrompt": "Sélectionnez un document dans la liste ou créez-en un nouveau."
 		},
 		"editor": {
-			"readOnlyNote": "L'éditeur arrive bientôt. Ce document est en lecture seule pour le moment."
+			"ariaLabel": "Éditeur de document",
+			"contentLabel": "Contenu du document",
+			"titleLabel": "Titre du document",
+			"titlePlaceholder": "Sans titre",
+			"placeholder": "Commencez à écrire ou tapez '/' pour les commandes…",
+			"save": {
+				"saving": "Enregistrement…",
+				"saved": "Enregistré",
+				"error": "Échec de l'enregistrement – nouvelle tentative à votre prochaine modification."
+			}
 		}
 	}
 }

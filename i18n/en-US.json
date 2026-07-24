@@ -2081,7 +2081,16 @@
 			"selectPrompt": "Select a doc from the list or create a new one."
 		},
 		"editor": {
-			"readOnlyNote": "The editor is coming soon. This doc is read-only for now."
+			"ariaLabel": "Doc editor",
+			"contentLabel": "Doc content",
+			"titleLabel": "Doc title",
+			"titlePlaceholder": "Untitled",
+			"placeholder": "Start writing, or type '/' for commands…",
+			"save": {
+				"saving": "Saving…",
+				"saved": "Saved",
+				"error": "Couldn't save — will retry on your next edit."
+			}
 		}
 	}
 }

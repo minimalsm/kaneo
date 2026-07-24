@@ -2015,7 +2015,16 @@
 			"selectPrompt": "Pilih dokumen dari daftar atau buat yang baru."
 		},
 		"editor": {
-			"readOnlyNote": "Editor segera hadir. Untuk saat ini dokumen ini hanya-baca."
+			"ariaLabel": "Editor dokumen",
+			"contentLabel": "Konten dokumen",
+			"titleLabel": "Judul dokumen",
+			"titlePlaceholder": "Tanpa judul",
+			"placeholder": "Mulai menulis, atau ketik '/' untuk perintah…",
+			"save": {
+				"saving": "Menyimpan…",
+				"saved": "Tersimpan",
+				"error": "Gagal menyimpan – akan dicoba lagi saat Anda mengedit berikutnya."
+			}
 		}
 	}
 }

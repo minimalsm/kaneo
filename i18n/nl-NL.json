@@ -1640,7 +1640,16 @@
 			"selectPrompt": "Selecteer een document uit de lijst of maak een nieuw document."
 		},
 		"editor": {
-			"readOnlyNote": "De editor komt binnenkort. Dit document is voorlopig alleen-lezen."
+			"ariaLabel": "Documenteditor",
+			"contentLabel": "Documentinhoud",
+			"titleLabel": "Documenttitel",
+			"titlePlaceholder": "Zonder titel",
+			"placeholder": "Begin met schrijven of typ '/' voor opdrachten…",
+			"save": {
+				"saving": "Opslaan…",
+				"saved": "Opgeslagen",
+				"error": "Opslaan mislukt – bij je volgende bewerking wordt het opnieuw geprobeerd."
+			}
 		}
 	}
 }

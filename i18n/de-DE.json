@@ -1907,7 +1907,16 @@
 			"selectPrompt": "Wähle ein Dokument aus der Liste oder erstelle ein neues."
 		},
 		"editor": {
-			"readOnlyNote": "Der Editor kommt bald. Dieses Dokument ist vorerst schreibgeschützt."
+			"ariaLabel": "Dokument-Editor",
+			"contentLabel": "Dokumentinhalt",
+			"titleLabel": "Dokumenttitel",
+			"titlePlaceholder": "Ohne Titel",
+			"placeholder": "Schreibe los oder tippe '/' für Befehle …",
+			"save": {
+				"saving": "Wird gespeichert …",
+				"saved": "Gespeichert",
+				"error": "Speichern fehlgeschlagen – beim nächsten Bearbeiten wird es erneut versucht."
+			}
 		}
 	}
 }

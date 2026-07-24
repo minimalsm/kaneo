@@ -1639,7 +1639,16 @@
 			"selectPrompt": "Selecciona un documento de la lista o crea uno nuevo."
 		},
 		"editor": {
-			"readOnlyNote": "El editor llegará pronto. Por ahora este documento es de solo lectura."
+			"ariaLabel": "Editor de documentos",
+			"contentLabel": "Contenido del documento",
+			"titleLabel": "Título del documento",
+			"titlePlaceholder": "Sin título",
+			"placeholder": "Empieza a escribir o escribe '/' para ver comandos…",
+			"save": {
+				"saving": "Guardando…",
+				"saved": "Guardado",
+				"error": "No se pudo guardar: se reintentará con tu próxima edición."
+			}
 		}
 	}
 }

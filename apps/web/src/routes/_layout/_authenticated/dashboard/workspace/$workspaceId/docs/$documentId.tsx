@@ -29,7 +29,7 @@ function RouteComponent() {
             />
           </aside>
           <main className="min-w-0 flex-1 overflow-y-auto">
-            <DocEditor documentId={documentId} />
+            <DocEditor key={documentId} documentId={documentId} />
           </main>
         </div>
       </WorkspaceLayout>

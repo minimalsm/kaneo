@@ -15,45 +15,54 @@ async function createDocument(
 ) {
   const { title, parentId, projectId } = input;
 
-  if (parentId) {
-    const [parent] = await db
-      .select({ workspaceId: documentTable.workspaceId })
+  const [[parent], [project], [maxSortOrderRow]] = await Promise.all([
+    parentId
+      ? db
+          .select({
+            workspaceId: documentTable.workspaceId,
+            archivedAt: documentTable.archivedAt,
+          })
+          .from(documentTable)
+          .where(eq(documentTable.id, parentId))
+          .limit(1)
+      : Promise.resolve([null]),
+    projectId
+      ? db
+          .select({ workspaceId: projectTable.workspaceId })
+          .from(projectTable)
+          .where(eq(projectTable.id, projectId))
+          .limit(1)
+      : Promise.resolve([null]),
+    db
+      .select({ maxSortOrder: max(documentTable.sortOrder) })
       .from(documentTable)
-      .where(eq(documentTable.id, parentId))
-      .limit(1);
-
-    if (!parent || parent.workspaceId !== workspaceId) {
-      throw new HTTPException(400, {
-        message: "Parent document doesn't belong to the specified workspace",
-      });
-    }
-  }
-
-  if (projectId) {
-    const [project] = await db
-      .select({ workspaceId: projectTable.workspaceId })
-      .from(projectTable)
-      .where(eq(projectTable.id, projectId))
-      .limit(1);
-
-    if (!project || project.workspaceId !== workspaceId) {
-      throw new HTTPException(400, {
-        message: "Project doesn't belong to the specified workspace",
-      });
-    }
-  }
-
-  const [maxSortOrderRow] = await db
-    .select({ maxSortOrder: max(documentTable.sortOrder) })
-    .from(documentTable)
-    .where(
-      and(
-        eq(documentTable.workspaceId, workspaceId),
-        parentId
-          ? eq(documentTable.parentId, parentId)
-          : isNull(documentTable.parentId),
+      .where(
+        and(
+          eq(documentTable.workspaceId, workspaceId),
+          parentId
+            ? eq(documentTable.parentId, parentId)
+            : isNull(documentTable.parentId),
+        ),
       ),
-    );
+  ]);
+
+  if (parentId && (!parent || parent.workspaceId !== workspaceId)) {
+    throw new HTTPException(400, {
+      message: "Parent document doesn't belong to the specified workspace",
+    });
+  }
+
+  if (parentId && parent?.archivedAt) {
+    throw new HTTPException(400, {
+      message: "Cannot create a document under an archived parent",
+    });
+  }
+
+  if (projectId && (!project || project.workspaceId !== workspaceId)) {
+    throw new HTTPException(400, {
+      message: "Project doesn't belong to the specified workspace",
+    });
+  }
 
   const [createdDocument] = await db
     .insert(documentTable)

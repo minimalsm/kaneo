@@ -175,6 +175,29 @@ describe("API integration: documents", () => {
       expect(response.status).toBe(400);
     });
 
+    it("rejects creation under an archived parent", async () => {
+      const member = await createWorkspaceMember({ role: "member" });
+      const archivedParent = await seedDocument(
+        member.workspace.id,
+        member.user.id,
+        { archivedAt: new Date() },
+      );
+
+      mockAuthenticatedSession(member.user);
+      const { app } = createApp();
+
+      const response = await app.request("/api/document", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          workspaceId: member.workspace.id,
+          parentId: archivedParent.id,
+        }),
+      });
+
+      expect(response.status).toBe(400);
+    });
+
     it("rejects creation for users outside the workspace", async () => {
       const member = await createWorkspaceMember();
       const [outsider] = await db
@@ -540,6 +563,26 @@ describe("API integration: documents", () => {
       expect(response.status).toBe(400);
     });
 
+    it("rejects moving under an archived parent", async () => {
+      const member = await createWorkspaceMember({ role: "member" });
+      const doc = await seedDocument(member.workspace.id, member.user.id);
+      const archivedParent = await seedDocument(
+        member.workspace.id,
+        member.user.id,
+        { archivedAt: new Date() },
+      );
+
+      mockAuthenticatedSession(member.user);
+      const { app } = createApp();
+
+      const response = await app.request(`/api/document/${doc.id}/move`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ parentId: archivedParent.id }),
+      });
+      expect(response.status).toBe(400);
+    });
+
     it("rejects moving under a parent from another workspace", async () => {
       const member = await createWorkspaceMember({ role: "member" });
       const other = await createWorkspaceMember({ role: "member" });
@@ -702,6 +745,52 @@ describe("API integration: documents", () => {
       expect(
         remaining.find((docRow) => docRow.id === child.id),
       ).toBeUndefined();
+    });
+
+    it("rejects deleting an archived parent whose subtree contains a live document, then succeeds once the child is archived too", async () => {
+      const member = await createWorkspaceMember({ role: "admin" });
+      const parent = await seedDocument(member.workspace.id, member.user.id, {
+        archivedAt: new Date(),
+      });
+      // A child unarchived on its own after the parent was archived.
+      const child = await seedDocument(member.workspace.id, member.user.id, {
+        parentId: parent.id,
+        archivedAt: null,
+      });
+
+      mockAuthenticatedSession(member.user);
+      const { app } = createApp();
+
+      const rejected = await app.request(`/api/document/${parent.id}`, {
+        method: "DELETE",
+      });
+      expect(rejected.status).toBe(400);
+      await expect(rejected.text()).resolves.toContain(
+        "Document subtree contains non-archived documents",
+      );
+
+      const survivors = await db.query.documentTable.findMany({
+        where: eq(schema.documentTable.workspaceId, member.workspace.id),
+      });
+      expect(survivors.map((docRow) => docRow.id).sort()).toEqual(
+        [parent.id, child.id].sort(),
+      );
+
+      const archiveChild = await app.request(
+        `/api/document/${child.id}/archive`,
+        { method: "PUT" },
+      );
+      expect(archiveChild.status).toBe(200);
+
+      const deleted = await app.request(`/api/document/${parent.id}`, {
+        method: "DELETE",
+      });
+      expect(deleted.status).toBe(200);
+
+      const remaining = await db.query.documentTable.findMany({
+        where: eq(schema.documentTable.workspaceId, member.workspace.id),
+      });
+      expect(remaining).toHaveLength(0);
     });
   });
 

@@ -71,14 +71,8 @@ export function DocVersionHistory({
   const { canUpdateDocuments } = useWorkspacePermission();
   const canRestore = canUpdateDocuments();
 
-  const sortedVersions = useMemo(
-    () =>
-      [...((versions as DocumentVersionItem[] | undefined) ?? [])].sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      ),
-    [versions],
-  );
+  // The API returns versions newest-first (server-side orderBy desc).
+  const versionList = (versions as DocumentVersionItem[] | undefined) ?? [];
 
   const authorNameById = useMemo(() => {
     const byId = new Map<string, string>();
@@ -157,7 +151,7 @@ export function DocVersionHistory({
               </div>
             )}
 
-            {!isLoading && !isError && sortedVersions.length === 0 && (
+            {!isLoading && !isError && versionList.length === 0 && (
               <Empty className="p-4 md:p-6">
                 <EmptyHeader>
                   <EmptyMedia variant="icon">
@@ -173,12 +167,12 @@ export function DocVersionHistory({
               </Empty>
             )}
 
-            {!isLoading && !isError && sortedVersions.length > 0 && (
+            {!isLoading && !isError && versionList.length > 0 && (
               <ul
                 aria-label={t("documents:versionHistory.listLabel")}
                 className="m-0 flex list-none flex-col gap-1 p-0"
               >
-                {sortedVersions.map((version) => (
+                {versionList.map((version) => (
                   <li
                     className="flex items-center gap-3 rounded-md px-2 py-1.5 text-sm hover:bg-accent/50"
                     key={version.id}

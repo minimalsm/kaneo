@@ -4,6 +4,7 @@ import db from "../../database";
 import { documentTable, documentVersionTable } from "../../database/schema";
 import { publishEvent } from "../../events";
 import { deriveContentText } from "../content-text";
+import { getDocumentOrThrow } from "../get-document-or-throw";
 import { insertVersionSnapshot } from "../snapshot";
 
 async function restoreDocumentVersion(
@@ -13,22 +14,7 @@ async function restoreDocumentVersion(
   userId: string,
 ) {
   const restoredDocument = await db.transaction(async (tx) => {
-    const [existing] = await tx
-      .select()
-      .from(documentTable)
-      .where(
-        and(
-          eq(documentTable.id, id),
-          eq(documentTable.workspaceId, workspaceId),
-        ),
-      );
-
-    if (!existing) {
-      throw new HTTPException(404, {
-        message:
-          "Document doesn't exist or doesn't belong to the specified workspace",
-      });
-    }
+    const existing = await getDocumentOrThrow(tx, id, workspaceId);
 
     const [version] = await tx
       .select()

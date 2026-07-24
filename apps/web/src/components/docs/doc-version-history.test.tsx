@@ -101,8 +101,8 @@ afterEach(() => {
 
 describe("DocVersionHistory", () => {
   it("renders versions newest-first with their authors", async () => {
-    // Deliberately oldest-first: the component must order them itself.
-    mockVersions([olderVersion, newerVersion]);
+    // Server order (orderBy desc): the API guarantees newest-first.
+    mockVersions([newerVersion, olderVersion]);
 
     openHistory();
 

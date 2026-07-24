@@ -1,10 +1,11 @@
-import { and, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import db from "../../database";
 import { documentTable, documentVersionTable } from "../../database/schema";
 import { publishEvent } from "../../events";
 import { MAX_CONTENT_BYTES, SNAPSHOT_INTERVAL_MS } from "../constants";
 import { deriveContentText } from "../content-text";
+import { getDocumentOrThrow } from "../get-document-or-throw";
 import { insertVersionSnapshot } from "../snapshot";
 
 async function updateDocument(
@@ -26,7 +27,7 @@ async function updateDocument(
   }
 
   if (hasContent) {
-    const serialized = JSON.stringify(input.content) ?? "";
+    const serialized = JSON.stringify(input.content);
     if (Buffer.byteLength(serialized, "utf8") > MAX_CONTENT_BYTES) {
       throw new HTTPException(413, {
         message: "Document content exceeds the maximum allowed size",
@@ -35,22 +36,7 @@ async function updateDocument(
   }
 
   const updatedDocument = await db.transaction(async (tx) => {
-    const [existing] = await tx
-      .select()
-      .from(documentTable)
-      .where(
-        and(
-          eq(documentTable.id, id),
-          eq(documentTable.workspaceId, workspaceId),
-        ),
-      );
-
-    if (!existing) {
-      throw new HTTPException(404, {
-        message:
-          "Document doesn't exist or doesn't belong to the specified workspace",
-      });
-    }
+    const existing = await getDocumentOrThrow(tx, id, workspaceId);
 
     const changes: Partial<typeof documentTable.$inferInsert> = {};
 

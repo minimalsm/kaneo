@@ -4,6 +4,7 @@ import db from "../../database";
 import { documentTable } from "../../database/schema";
 import { publishEvent } from "../../events";
 import { MAX_TREE_DEPTH } from "../constants";
+import { getDocumentOrThrow } from "../get-document-or-throw";
 
 async function moveDocument(
   id: string,
@@ -17,22 +18,7 @@ async function moveDocument(
   const { parentId, position } = input;
 
   const movedDocument = await db.transaction(async (tx) => {
-    const [existing] = await tx
-      .select()
-      .from(documentTable)
-      .where(
-        and(
-          eq(documentTable.id, id),
-          eq(documentTable.workspaceId, workspaceId),
-        ),
-      );
-
-    if (!existing) {
-      throw new HTTPException(404, {
-        message:
-          "Document doesn't exist or doesn't belong to the specified workspace",
-      });
-    }
+    await getDocumentOrThrow(tx, id, workspaceId);
 
     if (parentId !== null) {
       if (parentId === id) {
@@ -46,6 +32,7 @@ async function moveDocument(
           id: documentTable.id,
           workspaceId: documentTable.workspaceId,
           parentId: documentTable.parentId,
+          archivedAt: documentTable.archivedAt,
         })
         .from(documentTable)
         .where(eq(documentTable.id, parentId))
@@ -54,6 +41,12 @@ async function moveDocument(
       if (!parent || parent.workspaceId !== workspaceId) {
         throw new HTTPException(400, {
           message: "Parent document doesn't belong to the specified workspace",
+        });
+      }
+
+      if (parent.archivedAt) {
+        throw new HTTPException(400, {
+          message: "Cannot move a document under an archived parent",
         });
       }
 
@@ -84,7 +77,7 @@ async function moveDocument(
     }
 
     const siblings = await tx
-      .select({ id: documentTable.id })
+      .select({ id: documentTable.id, sortOrder: documentTable.sortOrder })
       .from(documentTable)
       .where(
         and(
@@ -93,6 +86,10 @@ async function moveDocument(
             ? isNull(documentTable.parentId)
             : eq(documentTable.parentId, parentId),
           ne(documentTable.id, id),
+          // Position indices come from the client's visible tree, so archived
+          // siblings are excluded; they keep their stale sortOrder until
+          // unarchive re-interleaves them.
+          isNull(documentTable.archivedAt),
         ),
       )
       .orderBy(asc(documentTable.sortOrder), asc(documentTable.createdAt));
@@ -102,24 +99,28 @@ async function moveDocument(
       Math.min(position ?? siblings.length, siblings.length),
     );
 
+    const sortOrderById = new Map(
+      siblings.map((sibling) => [sibling.id, sibling.sortOrder]),
+    );
     const orderedIds = siblings.map((sibling) => sibling.id);
     orderedIds.splice(targetPosition, 0, id);
 
-    for (const [index, documentId] of orderedIds.entries()) {
-      await tx
-        .update(documentTable)
-        .set(
-          documentId === id
-            ? { parentId, sortOrder: index }
-            : { sortOrder: index },
-        )
-        .where(eq(documentTable.id, documentId));
-    }
+    let moved: typeof documentTable.$inferSelect | undefined;
 
-    const [moved] = await tx
-      .select()
-      .from(documentTable)
-      .where(eq(documentTable.id, id));
+    for (const [index, documentId] of orderedIds.entries()) {
+      if (documentId === id) {
+        [moved] = await tx
+          .update(documentTable)
+          .set({ parentId, sortOrder: index })
+          .where(eq(documentTable.id, documentId))
+          .returning();
+      } else if (sortOrderById.get(documentId) !== index) {
+        await tx
+          .update(documentTable)
+          .set({ sortOrder: index })
+          .where(eq(documentTable.id, documentId));
+      }
+    }
 
     if (!moved) {
       throw new HTTPException(500, {

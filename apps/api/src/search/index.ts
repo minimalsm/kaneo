@@ -18,7 +18,7 @@ const workspaceSchema = v.object({
 const documentSearchSchema = v.object({
   id: v.string(),
   title: v.string(),
-  icon: v.nullable(v.string()),
+  icon: v.optional(v.string()),
   workspaceId: v.string(),
   createdAt: v.date(),
 });

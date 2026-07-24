@@ -22,12 +22,20 @@ import {
   List,
   ListOrdered,
   ListTodo,
+  type LucideIcon,
   Quote,
   Strikethrough,
   Table2,
   Underline as UnderlineIcon,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { ErrorDisplay } from "@/components/ui/error-display";
@@ -155,6 +163,96 @@ const SLASH_COMMANDS: Omit<SlashCommand, "label">[] = [
         .run();
     },
   },
+];
+
+type BubbleAction = {
+  id: string;
+  icon: LucideIcon;
+  isActive: (editor: Editor) => boolean;
+  run: (editor: Editor) => void;
+};
+
+// Mirrors SLASH_COMMANDS: data-driven toolbar buttons, grouped so a separator
+// renders between block-level and inline-mark actions. The link button stays
+// bespoke in the JSX because its click handler needs component state (setLink).
+const BUBBLE_ACTION_GROUPS: BubbleAction[][] = [
+  [
+    {
+      id: "heading-2",
+      icon: Heading2,
+      isActive: (editor) => editor.isActive("heading", { level: 2 }),
+      run: (editor) => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+    },
+    {
+      id: "bullet-list",
+      icon: List,
+      isActive: (editor) => editor.isActive("bulletList"),
+      run: (editor) => editor.chain().focus().toggleBulletList().run(),
+    },
+    {
+      id: "task-list",
+      icon: ListTodo,
+      isActive: (editor) => editor.isActive("taskList"),
+      run: (editor) => editor.chain().focus().toggleTaskList().run(),
+    },
+    {
+      id: "ordered-list",
+      icon: ListOrdered,
+      isActive: (editor) => editor.isActive("orderedList"),
+      run: (editor) => editor.chain().focus().toggleOrderedList().run(),
+    },
+    {
+      id: "blockquote",
+      icon: Quote,
+      isActive: (editor) => editor.isActive("blockquote"),
+      run: (editor) => editor.chain().focus().toggleBlockquote().run(),
+    },
+    {
+      id: "code-block",
+      icon: Braces,
+      isActive: (editor) => editor.isActive("codeBlock"),
+      run: (editor) => editor.chain().focus().toggleCodeBlock().run(),
+    },
+    {
+      id: "table",
+      icon: Table2,
+      isActive: () => false,
+      run: (editor) =>
+        editor.chain().focus().insertTable({ cols: 3, rows: 3 }).run(),
+    },
+  ],
+  [
+    {
+      id: "bold",
+      icon: Bold,
+      isActive: (editor) => editor.isActive("bold"),
+      run: (editor) => editor.chain().focus().toggleBold().run(),
+    },
+    {
+      id: "italic",
+      icon: Italic,
+      isActive: (editor) => editor.isActive("italic"),
+      run: (editor) => editor.chain().focus().toggleItalic().run(),
+    },
+    {
+      id: "underline",
+      icon: UnderlineIcon,
+      isActive: (editor) => editor.isActive("underline"),
+      run: (editor) => editor.chain().focus().toggleUnderline().run(),
+    },
+    {
+      id: "strike",
+      icon: Strikethrough,
+      isActive: (editor) => editor.isActive("strike"),
+      run: (editor) => editor.chain().focus().toggleStrike().run(),
+    },
+    {
+      id: "code",
+      icon: Code,
+      isActive: (editor) => editor.isActive("code"),
+      run: (editor) => editor.chain().focus().toggleCode().run(),
+    },
+  ],
 ];
 
 export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
@@ -589,159 +687,29 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
               return from !== to;
             }}
           >
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("heading", { level: 2 }) &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
-              }
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Heading2 className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("bulletList") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleBulletList().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <List className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("taskList") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleTaskList().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <ListTodo className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("orderedList") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <ListOrdered className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("blockquote") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleBlockquote().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Quote className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("codeBlock") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Braces className="size-3.5" />
-            </Button>
-            <Button
-              className="kaneo-tiptap-bubble-btn"
-              onClick={() =>
-                editor.chain().focus().insertTable({ cols: 3, rows: 3 }).run()
-              }
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Table2 className="size-3.5" />
-            </Button>
-            <span className="kaneo-tiptap-bubble-separator" />
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("bold") && "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleBold().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Bold className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("italic") && "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Italic className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("underline") &&
-                  "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleUnderline().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <UnderlineIcon className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("strike") && "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleStrike().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Strikethrough className="size-3.5" />
-            </Button>
-            <Button
-              className={cn(
-                "kaneo-tiptap-bubble-btn",
-                editor.isActive("code") && "bg-accent text-accent-foreground",
-              )}
-              onClick={() => editor.chain().focus().toggleCode().run()}
-              size="xs"
-              type="button"
-              variant="ghost"
-            >
-              <Code className="size-3.5" />
-            </Button>
+            {BUBBLE_ACTION_GROUPS.map((group, groupIndex) => (
+              <Fragment key={group[0]?.id}>
+                {groupIndex > 0 && (
+                  <span className="kaneo-tiptap-bubble-separator" />
+                )}
+                {group.map((action) => (
+                  <Button
+                    className={cn(
+                      "kaneo-tiptap-bubble-btn",
+                      action.isActive(editor) &&
+                        "bg-accent text-accent-foreground",
+                    )}
+                    key={action.id}
+                    onClick={() => action.run(editor)}
+                    size="xs"
+                    type="button"
+                    variant="ghost"
+                  >
+                    <action.icon className="size-3.5" />
+                  </Button>
+                ))}
+              </Fragment>
+            ))}
             <Button
               className={cn(
                 "kaneo-tiptap-bubble-btn",

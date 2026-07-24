@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -253,15 +254,30 @@ export function KeyboardShortcutsProvider({
     };
   }, [prefixTimeout]);
 
-  const value = {
-    registerShortcut,
-    registerSequentialShortcut,
-    registerModifierShortcut,
-    unregisterShortcut,
-    unregisterSequentialShortcut,
-    unregisterModifierShortcut,
-    activePrefix,
-  };
+  // Memoized so registrations (which update provider state) do not hand
+  // consumers a fresh context value: useRegisterShortcuts re-registers on
+  // every consumer render, so an unstable value re-renders every consumer on
+  // each registration — an infinite register -> render -> register loop.
+  const value = useMemo(
+    () => ({
+      registerShortcut,
+      registerSequentialShortcut,
+      registerModifierShortcut,
+      unregisterShortcut,
+      unregisterSequentialShortcut,
+      unregisterModifierShortcut,
+      activePrefix,
+    }),
+    [
+      registerShortcut,
+      registerSequentialShortcut,
+      registerModifierShortcut,
+      unregisterShortcut,
+      unregisterSequentialShortcut,
+      unregisterModifierShortcut,
+      activePrefix,
+    ],
+  );
 
   return React.createElement(
     KeyboardShortcutsContext.Provider,

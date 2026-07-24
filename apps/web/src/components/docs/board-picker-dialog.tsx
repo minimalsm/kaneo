@@ -18,6 +18,7 @@ import useCreateProject from "@/hooks/mutations/project/use-create-project";
 import useGetProjects from "@/hooks/queries/project/use-get-projects";
 import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import generateProjectSlug from "@/lib/generate-project-id";
+import { toast } from "@/lib/toast";
 
 // Matches create-project-modal's default icon.
 const DEFAULT_PROJECT_ICON = "Layout";
@@ -94,11 +95,13 @@ export function BoardPickerDialog({
       await queryClient.invalidateQueries({ queryKey: ["projects"] });
       onSelect(id);
     } catch (error) {
-      setCreateError(
+      const message =
         error instanceof Error && error.message
           ? error.message
-          : t("documents:boardPicker.create.error"),
-      );
+          : t("documents:boardPicker.create.error");
+      setCreateError(message);
+      // Toast in addition to the inline error, matching create-project-modal.
+      toast.error(message);
     }
   };
 

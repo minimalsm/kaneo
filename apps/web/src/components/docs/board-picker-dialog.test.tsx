@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { toast } from "@/lib/toast";
 import { BoardPickerDialog } from "./board-picker-dialog";
 
 const useProjectsMock = vi.fn();
@@ -27,6 +28,10 @@ vi.mock("@/hooks/mutations/project/use-create-project", () => ({
 
 vi.mock("@/hooks/use-workspace-permission", () => ({
   useWorkspacePermission: () => permissions,
+}));
+
+vi.mock("@/lib/toast", () => ({
+  toast: { success: vi.fn(), error: vi.fn() },
 }));
 
 type Project = { id: string; name: string; slug: string };
@@ -195,6 +200,7 @@ describe("BoardPickerDialog", () => {
     );
 
     expect(await screen.findByText("key already taken")).toBeVisible();
+    expect(toast.error).toHaveBeenCalledWith("key already taken");
     expect(onSelect).not.toHaveBeenCalled();
     expect(onOpenChange).not.toHaveBeenCalledWith(false);
     // Still in create mode.

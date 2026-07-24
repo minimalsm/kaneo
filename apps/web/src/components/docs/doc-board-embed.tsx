@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
   Link,
   useNavigate,
@@ -13,8 +12,8 @@ import { useTranslation } from "react-i18next";
 import KanbanBoard from "@/components/kanban-board";
 import ListView from "@/components/list-view";
 import TaskDetailsSheet from "@/components/task/task-details-sheet";
-import getTasks from "@/fetchers/task/get-tasks";
-import useGetProject from "@/hooks/queries/project/use-get-project";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetTasks } from "@/hooks/queries/task/use-get-tasks";
 import { cn } from "@/lib/cn";
 
 // Fixed embed body height (KTD6): the board assumes h-full flex layouts, so
@@ -25,19 +24,6 @@ const TASKS_REFETCH_INTERVAL = 30000;
 
 type EmbedView = "board" | "list";
 
-// Same queryKey + fetcher as useGetTasks so task mutations still invalidate
-// this query, but with polling disabled while errored (KTD4) so a no-access
-// embed does not hammer a 403 behind its placeholder.
-function useEmbedTasks(projectId: string) {
-  return useQuery({
-    queryKey: ["tasks", projectId],
-    queryFn: () => getTasks(projectId),
-    refetchInterval: (query) =>
-      query.state.status === "error" ? false : TASKS_REFETCH_INTERVAL,
-    enabled: !!projectId,
-  });
-}
-
 function EmbedSkeleton() {
   return (
     <div
@@ -46,15 +32,15 @@ function EmbedSkeleton() {
     >
       {["col-a", "col-b", "col-c"].map((col) => (
         <div key={col} className="flex w-64 shrink-0 flex-col gap-3">
-          <div className="h-4 w-24 animate-pulse rounded bg-muted" />
+          <Skeleton className="h-4 w-24 rounded" />
           <div className="flex flex-col gap-2.5">
             {[0, 1, 2].map((i) => (
               <div
                 key={`${col}-${i}`}
                 className="space-y-2 rounded-lg border border-border bg-card p-3"
               >
-                <div className="h-3.5 w-4/5 animate-pulse rounded bg-muted" />
-                <div className="h-3 w-3/5 animate-pulse rounded bg-muted" />
+                <Skeleton className="h-3.5 w-4/5 rounded" />
+                <Skeleton className="h-3 w-3/5 rounded" />
               </div>
             ))}
           </div>
@@ -76,8 +62,12 @@ export function DocBoardEmbed({
   const { workspaceId = "" } = useParams({ strict: false });
   const search = useSearch({ strict: false }) as { taskId?: string };
 
-  const { data: project, isError } = useEmbedTasks(projectId);
-  const { data: projectMeta } = useGetProject({ id: projectId, workspaceId });
+  // Polling is disabled while errored (KTD4) so a no-access embed does not
+  // hammer a 403 behind its placeholder.
+  const { data: project, isError } = useGetTasks(projectId, {
+    refetchInterval: (query) =>
+      query.state.status === "error" ? false : TASKS_REFETCH_INTERVAL,
+  });
 
   const attrView: EmbedView = node.attrs.view === "list" ? "list" : "board";
   const [localView, setLocalView] = useState<EmbedView>(attrView);
@@ -101,15 +91,15 @@ export function DocBoardEmbed({
     }
   }, [editor, getPos]);
 
-  const projectTaskIds = useMemo(() => {
-    const ids = new Set<string>();
-    for (const column of project?.columns ?? []) {
-      for (const task of column.tasks) {
-        ids.add(task.id);
-      }
-    }
-    return ids;
-  }, [project]);
+  const projectTaskIds = useMemo(
+    () =>
+      new Set(
+        project?.columns.flatMap((column) =>
+          column.tasks.map((task) => task.id),
+        ) ?? [],
+      ),
+    [project],
+  );
 
   const openTaskId =
     search.taskId && projectTaskIds.has(search.taskId)
@@ -120,7 +110,7 @@ export function DocBoardEmbed({
     navigate({ to: ".", search: {}, replace: true });
   }, [navigate]);
 
-  const projectName = projectMeta?.name ?? project?.name ?? "";
+  const projectName = project?.name ?? "";
 
   const viewToggle = (
     [

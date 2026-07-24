@@ -7,9 +7,6 @@ import { DocBoardEmbed } from "./doc-board-embed";
 const navigate = vi.fn();
 const searchMock = vi.fn<() => Record<string, unknown>>(() => ({}));
 const getTasksMock = vi.fn();
-const useGetProjectMock = vi.fn(() => ({
-  data: { id: "proj-1", name: "My project" },
-}));
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -34,11 +31,6 @@ vi.mock("@tanstack/react-router", () => ({
 
 vi.mock("@/fetchers/task/get-tasks", () => ({
   default: (projectId: string) => getTasksMock(projectId),
-}));
-
-vi.mock("@/hooks/queries/project/use-get-project", () => ({
-  default: (args: { id: string; workspaceId: string }) =>
-    useGetProjectMock(args),
 }));
 
 vi.mock("@/components/kanban-board", () => ({
@@ -124,9 +116,6 @@ function renderEmbed(props = makeProps()) {
 beforeEach(() => {
   vi.clearAllMocks();
   searchMock.mockReturnValue({});
-  useGetProjectMock.mockReturnValue({
-    data: { id: "proj-1", name: "My project" },
-  });
 });
 
 afterEach(() => {

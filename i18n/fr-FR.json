@@ -1072,6 +1072,7 @@
 				"task": "Tâches",
 				"project": "Projets",
 				"workspace": "Espaces de travail",
+				"document": "Documents",
 				"comment": "Commentaires",
 				"activity": "Activités",
 				"fallback": "Résultats"

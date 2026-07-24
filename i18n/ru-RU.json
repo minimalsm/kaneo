@@ -1073,6 +1073,7 @@
 				"task": "Задачи",
 				"project": "Проекты",
 				"workspace": "Рабочие области",
+				"document": "Documents",
 				"comment": "Комментарии",
 				"activity": "Активности",
 				"fallback": "Результаты"

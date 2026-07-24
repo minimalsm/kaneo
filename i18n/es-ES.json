@@ -853,6 +853,7 @@
 				"task": "Tareas",
 				"project": "Proyectos",
 				"workspace": "Espacios de trabajo",
+				"document": "Documents",
 				"comment": "Comentarios",
 				"activity": "Actividad",
 				"fallback": "Resultados"

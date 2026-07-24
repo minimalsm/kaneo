@@ -34,7 +34,7 @@ type SearchResultItem = {
   title: string;
   description?: string;
   content?: string;
-  type: "task" | "project" | "workspace" | "comment" | "activity";
+  type: "task" | "project" | "workspace" | "document" | "comment" | "activity";
   projectId?: string;
   workspaceId?: string;
   taskNumber?: number;
@@ -121,6 +121,17 @@ function SearchCommandMenu({ open, setOpen }: SearchCommandMenuProps) {
           });
         }
         break;
+      case "document":
+        if (item.id && (item.workspaceId || workspace?.id)) {
+          navigate({
+            to: "/dashboard/workspace/$workspaceId/docs/$documentId",
+            params: {
+              workspaceId: item.workspaceId ?? workspace?.id,
+              documentId: item.id,
+            },
+          });
+        }
+        break;
       case "comment":
       case "activity":
         if (item.projectId && item.id && workspace?.id) {
@@ -145,6 +156,8 @@ function SearchCommandMenu({ open, setOpen }: SearchCommandMenuProps) {
         return FolderKanban;
       case "workspace":
         return Users;
+      case "document":
+        return FileText;
       case "comment":
         return MessageSquare;
       case "activity":
@@ -174,6 +187,8 @@ function SearchCommandMenu({ open, setOpen }: SearchCommandMenuProps) {
           return t("navigation:search.groups.project");
         case "workspace":
           return t("navigation:search.groups.workspace");
+        case "document":
+          return t("navigation:search.groups.document");
         case "comment":
           return t("navigation:search.groups.comment");
         case "activity":

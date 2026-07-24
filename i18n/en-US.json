@@ -1250,6 +1250,7 @@
 				"task": "Tasks",
 				"project": "Projects",
 				"workspace": "Workspaces",
+				"document": "Documents",
 				"comment": "Comments",
 				"activity": "Activities",
 				"fallback": "Results"

@@ -15,10 +15,19 @@ const workspaceSchema = v.object({
   createdAt: v.date(),
 });
 
+const documentSearchSchema = v.object({
+  id: v.string(),
+  title: v.string(),
+  icon: v.nullable(v.string()),
+  workspaceId: v.string(),
+  createdAt: v.date(),
+});
+
 const searchResultSchema = v.object({
   tasks: v.optional(v.array(taskSchema)),
   projects: v.optional(v.array(projectSchema)),
   workspaces: v.optional(v.array(workspaceSchema)),
+  documents: v.optional(v.array(documentSearchSchema)),
   comments: v.optional(v.array(activitySchema)),
   activities: v.optional(v.array(activitySchema)),
 });
@@ -33,7 +42,7 @@ const search = new Hono<{
     operationId: "globalSearch",
     tags: ["Search"],
     description:
-      "Search across tasks, projects, workspaces, comments, and activities",
+      "Search across tasks, projects, workspaces, documents, comments, and activities",
     responses: {
       200: {
         description: "Search results",
@@ -56,6 +65,7 @@ const search = new Hono<{
           "tasks",
           "projects",
           "workspaces",
+          "documents",
           "comments",
           "activities",
         ]),

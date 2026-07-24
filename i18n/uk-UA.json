@@ -1067,6 +1067,7 @@
 				"task": "Завдання",
 				"project": "Проєкти",
 				"workspace": "Робочі простори",
+				"document": "Documents",
 				"comment": "Коментарі",
 				"activity": "Активність",
 				"fallback": "Результати"

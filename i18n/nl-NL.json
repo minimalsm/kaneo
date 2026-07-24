@@ -854,6 +854,7 @@
 				"task": "Taken",
 				"project": "Projecten",
 				"workspace": "Werkruimtes",
+				"document": "Documents",
 				"comment": "Reacties",
 				"activity": "Activiteiten",
 				"fallback": "Resultaten"

@@ -1,7 +1,8 @@
-import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
 import db from "../../database";
 import {
   activityTable,
+  documentTable,
   projectTable,
   taskTable,
   userTable,
@@ -18,6 +19,7 @@ type SearchParams = {
     | "tasks"
     | "projects"
     | "workspaces"
+    | "documents"
     | "comments"
     | "activities";
   workspaceId?: string;
@@ -27,8 +29,9 @@ type SearchParams = {
 
 type SearchResult = {
   id: string;
-  type: "task" | "project" | "workspace" | "comment" | "activity";
+  type: "task" | "project" | "workspace" | "document" | "comment" | "activity";
   title: string;
+  icon?: string;
   description?: string;
   content?: string;
   projectId?: string;
@@ -382,6 +385,63 @@ async function globalSearch(params: SearchParams): Promise<{
         workspaceName: workspace.name,
         createdAt: workspace.createdAt,
         relevanceScore: workspace.relevanceScore,
+      });
+    }
+  }
+
+  if (type === "all" || type === "documents") {
+    const documentRelevanceScore = sql<number>`
+      CASE
+        WHEN LOWER(${documentTable.title}) LIKE ${searchPattern} THEN 3
+        WHEN LOWER(${documentTable.contentText}) LIKE ${searchPattern} THEN 2
+        ELSE 1
+      END
+    `;
+
+    const documentWorkspaceFilter = workspaceId
+      ? eq(documentTable.workspaceId, workspaceId)
+      : inArray(documentTable.workspaceId, accessibleWorkspaceIds);
+
+    const documentQuery = db
+      .select({
+        id: documentTable.id,
+        title: documentTable.title,
+        icon: documentTable.icon,
+        workspaceId: documentTable.workspaceId,
+        workspaceName: workspaceTable.name,
+        createdAt: documentTable.createdAt,
+        relevanceScore: documentRelevanceScore.as("relevanceScore"),
+      })
+      .from(documentTable)
+      .leftJoin(
+        workspaceTable,
+        eq(documentTable.workspaceId, workspaceTable.id),
+      )
+      .where(
+        and(
+          documentWorkspaceFilter,
+          isNull(documentTable.archivedAt),
+          or(
+            ilike(documentTable.title, searchPattern),
+            ilike(documentTable.contentText, searchPattern),
+          ),
+        ),
+      )
+      .orderBy(desc(documentRelevanceScore), desc(documentTable.createdAt))
+      .limit(limit);
+
+    const documents = await documentQuery;
+
+    for (const document of documents) {
+      results.push({
+        id: document.id,
+        type: "document",
+        title: document.title,
+        icon: document.icon || undefined,
+        workspaceId: document.workspaceId,
+        workspaceName: document.workspaceName || undefined,
+        createdAt: document.createdAt,
+        relevanceScore: document.relevanceScore,
       });
     }
   }

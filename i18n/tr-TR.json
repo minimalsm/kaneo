@@ -1071,6 +1071,7 @@
 				"task": "Talepler",
 				"project": "Projeler",
 				"workspace": "Çalışma Alanları",
+				"document": "Documents",
 				"comment": "Yorumlar",
 				"activity": "Aktiviteler",
 				"fallback": "Sonuçlar"

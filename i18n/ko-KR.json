@@ -1070,6 +1070,7 @@
 				"task": "작업",
 				"project": "프로젝트",
 				"workspace": "워크스페이스",
+				"document": "Documents",
 				"comment": "댓글",
 				"activity": "활동",
 				"fallback": "결과"

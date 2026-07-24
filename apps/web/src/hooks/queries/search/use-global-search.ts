@@ -8,6 +8,7 @@ type SearchParams = {
     | "tasks"
     | "projects"
     | "workspaces"
+    | "documents"
     | "comments"
     | "activities";
   workspaceId?: string;

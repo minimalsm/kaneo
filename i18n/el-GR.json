@@ -1068,6 +1068,7 @@
 				"task": "Εργασίες",
 				"project": "Έργα",
 				"workspace": "Χώροι εργασίας",
+				"document": "Documents",
 				"comment": "Σχόλια",
 				"activity": "Δραστηριότητες",
 				"fallback": "Αποτελέσματα"

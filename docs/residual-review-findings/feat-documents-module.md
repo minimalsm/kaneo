@@ -1,5 +1,16 @@
 # Residual Review Findings — feat/documents-module
 
+## Phase 2 (kanban-in-doc) — run `20260724-232321-5c5ec11d`
+
+Verdict: Ready with fixes. Four findings validated; three applied and committed (`fix(review): apply Phase 2 review findings and fix shortcut provider render loop` — which also fixed a pre-existing infinite render loop in `KeyboardShortcutsProvider`). Residuals below; GitHub Issues remains disabled on this fork, so this file is the durable record.
+
+- **P2 — `apps/web/src/components/docs/doc-board-embed.tsx:104` — Same project embedded twice renders duplicate TaskDetailsSheets** (correctness, validated). Both matching embeds mount an overlay sheet for the same taskId. Fix needs a design call: first-embed-claims registry vs hoisting the sheet to the doc route. Edge case (same project embedded twice AND a task opened).
+- **P1@anchor-50 — `apps/web/src/components/docs/doc-editor.tsx:541` — Stored picker insertion position not validated before `insertContentAt`** (correctness). `insertContentAt` throws RangeError on out-of-range positions (verified in installed @tiptap/core); reachable if the doc re-syncs while the picker is open. Suggested: clamp to `doc.content.size` + try/finally around insert. Below the apply confidence bar; cheap defensive fix for a follow-up.
+- **P3 — `apps/web/src/components/docs/extensions/kaneo-board.tsx:41` — Serialized embed HTML links to a non-existent route** (correctness, advisory). Fallback anchor uses `/dashboard/project/{id}`, which isn't a real route; fine until a real export pipeline exists.
+- **P2 — `apps/web/src/components/docs/doc-editor.tsx:520` — Board-picker wiring is bespoke; `/table`//`/calendar` would re-add the state/branch/callback/JSX quadruplet** (maintainability, owner: human). Suggested generic `command.picker` hook + `pendingEmbed` state when the next embed type lands.
+- **Coverage notes:** cross-model adversarial peer (Codex) timed out at its 600s cap in both Phase 1 and Phase 2 runs — adversarial lens degraded both times; do not auto-retry this route in this environment. End-to-end browser smoke of the embed flow was environment-blocked (Docker daemon hung, killing the local API mid-run) — rerun `scratchpad/smoke-board-embed.mjs` against a healthy dev instance, or exercise manually: `/board` → create project → drag task → verify on project page.
+
+
 Source: ce-code-review run `20260724-201446-6b1afe73` (branch `feat/documents-module`, base `90d8b695`). Verdict: Ready with fixes. Seven actionable findings survived validation; four were applied and committed (`fix(review): apply review findings`). The three below were not applied and have no tracker sink (GitHub Issues is disabled on this fork), so this file is their durable record.
 
 ## Residual Review Findings

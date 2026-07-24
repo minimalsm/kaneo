@@ -24,6 +24,7 @@ import db, { getDatabase, schema } from "./database";
 import { prepareDatabaseStartup } from "./database/prepare-database-startup";
 import { waitForDatabase } from "./database/wait-for-database";
 import discordIntegration from "./discord-integration";
+import document from "./document";
 import { eventContext } from "./events";
 import externalLink from "./external-link";
 import genericWebhookIntegration from "./generic-webhook-integration";
@@ -530,6 +531,7 @@ export function createApp() {
   const oauthApi = api.route("/oauth", oauth);
 
   const projectApi = api.route("/project", project);
+  const documentApi = api.route("/document", document);
   const taskApi = api.route("/task", task);
   const columnApi = api.route("/column", column);
   const activityApi = api.route("/activity", activity);
@@ -709,6 +711,7 @@ export function createApp() {
     commentApi,
     configApi,
     discordIntegrationApi,
+    documentApi,
     externalLinkApi,
     genericWebhookIntegrationApi,
     githubIntegrationApi,
@@ -825,6 +828,7 @@ const {
   commentApi,
   configApi,
   discordIntegrationApi,
+  documentApi,
   externalLinkApi,
   genericWebhookIntegrationApi,
   githubIntegrationApi,
@@ -858,6 +862,7 @@ if (isMainModule) {
 export type AppType =
   | typeof configApi
   | typeof projectApi
+  | typeof documentApi
   | typeof taskApi
   | typeof columnApi
   | typeof activityApi

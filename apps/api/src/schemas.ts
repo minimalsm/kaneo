@@ -21,6 +21,35 @@ export const projectSchema = v.object({
   archivedAt: v.nullable(v.date()),
 });
 
+export const documentSchema = v.object({
+  id: v.string(),
+  workspaceId: v.string(),
+  projectId: v.nullable(v.string()),
+  parentId: v.nullable(v.string()),
+  title: v.string(),
+  icon: v.nullable(v.string()),
+  content: v.nullable(v.unknown()),
+  contentText: v.nullable(v.string()),
+  sortOrder: v.number(),
+  archivedAt: v.nullable(v.date()),
+  createdBy: v.string(),
+  createdAt: v.date(),
+  updatedAt: v.date(),
+});
+
+export const documentListItemSchema = v.omit(documentSchema, [
+  "workspaceId",
+  "content",
+  "contentText",
+]);
+
+export const documentVersionSchema = v.object({
+  id: v.string(),
+  documentId: v.string(),
+  createdBy: v.string(),
+  createdAt: v.date(),
+});
+
 export const taskSchema = v.object({
   id: v.string(),
   projectId: v.string(),

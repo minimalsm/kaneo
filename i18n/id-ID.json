@@ -2026,6 +2026,17 @@
 				"error": "Gagal menyimpan – akan dicoba lagi saat Anda mengedit berikutnya."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Pilih blok papan tersemat",
+			"dragHandleLabel": "Seret untuk memindahkan papan tersemat",
+			"openProject": "Buka papan proyek",
+			"fallbackTitle": "Papan",
+			"view": {
+				"board": "Tampilan papan",
+				"list": "Tampilan daftar"
+			},
+			"unavailable": "Papan ini tidak dapat ditampilkan — Anda mungkin tidak memiliki akses, atau papan telah dihapus."
+		},
 		"versionHistory": {
 			"trigger": "Riwayat",
 			"title": "Riwayat versi",

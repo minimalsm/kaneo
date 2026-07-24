@@ -1651,6 +1651,17 @@
 				"error": "Opslaan mislukt – bij je volgende bewerking wordt het opnieuw geprobeerd."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Ingesloten bordblok selecteren",
+			"dragHandleLabel": "Sleep om het ingesloten bord te verplaatsen",
+			"openProject": "Projectbord openen",
+			"fallbackTitle": "Bord",
+			"view": {
+				"board": "Bordweergave",
+				"list": "Lijstweergave"
+			},
+			"unavailable": "Dit bord kan niet worden weergegeven — mogelijk heb je geen toegang of is het verwijderd."
+		},
 		"versionHistory": {
 			"trigger": "Geschiedenis",
 			"title": "Versiegeschiedenis",

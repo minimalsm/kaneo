@@ -2092,6 +2092,17 @@
 				"error": "Couldn't save — will retry on your next edit."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Select embedded board block",
+			"dragHandleLabel": "Drag to move embedded board",
+			"openProject": "Open project board",
+			"fallbackTitle": "Board",
+			"view": {
+				"board": "Board view",
+				"list": "List view"
+			},
+			"unavailable": "This board can't be shown — you may not have access, or it may have been removed."
+		},
 		"versionHistory": {
 			"trigger": "History",
 			"title": "Version history",

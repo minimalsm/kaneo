@@ -1894,6 +1894,17 @@
 				"error": "Échec de l'enregistrement – nouvelle tentative à votre prochaine modification."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Sélectionner le bloc de tableau intégré",
+			"dragHandleLabel": "Faites glisser pour déplacer le tableau intégré",
+			"openProject": "Ouvrir le tableau du projet",
+			"fallbackTitle": "Tableau",
+			"view": {
+				"board": "Vue tableau",
+				"list": "Vue liste"
+			},
+			"unavailable": "Ce tableau ne peut pas être affiché — vous n'y avez peut-être pas accès, ou il a été supprimé."
+		},
 		"versionHistory": {
 			"trigger": "Historique",
 			"title": "Historique des versions",

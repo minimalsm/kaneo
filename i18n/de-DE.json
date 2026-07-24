@@ -1918,6 +1918,17 @@
 				"error": "Speichern fehlgeschlagen – beim nächsten Bearbeiten wird es erneut versucht."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Eingebetteten Board-Block auswählen",
+			"dragHandleLabel": "Ziehen, um das eingebettete Board zu verschieben",
+			"openProject": "Projektboard öffnen",
+			"fallbackTitle": "Board",
+			"view": {
+				"board": "Board-Ansicht",
+				"list": "Listenansicht"
+			},
+			"unavailable": "Dieses Board kann nicht angezeigt werden — möglicherweise fehlt dir der Zugriff oder es wurde entfernt."
+		},
 		"versionHistory": {
 			"trigger": "Verlauf",
 			"title": "Versionsverlauf",

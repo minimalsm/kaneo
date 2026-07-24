@@ -4,10 +4,17 @@ import { DocEditor } from "@/components/docs/doc-editor";
 import PageTitle from "@/components/page-title";
 import useDocument from "@/hooks/queries/document/use-document";
 
+type DocumentSearchParams = {
+  taskId?: string;
+};
+
 export const Route = createFileRoute(
   "/_layout/_authenticated/dashboard/workspace/$workspaceId/docs/$documentId",
 )({
   component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>): DocumentSearchParams => ({
+    taskId: typeof search.taskId === "string" ? search.taskId : undefined,
+  }),
 });
 
 function RouteComponent() {

@@ -1650,6 +1650,17 @@
 				"error": "No se pudo guardar: se reintentará con tu próxima edición."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Seleccionar bloque de tablero incrustado",
+			"dragHandleLabel": "Arrastra para mover el tablero incrustado",
+			"openProject": "Abrir tablero del proyecto",
+			"fallbackTitle": "Tablero",
+			"view": {
+				"board": "Vista de tablero",
+				"list": "Vista de lista"
+			},
+			"unavailable": "Este tablero no se puede mostrar: puede que no tengas acceso o que se haya eliminado."
+		},
 		"versionHistory": {
 			"trigger": "Historial",
 			"title": "Historial de versiones",

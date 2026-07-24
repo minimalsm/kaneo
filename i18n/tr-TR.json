@@ -1878,6 +1878,17 @@
 				"error": "Kaydedilemedi – bir sonraki düzenlemenizde yeniden denenecek."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "Gömülü pano bloğunu seç",
+			"dragHandleLabel": "Gömülü panoyu taşımak için sürükleyin",
+			"openProject": "Proje panosunu aç",
+			"fallbackTitle": "Pano",
+			"view": {
+				"board": "Pano görünümü",
+				"list": "Liste görünümü"
+			},
+			"unavailable": "Bu pano gösterilemiyor — erişiminiz olmayabilir veya kaldırılmış olabilir."
+		},
 		"versionHistory": {
 			"trigger": "Geçmiş",
 			"title": "Sürüm geçmişi",

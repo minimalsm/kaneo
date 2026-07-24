@@ -1878,6 +1878,17 @@
 				"error": "저장에 실패했습니다. 다음 편집 시 다시 시도합니다."
 			}
 		},
+		"boardEmbed": {
+			"selectLabel": "임베드된 보드 블록 선택",
+			"dragHandleLabel": "드래그하여 임베드된 보드 이동",
+			"openProject": "프로젝트 보드 열기",
+			"fallbackTitle": "보드",
+			"view": {
+				"board": "보드 보기",
+				"list": "목록 보기"
+			},
+			"unavailable": "이 보드를 표시할 수 없습니다. 접근 권한이 없거나 보드가 삭제되었을 수 있습니다."
+		},
 		"versionHistory": {
 			"trigger": "기록",
 			"title": "버전 기록",

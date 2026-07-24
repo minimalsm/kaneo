@@ -29,9 +29,14 @@ import TaskCard from "./task-card";
 type KanbanBoardProps = {
   project: ProjectWithTasks;
   disableDragDrop?: boolean;
+  disableShortcuts?: boolean;
 };
 
-function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
+function KanbanBoard({
+  project,
+  disableDragDrop = false,
+  disableShortcuts = false,
+}: KanbanBoardProps) {
   const queryClient = useQueryClient();
   const { setProject } = useProjectStore();
   const {
@@ -58,36 +63,42 @@ function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
     clearFocus();
   }, [clearFocus]);
 
-  useRegisterShortcuts({
-    shortcuts: {
-      j: () => {
-        focusNext();
-        const state = useBulkSelectionStore.getState();
-        if (state.focusedTaskId) {
-          navigate({ to: ".", search: { taskId: state.focusedTaskId } });
-        }
-      },
-      k: () => {
-        focusPrevious();
-        const state = useBulkSelectionStore.getState();
-        if (state.focusedTaskId) {
-          navigate({ to: ".", search: { taskId: state.focusedTaskId } });
-        }
-      },
-      Enter: () => {
-        if (focusedTaskId && project) {
-          navigate({
-            to: "/dashboard/workspace/$workspaceId/project/$projectId/task/$taskId",
-            params: {
-              workspaceId: project.workspaceId,
-              projectId: project.id,
-              taskId: focusedTaskId,
+  // Hooks must run unconditionally; an empty config registers nothing when
+  // shortcuts are disabled (e.g. when embedded inside a doc).
+  useRegisterShortcuts(
+    disableShortcuts
+      ? {}
+      : {
+          shortcuts: {
+            j: () => {
+              focusNext();
+              const state = useBulkSelectionStore.getState();
+              if (state.focusedTaskId) {
+                navigate({ to: ".", search: { taskId: state.focusedTaskId } });
+              }
             },
-          });
-        }
-      },
-    },
-  });
+            k: () => {
+              focusPrevious();
+              const state = useBulkSelectionStore.getState();
+              if (state.focusedTaskId) {
+                navigate({ to: ".", search: { taskId: state.focusedTaskId } });
+              }
+            },
+            Enter: () => {
+              if (focusedTaskId && project) {
+                navigate({
+                  to: "/dashboard/workspace/$workspaceId/project/$projectId/task/$taskId",
+                  params: {
+                    workspaceId: project.workspaceId,
+                    projectId: project.id,
+                    taskId: focusedTaskId,
+                  },
+                });
+              }
+            },
+          },
+        },
+  );
 
   const sensors = useSensors(
     useSensor(MouseSensor, {

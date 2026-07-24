@@ -20,6 +20,9 @@ const permissions = {
 const translation = { t: (key: string) => key };
 vi.mock("react-i18next", () => ({
   useTranslation: () => translation,
+  // The kaneoBoard node view's import chain reaches src/lib/i18n, which
+  // calls i18n.use(initReactI18next) at module scope.
+  initReactI18next: { type: "3rdParty", init: () => {} },
 }));
 
 vi.mock("@/hooks/queries/document/use-document", () => ({

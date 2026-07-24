@@ -46,6 +46,7 @@ import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { cn } from "@/lib/cn";
 import { debounceWithFlush } from "@/lib/debounce";
 import { DocVersionHistory } from "./doc-version-history";
+import { KaneoBoard } from "./extensions/kaneo-board";
 
 const SAVE_DEBOUNCE_MS = 700;
 
@@ -385,6 +386,7 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
         TableRow,
         TableHeader,
         TableCell,
+        KaneoBoard,
       ],
       editorProps: {
         attributes: {

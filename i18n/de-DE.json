@@ -534,7 +534,8 @@
 				"codeLength": "Der Code muss 6 Ziffern haben",
 				"invalidCode": "Ungültiger Verifizierungscode",
 				"verify": "Überprüfen",
-				"verifying": "Wird überprüft..."
+				"verifying": "Wird überprüft...",
+				"secretUnavailable": "Geheimschlüssel konnte nicht gelesen werden. 2FA deaktivieren und erneut aktivieren."
 			},
 			"backupCodesModal": {
 				"title": "Speichere deine Backup-Codes",

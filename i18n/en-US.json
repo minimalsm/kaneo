@@ -531,6 +531,7 @@
 				"copySecret": "Copy",
 				"secretCopiedLabel": "Copied",
 				"secretCopied": "Setup key copied to clipboard",
+				"secretUnavailable": "Could not read the setup key. Cancel and try enabling again.",
 				"codeLabel": "Verification code",
 				"codePlaceholder": "123456",
 				"codeLength": "Code must be 6 digits",

@@ -430,7 +430,8 @@
 				"codeLength": "El código debe tener 6 dígitos",
 				"invalidCode": "Código de verificación no válido",
 				"verify": "Verificar",
-				"verifying": "Verificando..."
+				"verifying": "Verificando...",
+				"secretUnavailable": "No se pudo leer la clave secreta. Desactiva y vuelve a activar la 2FA."
 			},
 			"backupCodesModal": {
 				"title": "Guarda tus códigos de respaldo",

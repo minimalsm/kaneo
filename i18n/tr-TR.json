@@ -521,7 +521,8 @@
 				"codeLength": "Kod 6 haneli olmalıdır",
 				"invalidCode": "Geçersiz doğrulama kodu",
 				"verify": "Doğrula",
-				"verifying": "Doğrulanıyor..."
+				"verifying": "Doğrulanıyor...",
+				"secretUnavailable": "Gizli anahtar okunamadı. 2FA'yı devre dışı bırakıp yeniden etkinleştirin."
 			},
 			"backupCodesModal": {
 				"title": "Yedek kodlarınızı kaydedin",

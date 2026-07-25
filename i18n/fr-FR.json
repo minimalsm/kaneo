@@ -522,7 +522,8 @@
 				"codeLength": "Le code doit comporter 6 chiffres",
 				"invalidCode": "Code de vérification invalide",
 				"verify": "Vérifier",
-				"verifying": "Vérification..."
+				"verifying": "Vérification...",
+				"secretUnavailable": "Impossible de lire la clé secrète. Désactivez puis réactivez la 2FA."
 			},
 			"backupCodesModal": {
 				"title": "Enregistrez vos codes de secours",

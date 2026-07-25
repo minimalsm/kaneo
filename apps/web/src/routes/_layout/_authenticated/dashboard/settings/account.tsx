@@ -46,7 +46,7 @@ function RouteComponent() {
       url: "/dashboard/settings/account/preferences",
       icon: Settings,
     },
-    ...(user && !(user as { isAnonymous?: boolean }).isAnonymous
+    ...(user && !user.isAnonymous
       ? [
           {
             title: t("settings:security"),

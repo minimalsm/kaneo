@@ -520,7 +520,8 @@
 				"codeLength": "코드는 6자리여야 합니다",
 				"invalidCode": "유효하지 않은 확인 코드입니다",
 				"verify": "확인",
-				"verifying": "확인 중..."
+				"verifying": "확인 중...",
+				"secretUnavailable": "비밀 키를 읽을 수 없습니다. 2FA를 비활성화한 후 다시 활성화하세요."
 			},
 			"backupCodesModal": {
 				"title": "백업 코드를 저장하세요",

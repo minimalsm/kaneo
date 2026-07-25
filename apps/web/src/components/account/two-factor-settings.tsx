@@ -1,4 +1,4 @@
-import { Check, Copy, Download, ShieldCheck, ShieldOff } from "lucide-react";
+import { Download, ShieldCheck, ShieldOff } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useId, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import {
   CardPanel,
   CardTitle,
 } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Dialog,
   DialogContent,
@@ -34,12 +35,13 @@ type Enrollment = {
   backupCodes: string[];
 };
 
-function getSecretFromTotpUri(totpURI: string) {
+function getSecretFromTotpUri(totpURI: string): string | null {
   try {
     const url = new URL(totpURI);
-    return url.searchParams.get("secret") ?? "";
-  } catch {
-    return "";
+    return url.searchParams.get("secret");
+  } catch (error) {
+    console.error("Failed to parse TOTP URI", error);
+    return null;
   }
 }
 
@@ -139,8 +141,7 @@ function BackupCodesModal({ backupCodes, onClose }: BackupCodesModalProps) {
   const [saved, setSaved] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(backupCodes.join("\n"));
+  const handleCopied = () => {
     setCopied(true);
     setSaved(true);
     toast.success(t("settings:twoFactor.backupCodesModal.toastCopied"));
@@ -180,24 +181,13 @@ function BackupCodesModal({ backupCodes, onClose }: BackupCodesModalProps) {
                 {t("settings:twoFactor.backupCodesModal.yourCodes")}
               </p>
               <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleCopy}
-                  className="h-7 gap-1.5 text-xs"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-3 w-3 text-success-foreground" />
-                      {t("settings:twoFactor.backupCodesModal.copied")}
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-3 w-3" />
-                      {t("settings:twoFactor.backupCodesModal.copy")}
-                    </>
-                  )}
-                </Button>
+                <CopyButton
+                  text={backupCodes.join("\n")}
+                  copied={copied}
+                  onCopied={handleCopied}
+                  copyLabel={t("settings:twoFactor.backupCodesModal.copy")}
+                  copiedLabel={t("settings:twoFactor.backupCodesModal.copied")}
+                />
                 <Button
                   variant="ghost"
                   size="sm"
@@ -265,16 +255,14 @@ export function TwoFactorSettings() {
   const [secretCopied, setSecretCopied] = useState(false);
   const [backupCodes, setBackupCodes] = useState<string[] | null>(null);
 
-  const isEnabled =
-    enabledOverride ??
-    Boolean((user as { twoFactorEnabled?: boolean } | null)?.twoFactorEnabled);
+  const isEnabled = enabledOverride ?? Boolean(user?.twoFactorEnabled);
 
   const secret = useMemo(
-    () => (enrollment ? getSecretFromTotpUri(enrollment.totpURI) : ""),
+    () => (enrollment ? getSecretFromTotpUri(enrollment.totpURI) : null),
     [enrollment],
   );
 
-  if (!user || (user as { isAnonymous?: boolean }).isAnonymous) {
+  if (!user || user.isAnonymous) {
     return null;
   }
 
@@ -357,8 +345,7 @@ export function TwoFactorSettings() {
     toast.success(t("settings:twoFactor.toast.enabled"));
   };
 
-  const handleCopySecret = () => {
-    navigator.clipboard.writeText(secret);
+  const handleSecretCopied = () => {
     setSecretCopied(true);
     toast.success(t("settings:twoFactor.qrStep.secretCopied"));
   };
@@ -405,29 +392,28 @@ export function TwoFactorSettings() {
                     <p className="text-xs font-medium">
                       {t("settings:twoFactor.qrStep.secretLabel")}
                     </p>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleCopySecret}
-                      className="h-7 gap-1.5 text-xs"
-                    >
-                      {secretCopied ? (
-                        <>
-                          <Check className="h-3 w-3 text-success-foreground" />
-                          {t("settings:twoFactor.qrStep.secretCopiedLabel")}
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-3 w-3" />
-                          {t("settings:twoFactor.qrStep.copySecret")}
-                        </>
-                      )}
-                    </Button>
+                    {secret !== null && (
+                      <CopyButton
+                        text={secret}
+                        copied={secretCopied}
+                        onCopied={handleSecretCopied}
+                        copyLabel={t("settings:twoFactor.qrStep.copySecret")}
+                        copiedLabel={t(
+                          "settings:twoFactor.qrStep.secretCopiedLabel",
+                        )}
+                      />
+                    )}
                   </div>
                   <div className="bg-sidebar border border-border rounded-sm p-2.5">
-                    <code className="text-xs font-mono text-foreground break-all leading-relaxed">
-                      {secret}
-                    </code>
+                    {secret === null ? (
+                      <p role="alert" className="text-xs text-destructive">
+                        {t("settings:twoFactor.qrStep.secretUnavailable")}
+                      </p>
+                    ) : (
+                      <code className="text-xs font-mono text-foreground break-all leading-relaxed">
+                        {secret}
+                      </code>
+                    )}
                   </div>
                 </div>
 

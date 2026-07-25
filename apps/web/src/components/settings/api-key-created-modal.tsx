@@ -1,9 +1,9 @@
-import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "@/lib/toast";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Button } from "../ui/button";
+import { CopyButton } from "../ui/copy-button";
 import {
   Dialog,
   DialogContent,
@@ -29,8 +29,7 @@ export function ApiKeyCreatedModal({
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(apiKey);
+  const handleCopied = () => {
     setCopied(true);
     toast.success(t("settings:apiKey.createdModal.toastCopied"));
   };
@@ -53,24 +52,13 @@ export function ApiKeyCreatedModal({
               <p className="text-xs font-medium">
                 {t("settings:apiKey.createdModal.yourApiKey")}
               </p>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopy}
-                className="h-7 gap-1.5 text-xs"
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-3 w-3 text-success-foreground" />
-                    {t("settings:apiKey.createdModal.copied")}
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3 w-3" />
-                    {t("settings:apiKey.createdModal.copy")}
-                  </>
-                )}
-              </Button>
+              <CopyButton
+                text={apiKey}
+                copied={copied}
+                onCopied={handleCopied}
+                copyLabel={t("settings:apiKey.createdModal.copy")}
+                copiedLabel={t("settings:apiKey.createdModal.copied")}
+              />
             </div>
             <div className="bg-sidebar border border-border rounded-sm p-2.5 max-h-24 overflow-y-auto">
               <code className="text-xs font-mono text-foreground break-all leading-relaxed">

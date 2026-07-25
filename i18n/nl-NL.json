@@ -430,7 +430,8 @@
 				"codeLength": "De code moet 6 cijfers bevatten",
 				"invalidCode": "Ongeldige verificatiecode",
 				"verify": "Verifiëren",
-				"verifying": "Verifiëren..."
+				"verifying": "Verifiëren...",
+				"secretUnavailable": "Geheime sleutel kon niet worden gelezen. Schakel 2FA uit en weer in."
 			},
 			"backupCodesModal": {
 				"title": "Bewaar je back-upcodes",

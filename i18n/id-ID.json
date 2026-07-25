@@ -522,7 +522,8 @@
 				"codeLength": "Kode harus terdiri dari 6 digit",
 				"invalidCode": "Kode verifikasi tidak valid",
 				"verify": "Verifikasi",
-				"verifying": "Memverifikasi..."
+				"verifying": "Memverifikasi...",
+				"secretUnavailable": "Kunci rahasia tidak dapat dibaca. Nonaktifkan lalu aktifkan kembali 2FA."
 			},
 			"backupCodesModal": {
 				"title": "Simpan kode cadangan Anda",

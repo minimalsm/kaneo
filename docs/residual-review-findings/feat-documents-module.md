@@ -1,5 +1,18 @@
 # Residual Review Findings — feat/documents-module
 
+## Phase 3 — TOTP two-factor auth — 2026-07-25
+
+Verdict: Shipped. Implementation, review, and fixes committed through `fix(i18n): translate copyFailed across locales`. Full gates green: API integration 15 files / 134 tests (incl. 9 new two-factor tests against real Postgres), web 32 files / 154 tests, unit 201, tsc 0, builds, biome, i18n (22 auth keys + ~59 settings lines across all 12 locales). **End-to-end browser smoke passed** (Playwright, fresh user): enable with password → secret captured from QR step → TOTP verified (base32-decoded secret, `createOTP(...).totp()`) → backup-codes modal, Done gated until copy succeeds (verified: headless denied-clipboard blocked Done exactly as designed) → enabled state → sign-out → password sign-in challenged and redirected to `/auth/two-factor` → code verified → landed on `/dashboard`.
+
+Coverage/testing gaps recorded as residuals (no tracker sink; this file is the durable record):
+
+- Review validator pass was skipped this round with direct-evidence justification (all findings carried reproduced evidence); cross-model adversarial peer remains degraded in this environment (recorded earlier — two 600s timeouts, do not auto-retry).
+- P3 — lockout path (`ACCOUNT_TEMPORARILY_LOCKED` after repeated failures) is asserted at the response level only; the full lockout window/expiry is untested.
+- P3 — TOTP secrets and backup codes are stored per better-auth defaults (no additional encryption at rest beyond the plugin's handling); revisit alongside the deferred admin 2FA-reset tooling.
+- Accepted + pinned: magic-link/email-OTP/OAuth sign-ins bypass the TOTP challenge (better-auth 1.6.23 hook scope); an integration test pins this so an upgrade changing semantics is caught.
+- Deferred by plan: workspace-level "enforce 2FA", trusted-device remember-me, SMS/passkey factors, admin reset tooling.
+
+
 ## Residual burn-down — 2026-07-25
 
 All previously recorded actionable residuals are now RESOLVED across three commits (`fix(api): preserve documents on user deletion…`, `fix(web): editor polish…`, `fix(web): dedupe embed task sheets…`): createdBy set-null with regenerated migration 0034 (product call: docs survive user deletion, taskAttachment precedent), move-position + editor re-sync + urgent-first-priority test coverage, picker insert clamp, slash-menu modified-arrow swallow, caret offset preservation, dead-route anchor removed, duplicate-sheet claim registry, stored-filter vocabulary validation. Full integration suite 125/125 (API) and 132/132 (web) green at time of burn-down. Still open by choice: board-picker generalization (waits for /table), URL-param shareable filters, mobile filter-bar treatment, multi-block move scope.

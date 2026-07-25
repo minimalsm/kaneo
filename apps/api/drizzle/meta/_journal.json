@@ -246,6 +246,13 @@
 			"when": 1784992466328,
 			"tag": "0034_giant_captain_stacy",
 			"breakpoints": true
+		},
+		{
+			"idx": 35,
+			"version": "7",
+			"when": 1784993901918,
+			"tag": "0035_useful_korath",
+			"breakpoints": true
 		}
 	]
 }

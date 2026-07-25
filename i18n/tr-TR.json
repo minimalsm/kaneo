@@ -212,6 +212,33 @@
 				"resendSuccess": "Yeni doğrulama kodu gönderildi!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "İki Adımlı Doğrulama",
+			"title": "İki faktörlü kimlik doğrulama",
+			"subtitle": "Kimlik doğrulayıcı uygulamanızdaki 6 haneli kodu girin",
+			"backupSubtitle": "Yedek kodlarınızdan birini girin",
+			"codeLabel": "Kimlik doğrulama kodu",
+			"backupCodeLabel": "Yedek kod",
+			"backupCodePlaceholder": "Bir yedek kod girin",
+			"verifying": "Doğrulanıyor...",
+			"verify": "Doğrula",
+			"useBackupCode": "Yedek kod kullan",
+			"useAuthenticatorCode": "Kimlik doğrulayıcı kullan",
+			"backToSignIn": "Girişe geri dön",
+			"expiredTitle": "Doğrulama süresi doldu",
+			"expiredMessage": "Oturum açma isteğinizin süresi doldu veya artık geçerli değil. Lütfen tekrar oturum açın.",
+			"lockedTitle": "Hesap geçici olarak kilitlendi",
+			"lockedMessage": "Çok fazla başarısız doğrulama denemesi. Hesabınız geçici olarak kilitlendi. Lütfen daha sonra tekrar deneyin.",
+			"validation": {
+				"codeLength": "Kod 6 haneli olmalıdır",
+				"backupCodeRequired": "Yedek kod gereklidir"
+			},
+			"toast": {
+				"invalidCode": "Geçersiz doğrulama kodu",
+				"signedInSuccess": "Başarıyla oturum açıldı!",
+				"verifyFailed": "Kod doğrulanamadı"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Doğrulama kodu gönderilemedi",
 			"codeSent": "Doğrulama kodu gönderildi! E-postanızı kontrol edin.",

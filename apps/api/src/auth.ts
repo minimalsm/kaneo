@@ -29,6 +29,7 @@ import {
   magicLink,
   openAPI,
   organization,
+  twoFactor,
 } from "better-auth/plugins";
 import type { AccessControl } from "better-auth/plugins/access";
 import type { UserWithAnonymous } from "better-auth/plugins/anonymous";
@@ -153,6 +154,9 @@ function getDeviceAuthVerificationUri(): string {
 }
 
 export const auth = betterAuth({
+  // Used as the TOTP issuer so authenticator entries are branded "Kaneo"
+  // instead of the better-auth default.
+  appName: "Kaneo",
   baseURL: baseURLWithoutPath,
   trustedOrigins,
   secret: process.env.AUTH_SECRET || "",
@@ -173,6 +177,7 @@ export const auth = betterAuth({
       teamMember: schema.teamMemberTable,
       apikey: schema.apikeyTable,
       deviceCode: schema.deviceCodeTable,
+      twoFactor: schema.twoFactorTable,
     },
   }),
   user: {
@@ -265,6 +270,7 @@ export const auth = betterAuth({
             },
           }),
         ]),
+    twoFactor(),
     organization({
       // `ac` is created with a narrow `statement` shape (project/task/label/
       // workspace + the default org statements), which makes its inferred
@@ -679,9 +685,28 @@ export const auth = betterAuth({
       }
     }),
     after: createAuthMiddleware(async (ctx) => {
-      if (ctx.path.startsWith("/sign-up") || ctx.path.startsWith("/sign-in")) {
+      // `/two-factor/verify-*` completes a 2FA-challenged sign-in (the
+      // twoFactor plugin nulls `newSession` on the challenged sign-in leg,
+      // so only the verified completion reaches the stamping below).
+      if (
+        ctx.path.startsWith("/sign-up") ||
+        ctx.path.startsWith("/sign-in") ||
+        ctx.path.startsWith("/two-factor/verify-")
+      ) {
         const newSession = ctx.context.newSession;
         if (newSession) {
+          // Enrollment-time `/two-factor/verify-totp` replaces the current
+          // session and carries over its `activeOrganizationId`. Stamping
+          // unconditionally would silently switch a multi-workspace user to
+          // their first workspace, so only stamp sessions that arrive
+          // without an active organization.
+          const existingActiveOrganizationId = (
+            newSession.session as { activeOrganizationId?: string | null }
+          ).activeOrganizationId;
+          if (existingActiveOrganizationId) {
+            return;
+          }
+
           const workspaceMember = await db
             .select({ workspaceId: schema.workspaceUserTable.workspaceId })
             .from(schema.workspaceUserTable)

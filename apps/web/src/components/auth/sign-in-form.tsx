@@ -57,6 +57,16 @@ export function SignInForm({ onSuccess, defaultEmail }: SignInFormProps) {
         return;
       }
 
+      if (
+        result.data &&
+        "twoFactorRedirect" in result.data &&
+        result.data.twoFactorRedirect
+      ) {
+        // No session yet — the twoFactorClient plugin's onTwoFactorRedirect
+        // navigates to the verification page. Don't toast or call onSuccess.
+        return;
+      }
+
       toast.success(t("auth:signInForm.signedInSuccess"));
       setTimeout(() => {
         onSuccess?.();

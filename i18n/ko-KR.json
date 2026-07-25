@@ -211,6 +211,33 @@
 				"resendSuccess": "새 인증 코드가 전송되었습니다!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "2단계 인증",
+			"title": "2단계 인증",
+			"subtitle": "인증 앱의 6자리 코드를 입력하세요",
+			"backupSubtitle": "백업 코드 중 하나를 입력하세요",
+			"codeLabel": "인증 코드",
+			"backupCodeLabel": "백업 코드",
+			"backupCodePlaceholder": "백업 코드를 입력하세요",
+			"verifying": "확인 중...",
+			"verify": "확인",
+			"useBackupCode": "백업 코드 사용",
+			"useAuthenticatorCode": "인증 앱 사용",
+			"backToSignIn": "로그인으로 돌아가기",
+			"expiredTitle": "인증이 만료되었습니다",
+			"expiredMessage": "로그인 요청이 만료되었거나 더 이상 유효하지 않습니다. 다시 로그인해 주세요.",
+			"lockedTitle": "계정이 일시적으로 잠겼습니다",
+			"lockedMessage": "인증 실패 횟수가 너무 많습니다. 계정이 일시적으로 잠겼습니다. 나중에 다시 시도해 주세요.",
+			"validation": {
+				"codeLength": "코드는 6자리여야 합니다",
+				"backupCodeRequired": "백업 코드가 필요합니다"
+			},
+			"toast": {
+				"invalidCode": "잘못된 인증 코드입니다",
+				"signedInSuccess": "로그인되었습니다!",
+				"verifyFailed": "코드 확인에 실패했습니다"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "인증 코드 전송에 실패했습니다",
 			"codeSent": "인증 코드가 전송되었습니다! 이메일을 확인하세요.",

@@ -213,6 +213,33 @@
 				"resendSuccess": "Kode verifikasi baru dikirim!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Verifikasi Dua Faktor",
+			"title": "Autentikasi dua faktor",
+			"subtitle": "Masukkan kode 6 digit dari aplikasi autentikator Anda",
+			"backupSubtitle": "Masukkan salah satu kode cadangan Anda",
+			"codeLabel": "Kode autentikasi",
+			"backupCodeLabel": "Kode cadangan",
+			"backupCodePlaceholder": "Masukkan kode cadangan",
+			"verifying": "Memverifikasi...",
+			"verify": "Verifikasi",
+			"useBackupCode": "Gunakan kode cadangan",
+			"useAuthenticatorCode": "Gunakan autentikator",
+			"backToSignIn": "Kembali ke halaman masuk",
+			"expiredTitle": "Verifikasi kedaluwarsa",
+			"expiredMessage": "Permintaan masuk Anda telah kedaluwarsa atau tidak lagi valid. Silakan masuk kembali.",
+			"lockedTitle": "Akun terkunci sementara",
+			"lockedMessage": "Terlalu banyak percobaan verifikasi yang gagal. Akun Anda terkunci sementara. Silakan coba lagi nanti.",
+			"validation": {
+				"codeLength": "Kode harus terdiri dari 6 digit",
+				"backupCodeRequired": "Kode cadangan wajib diisi"
+			},
+			"toast": {
+				"invalidCode": "Kode verifikasi tidak valid",
+				"signedInSuccess": "Berhasil masuk!",
+				"verifyFailed": "Gagal memverifikasi kode"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Gagal mengirim kode verifikasi",
 			"codeSent": "Kode verifikasi dikirim! Periksa email Anda.",

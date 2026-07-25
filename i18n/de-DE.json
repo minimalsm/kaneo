@@ -211,6 +211,33 @@
 				"resendSuccess": "Neuer Bestätigungscode gesendet!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Zwei-Faktor-Verifizierung",
+			"title": "Zwei-Faktor-Authentifizierung",
+			"subtitle": "Gib den 6-stelligen Code aus deiner Authenticator-App ein",
+			"backupSubtitle": "Gib einen deiner Backup-Codes ein",
+			"codeLabel": "Authentifizierungscode",
+			"backupCodeLabel": "Backup-Code",
+			"backupCodePlaceholder": "Backup-Code eingeben",
+			"verifying": "Wird überprüft...",
+			"verify": "Überprüfen",
+			"useBackupCode": "Backup-Code verwenden",
+			"useAuthenticatorCode": "Authenticator verwenden",
+			"backToSignIn": "Zurück zur Anmeldung",
+			"expiredTitle": "Verifizierung abgelaufen",
+			"expiredMessage": "Deine Anmeldeanfrage ist abgelaufen oder nicht mehr gültig. Bitte melde dich erneut an.",
+			"lockedTitle": "Konto vorübergehend gesperrt",
+			"lockedMessage": "Zu viele fehlgeschlagene Verifizierungsversuche. Dein Konto ist vorübergehend gesperrt. Bitte versuche es später erneut.",
+			"validation": {
+				"codeLength": "Der Code muss 6 Ziffern haben",
+				"backupCodeRequired": "Backup-Code ist erforderlich"
+			},
+			"toast": {
+				"invalidCode": "Ungültiger Verifizierungscode",
+				"signedInSuccess": "Erfolgreich angemeldet!",
+				"verifyFailed": "Code konnte nicht überprüft werden"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Bestätigungscode konnte nicht gesendet werden",
 			"codeSent": "Bestätigungscode gesendet! Prüfe deine E-Mails.",

@@ -9,6 +9,7 @@ import {
   lastLoginMethodClient,
   magicLinkClient,
   organizationClient,
+  twoFactorClient,
 } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import { ac, admin, member, owner, viewer } from "./permissions";
@@ -31,6 +32,13 @@ export const authClient = createAuthClient({
     lastLoginMethodClient(),
     magicLinkClient(),
     emailOTPClient(),
+    twoFactorClient({
+      onTwoFactorRedirect() {
+        // Preserve the sign-in page's search params (redirect/invitationId)
+        // so the verification page can complete the original flow.
+        window.location.href = `/auth/two-factor${window.location.search}`;
+      },
+    }),
     organizationClient({
       ac,
       roles: {

@@ -213,6 +213,33 @@
 				"resendSuccess": "New verification code sent!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Two-Factor Verification",
+			"title": "Two-factor authentication",
+			"subtitle": "Enter the 6-digit code from your authenticator app",
+			"backupSubtitle": "Enter one of your backup codes",
+			"codeLabel": "Authentication code",
+			"backupCodeLabel": "Backup code",
+			"backupCodePlaceholder": "Enter a backup code",
+			"verifying": "Verifying...",
+			"verify": "Verify",
+			"useBackupCode": "Use backup code",
+			"useAuthenticatorCode": "Use authenticator",
+			"backToSignIn": "Back to sign in",
+			"expiredTitle": "Verification expired",
+			"expiredMessage": "Your sign-in challenge has expired or is no longer valid. Please sign in again.",
+			"lockedTitle": "Account temporarily locked",
+			"lockedMessage": "Too many failed verification attempts. Your account is temporarily locked. Please try again later.",
+			"validation": {
+				"codeLength": "Code must be 6 digits",
+				"backupCodeRequired": "Backup code is required"
+			},
+			"toast": {
+				"invalidCode": "Invalid verification code",
+				"signedInSuccess": "Signed in successfully!",
+				"verifyFailed": "Failed to verify code"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Failed to send verification code",
 			"codeSent": "Verification code sent! Check your email.",

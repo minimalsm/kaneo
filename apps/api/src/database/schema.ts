@@ -31,6 +31,7 @@ export const userTable = pgTable("user", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   isAnonymous: boolean("is_anonymous").default(false),
+  twoFactorEnabled: boolean("two_factor_enabled").default(false),
   role: text("role"),
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
@@ -57,6 +58,27 @@ export const sessionTable = pgTable(
     impersonatedBy: text("impersonated_by"),
   },
   (table) => [index("session_userId_idx").on(table.userId)],
+);
+
+export const twoFactorTable = pgTable(
+  "two_factor",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    secret: text("secret").notNull(),
+    backupCodes: text("backup_codes").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => userTable.id, { onDelete: "cascade" }),
+    verified: boolean("verified").default(true),
+    failedVerificationCount: integer("failed_verification_count").default(0),
+    lockedUntil: timestamp("locked_until", { mode: "date" }),
+  },
+  (table) => [
+    index("two_factor_secret_idx").on(table.secret),
+    index("two_factor_userId_idx").on(table.userId),
+  ],
 );
 
 export const accountTable = pgTable(
@@ -1015,6 +1037,7 @@ export const invitation = invitationTable;
 export const organizationRole = workspaceRoleTable;
 export const apikey = apikeyTable;
 export const deviceCode = deviceCodeTable;
+export const twoFactor = twoFactorTable;
 
 // Auth-schema compatible relation exports in schema.ts
 export const userRelations = relations(user, ({ many }) => ({

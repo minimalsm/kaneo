@@ -210,6 +210,33 @@
 				"resendSuccess": "¡Nuevo código de verificación enviado!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Verificación en dos pasos",
+			"title": "Autenticación de dos factores",
+			"subtitle": "Introduce el código de 6 dígitos de tu aplicación de autenticación",
+			"backupSubtitle": "Introduce uno de tus códigos de respaldo",
+			"codeLabel": "Código de autenticación",
+			"backupCodeLabel": "Código de respaldo",
+			"backupCodePlaceholder": "Introduce un código de respaldo",
+			"verifying": "Verificando...",
+			"verify": "Verificar",
+			"useBackupCode": "Usar código de respaldo",
+			"useAuthenticatorCode": "Usar autenticador",
+			"backToSignIn": "Volver a iniciar sesión",
+			"expiredTitle": "Verificación caducada",
+			"expiredMessage": "Tu solicitud de inicio de sesión ha caducado o ya no es válida. Inicia sesión de nuevo.",
+			"lockedTitle": "Cuenta bloqueada temporalmente",
+			"lockedMessage": "Demasiados intentos de verificación fallidos. Tu cuenta está bloqueada temporalmente. Inténtalo de nuevo más tarde.",
+			"validation": {
+				"codeLength": "El código debe tener 6 dígitos",
+				"backupCodeRequired": "El código de respaldo es obligatorio"
+			},
+			"toast": {
+				"invalidCode": "Código de verificación no válido",
+				"signedInSuccess": "¡Sesión iniciada correctamente!",
+				"verifyFailed": "No se pudo verificar el código"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Error al enviar el código de verificación",
 			"codeSent": "¡Código de verificación enviado! Revisa tu correo electrónico.",

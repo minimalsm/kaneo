@@ -210,6 +210,33 @@
 				"resendSuccess": "Nieuwe verificatiecode verzonden!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Tweestapsverificatie",
+			"title": "Tweefactorauthenticatie",
+			"subtitle": "Voer de 6-cijferige code uit je authenticator-app in",
+			"backupSubtitle": "Voer een van je back-upcodes in",
+			"codeLabel": "Authenticatiecode",
+			"backupCodeLabel": "Back-upcode",
+			"backupCodePlaceholder": "Voer een back-upcode in",
+			"verifying": "Verifiëren...",
+			"verify": "Verifiëren",
+			"useBackupCode": "Back-upcode gebruiken",
+			"useAuthenticatorCode": "Authenticator gebruiken",
+			"backToSignIn": "Terug naar inloggen",
+			"expiredTitle": "Verificatie verlopen",
+			"expiredMessage": "Je inlogverzoek is verlopen of niet meer geldig. Log opnieuw in.",
+			"lockedTitle": "Account tijdelijk vergrendeld",
+			"lockedMessage": "Te veel mislukte verificatiepogingen. Je account is tijdelijk vergrendeld. Probeer het later opnieuw.",
+			"validation": {
+				"codeLength": "De code moet 6 cijfers bevatten",
+				"backupCodeRequired": "Back-upcode is vereist"
+			},
+			"toast": {
+				"invalidCode": "Ongeldige verificatiecode",
+				"signedInSuccess": "Succesvol ingelogd!",
+				"verifyFailed": "Code verifiëren mislukt"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Versturen verificatiecode mislukt",
 			"codeSent": "Verificatiecode verzonden! Check je e-mail.",

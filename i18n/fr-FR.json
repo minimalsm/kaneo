@@ -213,6 +213,33 @@
 				"resendSuccess": "Nouveau code de vérification envoyé!"
 			}
 		},
+		"twoFactor": {
+			"pageTitle": "Vérification en deux étapes",
+			"title": "Authentification à deux facteurs",
+			"subtitle": "Saisissez le code à 6 chiffres de votre application d'authentification",
+			"backupSubtitle": "Saisissez l'un de vos codes de secours",
+			"codeLabel": "Code d'authentification",
+			"backupCodeLabel": "Code de secours",
+			"backupCodePlaceholder": "Saisissez un code de secours",
+			"verifying": "Vérification...",
+			"verify": "Vérifier",
+			"useBackupCode": "Utiliser un code de secours",
+			"useAuthenticatorCode": "Utiliser l'authentificateur",
+			"backToSignIn": "Retour à la connexion",
+			"expiredTitle": "Vérification expirée",
+			"expiredMessage": "Votre demande de connexion a expiré ou n'est plus valide. Veuillez vous reconnecter.",
+			"lockedTitle": "Compte temporairement verrouillé",
+			"lockedMessage": "Trop de tentatives de vérification échouées. Votre compte est temporairement verrouillé. Veuillez réessayer plus tard.",
+			"validation": {
+				"codeLength": "Le code doit comporter 6 chiffres",
+				"backupCodeRequired": "Le code de secours est requis"
+			},
+			"toast": {
+				"invalidCode": "Code de vérification invalide",
+				"signedInSuccess": "Connexion réussie !",
+				"verifyFailed": "Échec de la vérification du code"
+			}
+		},
 		"otpSignIn": {
 			"sendFailed": "Échec de l'envoi du code de vérification",
 			"codeSent": "Code de vérification envoyé! Vérifiez votre e-mail.",

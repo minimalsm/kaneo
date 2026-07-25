@@ -1,5 +1,15 @@
 # Residual Review Findings — feat/documents-module
 
+## Block drag handles — run `20260725-124236-49880f12`
+
+Verdict: Ready with fixes. Four findings validated and all four applied (`fix(review)` commit: chunk-failure fallback, post-drag NodeRangeSelection branch, real-mount smoke test, real key-event binding test). Remaining advisories (no tracker sink; this file is the durable record):
+
+- P3 — `doc-editor.tsx` slash menu + Alt+Arrow interplay: modified arrows aren't swallowed while the slash menu is open (menu cycles or block moves with stranded slash text). Suggested one-line swallow in handleKeyDown.
+- P3 — `block-move.ts` caret restores to block start after a text-block move (offset not preserved).
+- P3 — multi-block text selections move only the anchor's block (documented single-block v1 scope).
+- Coverage: cross-model adversarial peer not attempted this run (codex route recorded degraded after two 600s timeouts); local adversarial persona ran instead. Simplify pass: 0 fixes (all three lenses clean).
+
+
 ## Phase 2 (kanban-in-doc) — run `20260724-232321-5c5ec11d`
 
 Verdict: Ready with fixes. Four findings validated; three applied and committed (`fix(review): apply Phase 2 review findings and fix shortcut provider render loop` — which also fixed a pre-existing infinite render loop in `KeyboardShortcutsProvider`). Residuals below; GitHub Issues remains disabled on this fork, so this file is the durable record.

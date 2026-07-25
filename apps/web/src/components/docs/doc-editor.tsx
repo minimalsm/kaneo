@@ -51,17 +51,16 @@ import { cn } from "@/lib/cn";
 import { debounceWithFlush } from "@/lib/debounce";
 import { BoardPickerDialog } from "./board-picker-dialog";
 import { DocVersionHistory } from "./doc-version-history";
+import { loadDragHandle } from "./drag-handle-loader";
 import { BlockMove } from "./extensions/block-move";
 import { KaneoBoard } from "./extensions/kaneo-board";
 
 // Lazy: the drag-handle package statically pulls the collaboration/yjs
 // modules (~40 kB gzip) this app doesn't otherwise use. Splitting it keeps
 // that cost off the docs-route chunk and away from read-only viewers.
-const DragHandle = lazy(() =>
-  import("@tiptap/extension-drag-handle-react").then((module) => ({
-    default: module.DragHandle,
-  })),
-);
+// The loader catches chunk-load failures and degrades to no handle — a
+// failed deferred chunk must not crash the editor (see drag-handle-loader).
+const DragHandle = lazy(loadDragHandle);
 
 const SAVE_DEBOUNCE_MS = 700;
 

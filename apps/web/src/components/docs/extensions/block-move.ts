@@ -1,5 +1,5 @@
 import { type CommandProps, Extension } from "@tiptap/core";
-import { NodeSelection, TextSelection } from "@tiptap/pm/state";
+import { AllSelection, NodeSelection, TextSelection } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -38,6 +38,15 @@ function moveBlock(direction: -1 | 1) {
       blockStart = selection.from;
     } else if (selection.$from.depth >= 1) {
       blockStart = selection.$from.before(1);
+    } else if (
+      selection.$from.depth === 0 &&
+      !(selection instanceof AllSelection) &&
+      selection.$from.nodeAfter
+    ) {
+      // NodeRangeSelection restored by the drag-handle plugin after drop: a
+      // depth-0 range spanning whole top-level blocks. Move its first block
+      // so Alt+Arrow keeps working right after a drag.
+      blockStart = selection.from;
     } else {
       return false;
     }

@@ -1,9 +1,39 @@
 import { Editor, type JSONContent } from "@tiptap/core";
-import { NodeSelection } from "@tiptap/pm/state";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import { NodeSelection, Selection } from "@tiptap/pm/state";
+import type { Mappable } from "@tiptap/pm/transform";
 import StarterKit from "@tiptap/starter-kit";
 import { afterEach, describe, expect, it } from "vitest";
 import { BlockMove } from "./block-move";
 import { KaneoBoard } from "./kaneo-board";
+
+/**
+ * Stand-in for the drag-handle plugin's NodeRangeSelection
+ * (@tiptap/extension-node-range is a transitive dependency pnpm does not
+ * expose for direct import here): a non-Node, non-All selection whose $from
+ * resolves at depth 0 in front of a top-level block — the selection shape
+ * the plugin restores after a drop.
+ */
+class FakeNodeRangeSelection extends Selection {
+  eq(other: Selection): boolean {
+    return (
+      other instanceof FakeNodeRangeSelection &&
+      other.from === this.from &&
+      other.to === this.to
+    );
+  }
+
+  map(doc: ProseMirrorNode, mapping: Mappable): Selection {
+    return new FakeNodeRangeSelection(
+      doc.resolve(mapping.map(this.from)),
+      doc.resolve(mapping.map(this.to)),
+    );
+  }
+
+  toJSON(): { type: string; from: number; to: number } {
+    return { type: "fakeNodeRange", from: this.from, to: this.to };
+  }
+}
 
 function paragraph(text: string): JSONContent {
   return { type: "paragraph", content: [{ type: "text", text }] };
@@ -114,6 +144,58 @@ describe("BlockMove extension", () => {
     // The list moved intact, list items untouched.
     const list = editor.getJSON().content?.[0];
     expect(list?.content).toHaveLength(2);
+  });
+
+  it("moves the first spanned block for a depth-0 range selection (post-drag NodeRangeSelection)", () => {
+    editor = createEditor(THREE_PARAGRAPHS);
+    const { doc } = editor.state;
+    // Range covering the whole first block, resolved at depth 0 — like the
+    // NodeRangeSelection the drag-handle plugin restores after a drop.
+    const rangeSelection = new FakeNodeRangeSelection(
+      doc.resolve(0),
+      doc.resolve(doc.child(0).nodeSize),
+    );
+    editor.commands.command(({ tr, dispatch }) => {
+      if (dispatch) dispatch(tr.setSelection(rangeSelection));
+      return true;
+    });
+    expect(editor.state.selection.$from.depth).toBe(0);
+
+    expect(editor.commands.moveBlockDown()).toBe(true);
+    expect(paragraphTexts(editor)).toEqual(["B", "A", "C"]);
+  });
+
+  it("moves the block on a real Alt+ArrowDown keydown through the editor view", () => {
+    // The keymap only fires through a mounted view, so attach one to jsdom.
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    try {
+      editor = new Editor({
+        element: host,
+        extensions: [
+          StarterKit.configure({ link: false }),
+          KaneoBoard,
+          BlockMove,
+        ],
+        content: THREE_PARAGRAPHS,
+      });
+      editor.commands.setTextSelection(1);
+
+      const handled = editor.view.dom.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: "ArrowDown",
+          altKey: true,
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+
+      // The keymap consumed the event (preventDefault) and moved the block.
+      expect(handled).toBe(false);
+      expect(paragraphTexts(editor)).toEqual(["B", "A", "C"]);
+    } finally {
+      host.remove();
+    }
   });
 
   it("returns false and leaves content unchanged when not editable", () => {

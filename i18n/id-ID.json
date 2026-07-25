@@ -335,6 +335,7 @@
 		"information": "Informasi",
 		"notifications": "Notifikasi",
 		"preferences": "Preferensi",
+		"security": "Keamanan",
 		"apiKeys": "API Key",
 		"informationPage": {
 			"pageTitle": "Informasi Pribadi",
@@ -482,6 +483,64 @@
 			"labelsDescription": "Tampilkan label dan tag tugas",
 			"priority": "Prioritas",
 			"priorityDescription": "Tampilkan indikator prioritas"
+		},
+		"securityPage": {
+			"pageTitle": "Keamanan",
+			"title": "Keamanan",
+			"subtitle": "Kelola autentikasi dua faktor untuk akun Anda"
+		},
+		"twoFactor": {
+			"cardTitle": "Autentikasi dua faktor",
+			"cardDescription": "Wajibkan kode verifikasi dari aplikasi autentikator Anda saat masuk dengan kata sandi.",
+			"statusEnabled": "Aktif",
+			"statusDisabled": "Nonaktif",
+			"disabledHint": "Tambahkan lapisan keamanan ekstra ke akun Anda dengan mewajibkan kode sekali pakai saat masuk.",
+			"enable": "Aktifkan autentikasi dua faktor",
+			"disable": "Nonaktifkan",
+			"regenerateBackupCodes": "Buat ulang kode cadangan",
+			"passwordDialog": {
+				"enableTitle": "Aktifkan autentikasi dua faktor",
+				"disableTitle": "Nonaktifkan autentikasi dua faktor",
+				"regenerateTitle": "Buat ulang kode cadangan",
+				"description": "Konfirmasikan kata sandi Anda untuk melanjutkan.",
+				"passwordLabel": "Kata sandi",
+				"passwordPlaceholder": "Masukkan kata sandi Anda",
+				"passwordRequired": "Kata sandi wajib diisi",
+				"invalidPassword": "Kata sandi salah",
+				"confirm": "Konfirmasi",
+				"confirming": "Mengonfirmasi..."
+			},
+			"qrStep": {
+				"title": "Pindai kode QR",
+				"description": "Pindai kode QR ini dengan aplikasi autentikator Anda, lalu masukkan kode 6 digit untuk menyelesaikan penyiapan.",
+				"secretLabel": "Kunci penyiapan",
+				"copySecret": "Salin",
+				"secretCopiedLabel": "Disalin",
+				"secretCopied": "Kunci penyiapan disalin ke papan klip",
+				"codeLabel": "Kode verifikasi",
+				"codePlaceholder": "123456",
+				"codeLength": "Kode harus terdiri dari 6 digit",
+				"invalidCode": "Kode verifikasi tidak valid",
+				"verify": "Verifikasi",
+				"verifying": "Memverifikasi..."
+			},
+			"backupCodesModal": {
+				"title": "Simpan kode cadangan Anda",
+				"description": "Setiap kode cadangan dapat digunakan sekali untuk masuk jika Anda kehilangan akses ke aplikasi autentikator.",
+				"yourCodes": "Kode cadangan Anda",
+				"copy": "Salin",
+				"copied": "Disalin",
+				"download": "Unduh",
+				"toastCopied": "Kode cadangan disalin ke papan klip",
+				"alertTitle": "Kode ini hanya ditampilkan sekali",
+				"alertDescription": "Simpan di tempat yang aman. Anda tidak akan bisa melihatnya lagi.",
+				"done": "Selesai",
+				"saveToContinue": "Salin atau unduh untuk melanjutkan"
+			},
+			"toast": {
+				"enabled": "Autentikasi dua faktor diaktifkan",
+				"disabled": "Autentikasi dua faktor dinonaktifkan"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Pengaturan Pengembang",

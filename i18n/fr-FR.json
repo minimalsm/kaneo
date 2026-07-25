@@ -335,6 +335,7 @@
 		"information": "Information",
 		"notifications": "Notifications",
 		"preferences": "Préférences",
+		"security": "Sécurité",
 		"apiKeys": "Clés API",
 		"informationPage": {
 			"pageTitle": "Informations personnelles",
@@ -482,6 +483,64 @@
 			"labelsDescription": "Afficher les labels et tags des tâches",
 			"priority": "Priorité",
 			"priorityDescription": "Afficher les indicateurs de priorité"
+		},
+		"securityPage": {
+			"pageTitle": "Sécurité",
+			"title": "Sécurité",
+			"subtitle": "Gérez l'authentification à deux facteurs de votre compte"
+		},
+		"twoFactor": {
+			"cardTitle": "Authentification à deux facteurs",
+			"cardDescription": "Exigez un code de vérification de votre application d'authentification lors de la connexion avec votre mot de passe.",
+			"statusEnabled": "Activée",
+			"statusDisabled": "Désactivée",
+			"disabledHint": "Ajoutez une couche de sécurité supplémentaire à votre compte en exigeant un code à usage unique à la connexion.",
+			"enable": "Activer l'authentification à deux facteurs",
+			"disable": "Désactiver",
+			"regenerateBackupCodes": "Régénérer les codes de secours",
+			"passwordDialog": {
+				"enableTitle": "Activer l'authentification à deux facteurs",
+				"disableTitle": "Désactiver l'authentification à deux facteurs",
+				"regenerateTitle": "Régénérer les codes de secours",
+				"description": "Confirmez votre mot de passe pour continuer.",
+				"passwordLabel": "Mot de passe",
+				"passwordPlaceholder": "Saisissez votre mot de passe",
+				"passwordRequired": "Le mot de passe est requis",
+				"invalidPassword": "Mot de passe incorrect",
+				"confirm": "Confirmer",
+				"confirming": "Confirmation..."
+			},
+			"qrStep": {
+				"title": "Scannez le code QR",
+				"description": "Scannez ce code QR avec votre application d'authentification, puis saisissez le code à 6 chiffres pour terminer la configuration.",
+				"secretLabel": "Clé de configuration",
+				"copySecret": "Copier",
+				"secretCopiedLabel": "Copiée",
+				"secretCopied": "Clé de configuration copiée dans le presse-papiers",
+				"codeLabel": "Code de vérification",
+				"codePlaceholder": "123456",
+				"codeLength": "Le code doit comporter 6 chiffres",
+				"invalidCode": "Code de vérification invalide",
+				"verify": "Vérifier",
+				"verifying": "Vérification..."
+			},
+			"backupCodesModal": {
+				"title": "Enregistrez vos codes de secours",
+				"description": "Chaque code de secours peut être utilisé une fois pour vous connecter si vous perdez l'accès à votre application d'authentification.",
+				"yourCodes": "Vos codes de secours",
+				"copy": "Copier",
+				"copied": "Copiés",
+				"download": "Télécharger",
+				"toastCopied": "Codes de secours copiés dans le presse-papiers",
+				"alertTitle": "Ces codes ne sont affichés qu'une seule fois",
+				"alertDescription": "Conservez-les en lieu sûr. Vous ne pourrez plus les consulter.",
+				"done": "Terminé",
+				"saveToContinue": "Copiez ou téléchargez pour continuer"
+			},
+			"toast": {
+				"enabled": "Authentification à deux facteurs activée",
+				"disabled": "Authentification à deux facteurs désactivée"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Paramètres développeur",

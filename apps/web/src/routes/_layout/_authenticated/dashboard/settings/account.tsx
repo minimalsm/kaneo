@@ -4,7 +4,7 @@ import {
   Outlet,
   useLocation,
 } from "@tanstack/react-router";
-import { Bell, Code, Settings, User } from "lucide-react";
+import { Bell, Code, Settings, ShieldCheck, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import useAuth from "@/components/providers/auth-provider/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -46,6 +46,15 @@ function RouteComponent() {
       url: "/dashboard/settings/account/preferences",
       icon: Settings,
     },
+    ...(user && !(user as { isAnonymous?: boolean }).isAnonymous
+      ? [
+          {
+            title: t("settings:security"),
+            url: "/dashboard/settings/account/security",
+            icon: ShieldCheck,
+          },
+        ]
+      : []),
   ];
 
   return (

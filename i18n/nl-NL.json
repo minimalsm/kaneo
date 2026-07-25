@@ -331,6 +331,7 @@
 		"developer": "Ontwikkelaar",
 		"information": "Informatie",
 		"preferences": "Voorkeuren",
+		"security": "Beveiliging",
 		"apiKeys": "API-sleutels",
 		"informationPage": {
 			"pageTitle": "Persoonlijke Informatie",
@@ -390,6 +391,64 @@
 			"labelsDescription": "Toon taaklabels en tags",
 			"priority": "Prioriteit",
 			"priorityDescription": "Toon prioriteitsindicatoren"
+		},
+		"securityPage": {
+			"pageTitle": "Beveiliging",
+			"title": "Beveiliging",
+			"subtitle": "Beheer tweefactorauthenticatie voor je account"
+		},
+		"twoFactor": {
+			"cardTitle": "Tweefactorauthenticatie",
+			"cardDescription": "Vereis een verificatiecode uit je authenticator-app bij het inloggen met je wachtwoord.",
+			"statusEnabled": "Ingeschakeld",
+			"statusDisabled": "Uitgeschakeld",
+			"disabledHint": "Voeg een extra beveiligingslaag toe aan je account door bij het inloggen een eenmalige code te vereisen.",
+			"enable": "Tweefactorauthenticatie inschakelen",
+			"disable": "Uitschakelen",
+			"regenerateBackupCodes": "Back-upcodes opnieuw genereren",
+			"passwordDialog": {
+				"enableTitle": "Tweefactorauthenticatie inschakelen",
+				"disableTitle": "Tweefactorauthenticatie uitschakelen",
+				"regenerateTitle": "Back-upcodes opnieuw genereren",
+				"description": "Bevestig je wachtwoord om door te gaan.",
+				"passwordLabel": "Wachtwoord",
+				"passwordPlaceholder": "Voer je wachtwoord in",
+				"passwordRequired": "Wachtwoord is verplicht",
+				"invalidPassword": "Onjuist wachtwoord",
+				"confirm": "Bevestigen",
+				"confirming": "Bevestigen..."
+			},
+			"qrStep": {
+				"title": "Scan de QR-code",
+				"description": "Scan deze QR-code met je authenticator-app en voer daarna de 6-cijferige code in om de installatie te voltooien.",
+				"secretLabel": "Instellingssleutel",
+				"copySecret": "Kopiëren",
+				"secretCopiedLabel": "Gekopieerd",
+				"secretCopied": "Instellingssleutel gekopieerd naar klembord",
+				"codeLabel": "Verificatiecode",
+				"codePlaceholder": "123456",
+				"codeLength": "De code moet 6 cijfers bevatten",
+				"invalidCode": "Ongeldige verificatiecode",
+				"verify": "Verifiëren",
+				"verifying": "Verifiëren..."
+			},
+			"backupCodesModal": {
+				"title": "Bewaar je back-upcodes",
+				"description": "Elke back-upcode kan één keer worden gebruikt om in te loggen als je de toegang tot je authenticator-app verliest.",
+				"yourCodes": "Je back-upcodes",
+				"copy": "Kopiëren",
+				"copied": "Gekopieerd",
+				"download": "Downloaden",
+				"toastCopied": "Back-upcodes gekopieerd naar klembord",
+				"alertTitle": "Deze codes worden maar één keer getoond",
+				"alertDescription": "Bewaar ze op een veilige plek. Je kunt ze niet opnieuw bekijken.",
+				"done": "Klaar",
+				"saveToContinue": "Kopieer of download om door te gaan"
+			},
+			"toast": {
+				"enabled": "Tweefactorauthenticatie ingeschakeld",
+				"disabled": "Tweefactorauthenticatie uitgeschakeld"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Ontwikkelaarsinstellingen",

@@ -331,6 +331,7 @@
 		"developer": "Desarrollador",
 		"information": "Información",
 		"preferences": "Ajustes",
+		"security": "Seguridad",
 		"apiKeys": "Claves de APIs",
 		"informationPage": {
 			"pageTitle": "Información Personal",
@@ -390,6 +391,64 @@
 			"labelsDescription": "Mostrar descripción y etiquetas de las tareas",
 			"priority": "Prioridad",
 			"priorityDescription": "Mostrar indicador de prioridad"
+		},
+		"securityPage": {
+			"pageTitle": "Seguridad",
+			"title": "Seguridad",
+			"subtitle": "Gestiona la autenticación de dos factores de tu cuenta"
+		},
+		"twoFactor": {
+			"cardTitle": "Autenticación de dos factores",
+			"cardDescription": "Exige un código de verificación de tu aplicación de autenticación al iniciar sesión con tu contraseña.",
+			"statusEnabled": "Activada",
+			"statusDisabled": "Desactivada",
+			"disabledHint": "Añade una capa extra de seguridad a tu cuenta exigiendo un código de un solo uso al iniciar sesión.",
+			"enable": "Activar la autenticación de dos factores",
+			"disable": "Desactivar",
+			"regenerateBackupCodes": "Regenerar códigos de respaldo",
+			"passwordDialog": {
+				"enableTitle": "Activar la autenticación de dos factores",
+				"disableTitle": "Desactivar la autenticación de dos factores",
+				"regenerateTitle": "Regenerar códigos de respaldo",
+				"description": "Confirma tu contraseña para continuar.",
+				"passwordLabel": "Contraseña",
+				"passwordPlaceholder": "Introduce tu contraseña",
+				"passwordRequired": "La contraseña es obligatoria",
+				"invalidPassword": "Contraseña incorrecta",
+				"confirm": "Confirmar",
+				"confirming": "Confirmando..."
+			},
+			"qrStep": {
+				"title": "Escanea el código QR",
+				"description": "Escanea este código QR con tu aplicación de autenticación y luego introduce el código de 6 dígitos para completar la configuración.",
+				"secretLabel": "Clave de configuración",
+				"copySecret": "Copiar",
+				"secretCopiedLabel": "Copiada",
+				"secretCopied": "Clave de configuración copiada al portapapeles",
+				"codeLabel": "Código de verificación",
+				"codePlaceholder": "123456",
+				"codeLength": "El código debe tener 6 dígitos",
+				"invalidCode": "Código de verificación no válido",
+				"verify": "Verificar",
+				"verifying": "Verificando..."
+			},
+			"backupCodesModal": {
+				"title": "Guarda tus códigos de respaldo",
+				"description": "Cada código de respaldo puede usarse una vez para iniciar sesión si pierdes el acceso a tu aplicación de autenticación.",
+				"yourCodes": "Tus códigos de respaldo",
+				"copy": "Copiar",
+				"copied": "Copiados",
+				"download": "Descargar",
+				"toastCopied": "Códigos de respaldo copiados al portapapeles",
+				"alertTitle": "Estos códigos solo se muestran una vez",
+				"alertDescription": "Guárdalos en un lugar seguro. No podrás volver a verlos.",
+				"done": "Hecho",
+				"saveToContinue": "Copia o descarga para continuar"
+			},
+			"toast": {
+				"enabled": "Autenticación de dos factores activada",
+				"disabled": "Autenticación de dos factores desactivada"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Ajustes de Desarrollador",

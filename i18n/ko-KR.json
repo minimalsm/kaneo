@@ -333,6 +333,7 @@
 		"information": "정보",
 		"notifications": "알림",
 		"preferences": "환경설정",
+		"security": "보안",
 		"apiKeys": "API 키",
 		"informationPage": {
 			"pageTitle": "개인 정보",
@@ -480,6 +481,64 @@
 			"labelsDescription": "작업 라벨과 태그를 표시합니다",
 			"priority": "우선순위",
 			"priorityDescription": "우선순위 표시기를 표시합니다"
+		},
+		"securityPage": {
+			"pageTitle": "보안",
+			"title": "보안",
+			"subtitle": "계정의 2단계 인증을 관리하세요"
+		},
+		"twoFactor": {
+			"cardTitle": "2단계 인증",
+			"cardDescription": "비밀번호로 로그인할 때 인증 앱의 확인 코드를 요구합니다.",
+			"statusEnabled": "사용 중",
+			"statusDisabled": "사용 안 함",
+			"disabledHint": "로그인 시 일회용 코드를 요구하여 계정에 보안을 한층 더 강화하세요.",
+			"enable": "2단계 인증 사용",
+			"disable": "사용 안 함",
+			"regenerateBackupCodes": "백업 코드 재생성",
+			"passwordDialog": {
+				"enableTitle": "2단계 인증 사용",
+				"disableTitle": "2단계 인증 사용 안 함",
+				"regenerateTitle": "백업 코드 재생성",
+				"description": "계속하려면 비밀번호를 확인하세요.",
+				"passwordLabel": "비밀번호",
+				"passwordPlaceholder": "비밀번호를 입력하세요",
+				"passwordRequired": "비밀번호가 필요합니다",
+				"invalidPassword": "비밀번호가 올바르지 않습니다",
+				"confirm": "확인",
+				"confirming": "확인 중..."
+			},
+			"qrStep": {
+				"title": "QR 코드 스캔",
+				"description": "인증 앱으로 이 QR 코드를 스캔한 다음 6자리 코드를 입력하여 설정을 완료하세요.",
+				"secretLabel": "설정 키",
+				"copySecret": "복사",
+				"secretCopiedLabel": "복사됨",
+				"secretCopied": "설정 키가 클립보드에 복사되었습니다",
+				"codeLabel": "확인 코드",
+				"codePlaceholder": "123456",
+				"codeLength": "코드는 6자리여야 합니다",
+				"invalidCode": "유효하지 않은 확인 코드입니다",
+				"verify": "확인",
+				"verifying": "확인 중..."
+			},
+			"backupCodesModal": {
+				"title": "백업 코드를 저장하세요",
+				"description": "인증 앱에 접근할 수 없게 되면 각 백업 코드를 한 번씩 사용해 로그인할 수 있습니다.",
+				"yourCodes": "내 백업 코드",
+				"copy": "복사",
+				"copied": "복사됨",
+				"download": "다운로드",
+				"toastCopied": "백업 코드가 클립보드에 복사되었습니다",
+				"alertTitle": "이 코드는 한 번만 표시됩니다",
+				"alertDescription": "안전한 곳에 보관하세요. 다시 볼 수 없습니다.",
+				"done": "완료",
+				"saveToContinue": "계속하려면 복사하거나 다운로드하세요"
+			},
+			"toast": {
+				"enabled": "2단계 인증이 활성화되었습니다",
+				"disabled": "2단계 인증이 비활성화되었습니다"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "개발자 설정",

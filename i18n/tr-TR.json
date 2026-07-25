@@ -334,6 +334,7 @@
 		"information": "Bilgiler",
 		"notifications": "Bildirimler",
 		"preferences": "Tercihler",
+		"security": "Güvenlik",
 		"apiKeys": "API Anahtarları",
 		"informationPage": {
 			"pageTitle": "Kişisel Bilgiler",
@@ -481,6 +482,64 @@
 			"labelsDescription": "Talep etiketlerini ve etiketleri göster",
 			"priority": "Öncelik",
 			"priorityDescription": "Öncelik göstergelerini görüntüle"
+		},
+		"securityPage": {
+			"pageTitle": "Güvenlik",
+			"title": "Güvenlik",
+			"subtitle": "Hesabınız için iki faktörlü kimlik doğrulamayı yönetin"
+		},
+		"twoFactor": {
+			"cardTitle": "İki faktörlü kimlik doğrulama",
+			"cardDescription": "Parolanızla giriş yaparken kimlik doğrulayıcı uygulamanızdan bir doğrulama kodu isteyin.",
+			"statusEnabled": "Etkin",
+			"statusDisabled": "Devre dışı",
+			"disabledHint": "Girişte tek kullanımlık bir kod isteyerek hesabınıza ek bir güvenlik katmanı ekleyin.",
+			"enable": "İki faktörlü kimlik doğrulamayı etkinleştir",
+			"disable": "Devre dışı bırak",
+			"regenerateBackupCodes": "Yedek kodları yeniden oluştur",
+			"passwordDialog": {
+				"enableTitle": "İki faktörlü kimlik doğrulamayı etkinleştir",
+				"disableTitle": "İki faktörlü kimlik doğrulamayı devre dışı bırak",
+				"regenerateTitle": "Yedek kodları yeniden oluştur",
+				"description": "Devam etmek için parolanızı onaylayın.",
+				"passwordLabel": "Parola",
+				"passwordPlaceholder": "Parolanızı girin",
+				"passwordRequired": "Parola gerekli",
+				"invalidPassword": "Yanlış parola",
+				"confirm": "Onayla",
+				"confirming": "Onaylanıyor..."
+			},
+			"qrStep": {
+				"title": "QR kodunu tarayın",
+				"description": "Bu QR kodunu kimlik doğrulayıcı uygulamanızla tarayın, ardından kurulumu tamamlamak için 6 haneli kodu girin.",
+				"secretLabel": "Kurulum anahtarı",
+				"copySecret": "Kopyala",
+				"secretCopiedLabel": "Kopyalandı",
+				"secretCopied": "Kurulum anahtarı panoya kopyalandı",
+				"codeLabel": "Doğrulama kodu",
+				"codePlaceholder": "123456",
+				"codeLength": "Kod 6 haneli olmalıdır",
+				"invalidCode": "Geçersiz doğrulama kodu",
+				"verify": "Doğrula",
+				"verifying": "Doğrulanıyor..."
+			},
+			"backupCodesModal": {
+				"title": "Yedek kodlarınızı kaydedin",
+				"description": "Kimlik doğrulayıcı uygulamanıza erişimi kaybederseniz her yedek kod giriş için bir kez kullanılabilir.",
+				"yourCodes": "Yedek kodlarınız",
+				"copy": "Kopyala",
+				"copied": "Kopyalandı",
+				"download": "İndir",
+				"toastCopied": "Yedek kodlar panoya kopyalandı",
+				"alertTitle": "Bu kodlar yalnızca bir kez gösterilir",
+				"alertDescription": "Bunları güvenli bir yerde saklayın. Bir daha göremeyeceksiniz.",
+				"done": "Tamam",
+				"saveToContinue": "Devam etmek için kopyalayın veya indirin"
+			},
+			"toast": {
+				"enabled": "İki faktörlü kimlik doğrulama etkinleştirildi",
+				"disabled": "İki faktörlü kimlik doğrulama devre dışı bırakıldı"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Geliştirici Ayarları",

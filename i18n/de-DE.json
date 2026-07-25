@@ -333,6 +333,7 @@
 		"information": "Informationen",
 		"notifications": "Benachrichtigungen",
 		"preferences": "Einstellungen",
+		"security": "Sicherheit",
 		"apiKeys": "API-Schlüssel",
 		"informationPage": {
 			"pageTitle": "Persönliche Informationen",
@@ -494,6 +495,64 @@
 			"labelsDescription": "Aufgabenlabels und Tags anzeigen",
 			"priority": "Priorität",
 			"priorityDescription": "Prioritätsindikatoren anzeigen"
+		},
+		"securityPage": {
+			"pageTitle": "Sicherheit",
+			"title": "Sicherheit",
+			"subtitle": "Verwalte die Zwei-Faktor-Authentifizierung für dein Konto"
+		},
+		"twoFactor": {
+			"cardTitle": "Zwei-Faktor-Authentifizierung",
+			"cardDescription": "Verlange bei der Anmeldung mit deinem Passwort einen Verifizierungscode aus deiner Authenticator-App.",
+			"statusEnabled": "Aktiviert",
+			"statusDisabled": "Deaktiviert",
+			"disabledHint": "Füge deinem Konto eine zusätzliche Sicherheitsebene hinzu, indem bei der Anmeldung ein Einmalcode verlangt wird.",
+			"enable": "Zwei-Faktor-Authentifizierung aktivieren",
+			"disable": "Deaktivieren",
+			"regenerateBackupCodes": "Backup-Codes neu erstellen",
+			"passwordDialog": {
+				"enableTitle": "Zwei-Faktor-Authentifizierung aktivieren",
+				"disableTitle": "Zwei-Faktor-Authentifizierung deaktivieren",
+				"regenerateTitle": "Backup-Codes neu erstellen",
+				"description": "Bestätige dein Passwort, um fortzufahren.",
+				"passwordLabel": "Passwort",
+				"passwordPlaceholder": "Passwort eingeben",
+				"passwordRequired": "Passwort ist erforderlich",
+				"invalidPassword": "Falsches Passwort",
+				"confirm": "Bestätigen",
+				"confirming": "Wird bestätigt..."
+			},
+			"qrStep": {
+				"title": "QR-Code scannen",
+				"description": "Scanne diesen QR-Code mit deiner Authenticator-App und gib dann den 6-stelligen Code ein, um die Einrichtung abzuschließen.",
+				"secretLabel": "Einrichtungsschlüssel",
+				"copySecret": "Kopieren",
+				"secretCopiedLabel": "Kopiert",
+				"secretCopied": "Einrichtungsschlüssel in die Zwischenablage kopiert",
+				"codeLabel": "Verifizierungscode",
+				"codePlaceholder": "123456",
+				"codeLength": "Der Code muss 6 Ziffern haben",
+				"invalidCode": "Ungültiger Verifizierungscode",
+				"verify": "Überprüfen",
+				"verifying": "Wird überprüft..."
+			},
+			"backupCodesModal": {
+				"title": "Speichere deine Backup-Codes",
+				"description": "Jeder Backup-Code kann einmal zur Anmeldung verwendet werden, falls du den Zugriff auf deine Authenticator-App verlierst.",
+				"yourCodes": "Deine Backup-Codes",
+				"copy": "Kopieren",
+				"copied": "Kopiert",
+				"download": "Herunterladen",
+				"toastCopied": "Backup-Codes in die Zwischenablage kopiert",
+				"alertTitle": "Diese Codes werden nur einmal angezeigt",
+				"alertDescription": "Bewahre sie an einem sicheren Ort auf. Du kannst sie nicht erneut ansehen.",
+				"done": "Fertig",
+				"saveToContinue": "Zum Fortfahren kopieren oder herunterladen"
+			},
+			"toast": {
+				"enabled": "Zwei-Faktor-Authentifizierung aktiviert",
+				"disabled": "Zwei-Faktor-Authentifizierung deaktiviert"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Entwicklereinstellungen",

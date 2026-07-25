@@ -335,6 +335,7 @@
 		"information": "Information",
 		"notifications": "Notifications",
 		"preferences": "Preferences",
+		"security": "Security",
 		"apiKeys": "API Keys",
 		"informationPage": {
 			"pageTitle": "Personal Information",
@@ -496,6 +497,64 @@
 			"labelsDescription": "Show task labels and tags",
 			"priority": "Priority",
 			"priorityDescription": "Display priority indicators"
+		},
+		"securityPage": {
+			"pageTitle": "Security",
+			"title": "Security",
+			"subtitle": "Manage two-factor authentication for your account"
+		},
+		"twoFactor": {
+			"cardTitle": "Two-factor authentication",
+			"cardDescription": "Require a verification code from your authenticator app when signing in with your password.",
+			"statusEnabled": "Enabled",
+			"statusDisabled": "Disabled",
+			"disabledHint": "Add an extra layer of security to your account by requiring a one-time code at sign-in.",
+			"enable": "Enable two-factor authentication",
+			"disable": "Disable",
+			"regenerateBackupCodes": "Regenerate backup codes",
+			"passwordDialog": {
+				"enableTitle": "Enable two-factor authentication",
+				"disableTitle": "Disable two-factor authentication",
+				"regenerateTitle": "Regenerate backup codes",
+				"description": "Confirm your password to continue.",
+				"passwordLabel": "Password",
+				"passwordPlaceholder": "Enter your password",
+				"passwordRequired": "Password is required",
+				"invalidPassword": "Incorrect password",
+				"confirm": "Confirm",
+				"confirming": "Confirming..."
+			},
+			"qrStep": {
+				"title": "Scan the QR code",
+				"description": "Scan this QR code with your authenticator app, then enter the 6-digit code to finish setup.",
+				"secretLabel": "Setup key",
+				"copySecret": "Copy",
+				"secretCopiedLabel": "Copied",
+				"secretCopied": "Setup key copied to clipboard",
+				"codeLabel": "Verification code",
+				"codePlaceholder": "123456",
+				"codeLength": "Code must be 6 digits",
+				"invalidCode": "Invalid verification code",
+				"verify": "Verify",
+				"verifying": "Verifying..."
+			},
+			"backupCodesModal": {
+				"title": "Save your backup codes",
+				"description": "Each backup code can be used once to sign in if you lose access to your authenticator app.",
+				"yourCodes": "Your backup codes",
+				"copy": "Copy",
+				"copied": "Copied",
+				"download": "Download",
+				"toastCopied": "Backup codes copied to clipboard",
+				"alertTitle": "These codes are shown only once",
+				"alertDescription": "Store them somewhere safe. You won't be able to see them again.",
+				"done": "Done",
+				"saveToContinue": "Copy or download to continue"
+			},
+			"toast": {
+				"enabled": "Two-factor authentication enabled",
+				"disabled": "Two-factor authentication disabled"
+			}
 		},
 		"developerPage": {
 			"pageTitle": "Developer Settings",

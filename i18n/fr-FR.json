@@ -11,7 +11,8 @@
 			"remove": "Retirer",
 			"reset": "Réinitialiser",
 			"filter": "Filtrer",
-			"clearAllFilters": "Effacer tous les filtres"
+			"clearAllFilters": "Effacer tous les filtres",
+			"copyFailed": "Échec de la copie"
 		},
 		"a11y": {
 			"toggleSidebar": "Basculer la barre latérale"

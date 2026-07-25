@@ -11,7 +11,8 @@
 			"remove": "제거",
 			"reset": "재설정",
 			"filter": "필터",
-			"clearAllFilters": "모든 필터 지우기"
+			"clearAllFilters": "모든 필터 지우기",
+			"copyFailed": "복사 실패"
 		},
 		"a11y": {
 			"toggleSidebar": "사이드바 토글"

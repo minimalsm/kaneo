@@ -11,7 +11,8 @@
 			"remove": "Verwijderen",
 			"reset": "Herstellen",
 			"filter": "Filteren",
-			"clearAllFilters": "Alle filters wissen"
+			"clearAllFilters": "Alle filters wissen",
+			"copyFailed": "Kopiëren mislukt"
 		},
 		"a11y": {
 			"toggleSidebar": "Zijbalk in-/uitschakelen"

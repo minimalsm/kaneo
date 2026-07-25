@@ -11,7 +11,8 @@
 			"remove": "Прибрати",
 			"reset": "Скинути",
 			"filter": "Фільтр",
-			"clearAllFilters": "Очистити всі фільтри"
+			"clearAllFilters": "Очистити всі фільтри",
+			"copyFailed": "Не вдалося скопіювати"
 		},
 		"a11y": {
 			"toggleSidebar": "Перемикач бічної панелі"

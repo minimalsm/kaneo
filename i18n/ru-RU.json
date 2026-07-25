@@ -11,7 +11,8 @@
 			"remove": "Убрать",
 			"reset": "Сбросить",
 			"filter": "Фильтр",
-			"clearAllFilters": "Сбросить все фильтры"
+			"clearAllFilters": "Сбросить все фильтры",
+			"copyFailed": "Не удалось скопировать"
 		},
 		"a11y": {
 			"toggleSidebar": "Переключить боковую панель"

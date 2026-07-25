@@ -383,6 +383,60 @@ describe("API integration: workspace tasks", () => {
     expect(payload.data.map((row) => row.id)).toEqual([undated.id]);
   });
 
+  it("defaults sortBy=priority to urgent-first when no sortOrder is given", async () => {
+    const member = await createWorkspaceMember({ role: "member" });
+    const { project } = await createProjectFixture({
+      workspaceId: member.workspace.id,
+    });
+    // Seed low-to-urgent so insertion order cannot fake urgent-first.
+    await seedTask(project.id, { title: "None", priority: "no-priority" });
+    await seedTask(project.id, { title: "Low", priority: "low" });
+    await seedTask(project.id, { title: "Medium", priority: "medium" });
+    await seedTask(project.id, { title: "High", priority: "high" });
+    await seedTask(project.id, { title: "Urgent", priority: "urgent" });
+
+    mockAuthenticatedSession(member.user);
+    const { app } = createApp();
+
+    const response = await fetchWorkspaceTasks(app, member.workspace.id, {
+      sortBy: "priority",
+    });
+    expect(response.status).toBe(200);
+    const payload = (await response.json()) as WorkspaceTasksResponse;
+    expect(payload.data.map((row) => row.title)).toEqual([
+      "Urgent",
+      "High",
+      "Medium",
+      "Low",
+      "None",
+    ]);
+  });
+
+  it("still honors an explicit sortOrder=asc for sortBy=priority", async () => {
+    const member = await createWorkspaceMember({ role: "member" });
+    const { project } = await createProjectFixture({
+      workspaceId: member.workspace.id,
+    });
+    await seedTask(project.id, { title: "Urgent", priority: "urgent" });
+    await seedTask(project.id, { title: "Low", priority: "low" });
+    await seedTask(project.id, { title: "High", priority: "high" });
+
+    mockAuthenticatedSession(member.user);
+    const { app } = createApp();
+
+    const response = await fetchWorkspaceTasks(app, member.workspace.id, {
+      sortBy: "priority",
+      sortOrder: "asc",
+    });
+    expect(response.status).toBe(200);
+    const payload = (await response.json()) as WorkspaceTasksResponse;
+    expect(payload.data.map((row) => row.title)).toEqual([
+      "Low",
+      "High",
+      "Urgent",
+    ]);
+  });
+
   it("orders rows project-first, then by the requested sort within each project", async () => {
     const member = await createWorkspaceMember({ role: "member" });
     const { project: alpha } = await createProjectFixture({

@@ -962,12 +962,10 @@ export const documentTable = pgTable(
     contentText: text("content_text"),
     sortOrder: integer("sort_order").notNull().default(0),
     archivedAt: timestamp("archived_at", { mode: "date" }),
-    createdBy: text("created_by")
-      .notNull()
-      .references(() => userTable.id, {
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      }),
+    createdBy: text("created_by").references(() => userTable.id, {
+      onDelete: "set null",
+      onUpdate: "cascade",
+    }),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "date" })
       .defaultNow()

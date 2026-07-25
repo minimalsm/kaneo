@@ -32,7 +32,7 @@ export const documentSchema = v.object({
   contentText: v.nullable(v.string()),
   sortOrder: v.number(),
   archivedAt: v.nullable(v.date()),
-  createdBy: v.string(),
+  createdBy: v.nullable(v.string()),
   createdAt: v.date(),
   updatedAt: v.date(),
 });

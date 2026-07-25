@@ -87,10 +87,12 @@ async function getWorkspaceTasks(
     options.limit && options.limit > 0 ? Math.min(options.limit, 100) : 50;
   const offset = (page - 1) * pageSize;
 
-  const sortExpr = buildSortExpr(
-    options.sortBy ?? "dueDate",
-    options.sortOrder ?? "asc",
-  );
+  const sortBy = options.sortBy ?? "dueDate";
+  // Priority sorts urgent-first by default: the priority weight expression
+  // gives urgent the highest weight, so descending puts it on top. Explicit
+  // sortOrder still wins.
+  const defaultSortOrder = sortBy === "priority" ? "desc" : "asc";
+  const sortExpr = buildSortExpr(sortBy, options.sortOrder ?? defaultSortOrder);
 
   const [taskCount] = await db
     .select({ count: sql<number>`count(*)` })

@@ -545,6 +545,160 @@ describe("API integration: documents", () => {
       expect(payload.parentId).toBe(parent.id);
     });
 
+    describe("position among siblings", () => {
+      async function seedTree(workspaceId: string, userId: string) {
+        const parent = await seedDocument(workspaceId, userId, {
+          title: "Parent",
+        });
+        const siblings = [];
+        for (let i = 0; i < 3; i++) {
+          siblings.push(
+            await seedDocument(workspaceId, userId, {
+              parentId: parent.id,
+              title: `Sibling ${i}`,
+              sortOrder: i,
+            }),
+          );
+        }
+        const doc = await seedDocument(workspaceId, userId, {
+          title: "Mover",
+        });
+        return { parent, siblings, doc };
+      }
+
+      async function moveTo(
+        app: ReturnType<typeof createApp>["app"],
+        docId: string,
+        parentId: string,
+        position: number,
+      ) {
+        const response = await app.request(`/api/document/${docId}/move`, {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ parentId, position }),
+        });
+        expect(response.status).toBe(200);
+        return (await response.json()) as DocumentRow;
+      }
+
+      async function childOrder(parentId: string) {
+        const rows = await db
+          .select({
+            id: schema.documentTable.id,
+            sortOrder: schema.documentTable.sortOrder,
+          })
+          .from(schema.documentTable)
+          .where(eq(schema.documentTable.parentId, parentId))
+          .orderBy(asc(schema.documentTable.sortOrder));
+        return rows;
+      }
+
+      it("moves to the start: siblings shift to a dense 0..n sequence", async () => {
+        const member = await createWorkspaceMember({ role: "member" });
+        const { parent, siblings, doc } = await seedTree(
+          member.workspace.id,
+          member.user.id,
+        );
+        mockAuthenticatedSession(member.user);
+        const { app } = createApp();
+
+        await moveTo(app, doc.id, parent.id, 0);
+
+        const rows = await childOrder(parent.id);
+        expect(rows.map((row) => row.id)).toEqual([
+          doc.id,
+          siblings[0].id,
+          siblings[1].id,
+          siblings[2].id,
+        ]);
+        expect(rows.map((row) => row.sortOrder)).toEqual([0, 1, 2, 3]);
+      });
+
+      it("moves to a middle position between siblings", async () => {
+        const member = await createWorkspaceMember({ role: "member" });
+        const { parent, siblings, doc } = await seedTree(
+          member.workspace.id,
+          member.user.id,
+        );
+        mockAuthenticatedSession(member.user);
+        const { app } = createApp();
+
+        await moveTo(app, doc.id, parent.id, 1);
+
+        const rows = await childOrder(parent.id);
+        expect(rows.map((row) => row.id)).toEqual([
+          siblings[0].id,
+          doc.id,
+          siblings[1].id,
+          siblings[2].id,
+        ]);
+        expect(rows.map((row) => row.sortOrder)).toEqual([0, 1, 2, 3]);
+      });
+
+      it("moves to the end when position equals the sibling count", async () => {
+        const member = await createWorkspaceMember({ role: "member" });
+        const { parent, siblings, doc } = await seedTree(
+          member.workspace.id,
+          member.user.id,
+        );
+        mockAuthenticatedSession(member.user);
+        const { app } = createApp();
+
+        await moveTo(app, doc.id, parent.id, 3);
+
+        const rows = await childOrder(parent.id);
+        expect(rows.map((row) => row.id)).toEqual([
+          siblings[0].id,
+          siblings[1].id,
+          siblings[2].id,
+          doc.id,
+        ]);
+        expect(rows.map((row) => row.sortOrder)).toEqual([0, 1, 2, 3]);
+      });
+
+      it("clamps an out-of-range position to the end", async () => {
+        const member = await createWorkspaceMember({ role: "member" });
+        const { parent, siblings, doc } = await seedTree(
+          member.workspace.id,
+          member.user.id,
+        );
+        mockAuthenticatedSession(member.user);
+        const { app } = createApp();
+
+        await moveTo(app, doc.id, parent.id, 99);
+
+        const rows = await childOrder(parent.id);
+        expect(rows.map((row) => row.id)).toEqual([
+          siblings[0].id,
+          siblings[1].id,
+          siblings[2].id,
+          doc.id,
+        ]);
+        expect(rows.map((row) => row.sortOrder)).toEqual([0, 1, 2, 3]);
+      });
+
+      it("clamps a negative position to the start", async () => {
+        const member = await createWorkspaceMember({ role: "member" });
+        const { parent, siblings, doc } = await seedTree(
+          member.workspace.id,
+          member.user.id,
+        );
+        mockAuthenticatedSession(member.user);
+        const { app } = createApp();
+
+        await moveTo(app, doc.id, parent.id, -5);
+
+        const rows = await childOrder(parent.id);
+        expect(rows.map((row) => row.id)).toEqual([
+          doc.id,
+          siblings[0].id,
+          siblings[1].id,
+          siblings[2].id,
+        ]);
+        expect(rows.map((row) => row.sortOrder)).toEqual([0, 1, 2, 3]);
+      });
+    });
+
     it("rejects moving a document under its own descendant", async () => {
       const member = await createWorkspaceMember({ role: "member" });
       const root = await seedDocument(member.workspace.id, member.user.id);
@@ -791,6 +945,27 @@ describe("API integration: documents", () => {
         where: eq(schema.documentTable.workspaceId, member.workspace.id),
       });
       expect(remaining).toHaveLength(0);
+    });
+  });
+
+  describe("creator deletion", () => {
+    it("deleting a user leaves their documents in place with createdBy set to null", async () => {
+      const member = await createWorkspaceMember({ role: "member" });
+      const doc = await seedDocument(member.workspace.id, member.user.id, {
+        title: "Orphaned by user deletion",
+      });
+      expect(doc.createdBy).toBe(member.user.id);
+
+      await db
+        .delete(schema.userTable)
+        .where(eq(schema.userTable.id, member.user.id));
+
+      const survivor = await db.query.documentTable.findFirst({
+        where: eq(schema.documentTable.id, doc.id),
+      });
+      expect(survivor).toBeDefined();
+      expect(survivor?.createdBy).toBeNull();
+      expect(survivor?.title).toBe("Orphaned by user deletion");
     });
   });
 

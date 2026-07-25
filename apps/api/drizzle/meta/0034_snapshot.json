@@ -1,5 +1,5 @@
 {
-	"id": "370fd6d8-3e00-4782-b096-12c31f407ea5",
+	"id": "23a6a155-cc84-4f52-9edf-26df8e8930bc",
 	"prevId": "3476a0a5-b497-4ecd-a6ba-c952266ce668",
 	"version": "7",
 	"dialect": "postgresql",
@@ -1141,7 +1141,7 @@
 					"name": "created_by",
 					"type": "text",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": false
 				},
 				"created_at": {
 					"name": "created_at",
@@ -1224,7 +1224,7 @@
 					"tableTo": "user",
 					"columnsFrom": ["created_by"],
 					"columnsTo": ["id"],
-					"onDelete": "cascade",
+					"onDelete": "set null",
 					"onUpdate": "cascade"
 				}
 			},

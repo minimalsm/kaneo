@@ -6,7 +6,7 @@ import {
   screen,
 } from "@testing-library/react";
 import type { Editor } from "@tiptap/core";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DocEditor } from "./doc-editor";
 
@@ -415,6 +415,77 @@ describe("DocEditor", () => {
     const json = JSON.stringify(editor.getJSON());
     expect(json).not.toContain("kaneoBoard");
     expect(editor.getText()).not.toContain("/board");
+  });
+
+  describe("external re-sync guard", () => {
+    const restoredDoc = () =>
+      makeDoc({
+        title: "Restored title",
+        content: {
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content: [{ type: "text", text: "Restored content" }],
+            },
+          ],
+        },
+        updatedAt: "2026-07-24T01:00:00.000Z",
+      });
+
+    function rerenderEditor(rerender: (ui: ReactElement) => void) {
+      rerender(<DocEditor documentId="doc-1" />);
+    }
+
+    it("syncs externally updated content while blurred with no pending edits", async () => {
+      const { editor, rerender } = await renderEditor();
+      expect(editor.getText()).toContain("Hello stored world");
+
+      mockDocument(restoredDoc());
+      await act(async () => {
+        rerenderEditor(rerender);
+      });
+
+      expect(editor.getText()).toBe("Restored content");
+      expect(
+        screen.getByLabelText("documents:editor.titleLabel"),
+      ).toHaveDisplayValue("Restored title");
+    });
+
+    it("does not overwrite the editor when local edits are pending", async () => {
+      const { editor, rerender } = await renderEditor();
+
+      // Unflushed local edit: pendingRef holds content, debounce not elapsed.
+      typeText(editor, " local edit");
+      expect(mutateAsync).not.toHaveBeenCalled();
+
+      mockDocument(restoredDoc());
+      await act(async () => {
+        rerenderEditor(rerender);
+      });
+
+      expect(editor.getText()).toContain("local edit");
+      expect(editor.getText()).not.toContain("Restored content");
+    });
+
+    it("does not overwrite the editor while it is focused", async () => {
+      const { editor, rerender } = await renderEditor();
+
+      act(() => {
+        editor.commands.focus();
+      });
+      await vi.waitFor(() => {
+        expect(editor.isFocused).toBe(true);
+      });
+
+      mockDocument(restoredDoc());
+      await act(async () => {
+        rerenderEditor(rerender);
+      });
+
+      expect(editor.getText()).toContain("Hello stored world");
+      expect(editor.getText()).not.toContain("Restored content");
+    });
   });
 
   describe("drag handle", () => {

@@ -36,11 +36,9 @@ export const KaneoBoard = Node.create({
         "data-project-id": projectId,
         "data-view": String(node.attrs.view || "board"),
       }),
-      [
-        "a",
-        { href: projectId ? `/dashboard/project/${projectId}` : "#" },
-        `[Board: ${projectId}]`,
-      ],
+      // Plain-text fallback (copy/paste HTML, non-hydrated render): there is
+      // no route addressable by a bare project id, so no anchor.
+      ["span", {}, `[Board: ${projectId}]`],
     ];
   },
 

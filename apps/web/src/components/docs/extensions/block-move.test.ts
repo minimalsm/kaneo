@@ -80,6 +80,26 @@ describe("BlockMove extension", () => {
     expect(paragraphTexts(editor)).toEqual(["A", "B", "C"]);
   });
 
+  it("keeps the caret at its in-block offset after a move", () => {
+    editor = createEditor({
+      type: "doc",
+      content: [paragraph("Alpha"), paragraph("Beta")],
+    });
+    // "Alpha" occupies 0..7; caret between "Al" and "pha" (pos 3, offset 3
+    // from the block start).
+    editor.commands.setTextSelection(3);
+
+    expect(editor.commands.moveBlockDown()).toBe(true);
+    expect(paragraphTexts(editor)).toEqual(["Beta", "Alpha"]);
+
+    const { $from } = editor.state.selection;
+    expect($from.parent.textContent).toBe("Alpha");
+    // "Beta" occupies 0..6, so moved "Alpha" starts at 6; the caret keeps
+    // its offset 3 within the block → absolute pos 9.
+    expect(editor.state.selection.from).toBe(9);
+    expect($from.parentOffset).toBe(2);
+  });
+
   it("no-ops at the document edges without throwing", () => {
     editor = createEditor(THREE_PARAGRAPHS);
 

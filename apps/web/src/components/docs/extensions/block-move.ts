@@ -62,6 +62,9 @@ function moveBlock(direction: -1 | 1) {
     const block = doc.child(index);
     const blockEnd = blockStart + block.nodeSize;
     const sibling = doc.child(targetIndex);
+    // Caret offset within the moved block, captured pre-delete; the block
+    // node is reinserted unchanged, so the offset stays valid at insertPos.
+    const selectionOffset = selection.from - blockStart;
 
     tr.delete(blockStart, blockEnd);
     // After deleting the block, positions before blockStart are unchanged and
@@ -74,11 +77,13 @@ function moveBlock(direction: -1 | 1) {
     tr.insert(insertPos, block);
 
     // Restore selection inside the moved block: keep atoms node-selected,
-    // put the cursor near the start of text blocks.
+    // put the cursor back at its original in-block offset for text blocks.
     if (isTopLevelNodeSelection) {
       tr.setSelection(NodeSelection.create(tr.doc, insertPos));
     } else {
-      tr.setSelection(TextSelection.near(tr.doc.resolve(insertPos + 1)));
+      tr.setSelection(
+        TextSelection.near(tr.doc.resolve(insertPos + selectionOffset)),
+      );
     }
     tr.scrollIntoView();
     return true;

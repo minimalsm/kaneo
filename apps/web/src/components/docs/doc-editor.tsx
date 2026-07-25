@@ -560,17 +560,29 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
 
   const insertBoardEmbed = useCallback(
     (projectId: string) => {
-      if (editor && boardPickerPos !== null) {
-        editor
-          .chain()
-          .focus()
-          .insertContentAt(boardPickerPos, {
-            type: "kaneoBoard",
-            attrs: { projectId, view: "board" },
-          })
-          .run();
+      try {
+        if (editor && boardPickerPos !== null) {
+          // Clamp: the doc may have shrunk (e.g. an external re-sync) while
+          // the picker was open; insertContentAt throws a RangeError on an
+          // out-of-range position.
+          const insertPos = Math.min(
+            boardPickerPos,
+            editor.state.doc.content.size,
+          );
+          editor
+            .chain()
+            .focus()
+            .insertContentAt(insertPos, {
+              type: "kaneoBoard",
+              attrs: { projectId, view: "board" },
+            })
+            .run();
+        }
+      } finally {
+        // Always clear the picker state, even if the insert throws — a stale
+        // position must not keep the dialog stuck open.
+        setBoardPickerPos(null);
       }
-      setBoardPickerPos(null);
     },
     [editor, boardPickerPos],
   );
@@ -646,6 +658,17 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
       if (event.key === "Escape") {
         event.preventDefault();
         setSlashMenu(null);
+        return;
+      }
+
+      // Swallow modified Arrow keys while the menu is open: Alt+Arrow would
+      // otherwise move blocks (BlockMove) and strand the slash text mid-menu.
+      if (
+        (event.key === "ArrowDown" || event.key === "ArrowUp") &&
+        (event.altKey || event.metaKey || event.ctrlKey)
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
         return;
       }
 

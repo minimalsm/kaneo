@@ -1,5 +1,10 @@
 # Residual Review Findings — feat/documents-module
 
+## Residual burn-down — 2026-07-25
+
+All previously recorded actionable residuals are now RESOLVED across three commits (`fix(api): preserve documents on user deletion…`, `fix(web): editor polish…`, `fix(web): dedupe embed task sheets…`): createdBy set-null with regenerated migration 0034 (product call: docs survive user deletion, taskAttachment precedent), move-position + editor re-sync + urgent-first-priority test coverage, picker insert clamp, slash-menu modified-arrow swallow, caret offset preservation, dead-route anchor removed, duplicate-sheet claim registry, stored-filter vocabulary validation. Full integration suite 125/125 (API) and 132/132 (web) green at time of burn-down. Still open by choice: board-picker generalization (waits for /table), URL-param shareable filters, mobile filter-bar treatment, multi-block move scope.
+
+
 ## Cross-project Tasks view — run `20260725-144228-cf1bb942`
 
 Verdict: Ready with fixes. Four validated findings applied (date-param validation, sheet resilience incl. deep-link cleanup + placeholderData, page-append dedupe, exact week-bounds tests). Bonus fixes this run: a pre-existing upstream API bug (`GET /search` 400'd whenever `limit` was omitted — numeric default fed to a string pipe) and Phase 1's search integration tests corrected to send the required `workspaceId`. **The full integration suite (14 files / 117 tests, all phases) now executes locally against Postgres and passes — first complete run.** Remaining advisories:

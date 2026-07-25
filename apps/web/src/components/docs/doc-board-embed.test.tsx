@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { NodeViewProps } from "@tiptap/react";
+import { StrictMode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DocBoardEmbed } from "./doc-board-embed";
 
@@ -208,6 +209,30 @@ describe("DocBoardEmbed", () => {
       search: {},
       replace: true,
     });
+  });
+
+  it("renders exactly one task sheet when the same project is embedded twice", async () => {
+    getTasksMock.mockResolvedValue(makeProject());
+    searchMock.mockReturnValue({ taskId: "task-1" });
+
+    const queryClient = new QueryClient({
+      defaultOptions: { queries: { retry: false } },
+    });
+    // Two embeds of the SAME project both match the taskId in the URL; the
+    // claim registry must let only the first-mounted one render the sheet.
+    // StrictMode intentionally double-runs effects to prove the claim
+    // survives the mount→cleanup→remount cycle.
+    render(
+      <StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <DocBoardEmbed {...makeProps()} />
+          <DocBoardEmbed {...makeProps()} />
+        </QueryClientProvider>
+      </StrictMode>,
+    );
+
+    await screen.findByTestId("task-details-sheet-stub");
+    expect(screen.getAllByTestId("task-details-sheet-stub").length).toBe(1);
   });
 
   it("ignores a taskId that does not belong to this project's tasks", async () => {

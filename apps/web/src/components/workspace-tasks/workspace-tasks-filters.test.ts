@@ -54,6 +54,34 @@ describe("workspace tasks filter persistence", () => {
     );
   });
 
+  it("resets well-typed but unknown status/priority strings to defaults", () => {
+    localStorage.setItem(
+      workspaceTasksFiltersStorageKey("ws-1"),
+      JSON.stringify({ status: "bogus", priority: "banana" }),
+    );
+    expect(loadWorkspaceTasksFilters("ws-1")).toEqual(
+      DEFAULT_WORKSPACE_TASKS_FILTERS,
+    );
+  });
+
+  it("keeps vocabulary status/priority values and plain assignee ids", () => {
+    localStorage.setItem(
+      workspaceTasksFiltersStorageKey("ws-1"),
+      JSON.stringify({
+        assignee: "user-42",
+        status: "archived",
+        priority: "no-priority",
+      }),
+    );
+    expect(loadWorkspaceTasksFilters("ws-1")).toEqual({
+      ...DEFAULT_WORKSPACE_TASKS_FILTERS,
+      // Member ids can't be validated at normalize time; kept as-is.
+      assignee: "user-42",
+      status: "archived",
+      priority: "no-priority",
+    });
+  });
+
   it("detects default vs non-default filter state", () => {
     expect(
       isDefaultWorkspaceTasksFilters(DEFAULT_WORKSPACE_TASKS_FILTERS),

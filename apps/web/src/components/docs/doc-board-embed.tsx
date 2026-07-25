@@ -7,7 +7,7 @@ import {
 import type { NodeViewProps } from "@tiptap/react";
 import { NodeViewWrapper } from "@tiptap/react";
 import { GripVertical, LayoutGrid, List } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import KanbanBoard from "@/components/kanban-board";
 import ListView from "@/components/list-view";
@@ -23,6 +23,14 @@ const EMBED_BODY_HEIGHT_CLASS = "h-[480px]";
 const TASKS_REFETCH_INTERVAL = 30000;
 
 type EmbedView = "board" | "list";
+
+// WHY: two embeds of the SAME project in one document would both match a
+// ?taskId in the URL and each mount their own TaskDetailsSheet (stacked
+// duplicate overlays). The first-mounted matching embed claims the sheet for
+// that taskId; later matches stand down. Claims are released on unmount /
+// taskId change, so StrictMode's mount→cleanup→remount cycle re-claims
+// cleanly.
+const taskSheetClaims = new Map<string, string>();
 
 function EmbedSkeleton() {
   return (
@@ -105,6 +113,27 @@ export function DocBoardEmbed({
     search.taskId && projectTaskIds.has(search.taskId)
       ? search.taskId
       : undefined;
+
+  // Sheet ownership: claim the taskId in the module-scoped registry so only
+  // one embed instance renders the sheet (see taskSheetClaims above).
+  const embedInstanceId = useId();
+  const [ownsTaskSheet, setOwnsTaskSheet] = useState(false);
+  useEffect(() => {
+    if (!openTaskId) {
+      setOwnsTaskSheet(false);
+      return;
+    }
+    if (!taskSheetClaims.has(openTaskId)) {
+      taskSheetClaims.set(openTaskId, embedInstanceId);
+    }
+    setOwnsTaskSheet(taskSheetClaims.get(openTaskId) === embedInstanceId);
+    return () => {
+      if (taskSheetClaims.get(openTaskId) === embedInstanceId) {
+        taskSheetClaims.delete(openTaskId);
+      }
+      setOwnsTaskSheet(false);
+    };
+  }, [openTaskId, embedInstanceId]);
 
   const handleCloseTaskSheet = useCallback(() => {
     navigate({ to: ".", search: {}, replace: true });
@@ -203,7 +232,7 @@ export function DocBoardEmbed({
           <ListView project={project} disableShortcuts />
         )}
       </div>
-      {openTaskId ? (
+      {openTaskId && ownsTaskSheet ? (
         <TaskDetailsSheet
           taskId={openTaskId}
           projectId={projectId}

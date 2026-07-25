@@ -10,26 +10,11 @@ import {
 import { useGetActiveWorkspaceUsers } from "@/hooks/queries/workspace-users/use-get-active-workspace-users";
 import {
   DUE_FILTER_VALUES,
+  PRIORITY_VALUES,
   SORT_BY_VALUES,
+  STATUS_VALUES,
   type WorkspaceTasksFilters,
 } from "./workspace-tasks-filters";
-
-const STATUS_VALUES = [
-  "to-do",
-  "in-progress",
-  "in-review",
-  "done",
-  "planned",
-  "archived",
-] as const;
-
-const PRIORITY_VALUES = [
-  "urgent",
-  "high",
-  "medium",
-  "low",
-  "no-priority",
-] as const;
 
 type WorkspaceTasksFilterBarProps = {
   workspaceId: string;

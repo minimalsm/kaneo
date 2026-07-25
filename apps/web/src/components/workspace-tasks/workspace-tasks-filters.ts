@@ -18,6 +18,29 @@ export const SORT_BY_VALUES = [
 ] as const;
 
 /**
+ * Known task status/priority vocabularies. Single source of truth shared with
+ * the filter bar UI and with `normalizeFilters`, so stored values that are
+ * well-typed strings but not in the vocabulary (e.g. "bogus") get reset
+ * instead of silently filtering everything out.
+ */
+export const STATUS_VALUES = [
+  "to-do",
+  "in-progress",
+  "in-review",
+  "done",
+  "planned",
+  "archived",
+] as const;
+
+export const PRIORITY_VALUES = [
+  "urgent",
+  "high",
+  "medium",
+  "low",
+  "no-priority",
+] as const;
+
+/**
  * View-specific single-select filter state for the workspace tasks view.
  * Deliberately NOT `BoardFilters` — the server endpoint takes single values,
  * not the board's multi-select arrays.
@@ -53,13 +76,25 @@ function normalizeFilters(raw: unknown): WorkspaceTasksFilters {
     Record<keyof WorkspaceTasksFilters, unknown>
   >;
 
+  // Assignee is "me" | "everyone" | "unassigned" | a member's user id. Member
+  // ids can't be validated here (no member list at normalize time), so any
+  // non-empty string is accepted as-is; the filter bar falls back to showing
+  // the raw id if the member no longer exists.
   if (typeof candidate.assignee === "string" && candidate.assignee) {
     normalized.assignee = candidate.assignee;
   }
-  if (typeof candidate.status === "string" && candidate.status) {
+  if (
+    typeof candidate.status === "string" &&
+    (candidate.status === "all" ||
+      (STATUS_VALUES as readonly string[]).includes(candidate.status))
+  ) {
     normalized.status = candidate.status;
   }
-  if (typeof candidate.priority === "string" && candidate.priority) {
+  if (
+    typeof candidate.priority === "string" &&
+    (candidate.priority === "all" ||
+      (PRIORITY_VALUES as readonly string[]).includes(candidate.priority))
+  ) {
     normalized.priority = candidate.priority;
   }
   if (

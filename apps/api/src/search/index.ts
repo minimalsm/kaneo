@@ -82,7 +82,10 @@ const search = new Hono<{
           v.minValue(1, "Limit must be at least 1"),
           v.maxValue(50, "Limit must not exceed 50"),
         ),
-        20,
+        // Default must be the pre-transform (string) shape: query params
+        // arrive as strings and valibot runs defaults through the pipe, so a
+        // numeric 20 fails the v.string() step and 400s any limit-less call.
+        "20",
       ),
       userEmail: v.optional(v.pipe(v.string(), v.email())),
     }),

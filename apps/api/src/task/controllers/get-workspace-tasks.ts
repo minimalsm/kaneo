@@ -4,7 +4,6 @@ import {
   desc,
   eq,
   gte,
-  inArray,
   isNull,
   lte,
   ne,
@@ -12,15 +11,13 @@ import {
   sql,
 } from "drizzle-orm";
 import db from "../../database";
+import { projectTable, taskTable, userTable } from "../../database/schema";
 import {
-  externalLinkTable,
-  labelTable,
-  projectTable,
-  taskTable,
-  userTable,
-} from "../../database/schema";
+  fetchTaskLabelsAndLinks,
+  priorityCaseExpr,
+} from "../task-query-helpers";
 
-export type GetWorkspaceTasksOptions = {
+type GetWorkspaceTasksOptions = {
   assigneeId?: string;
   dueAfter?: string;
   dueBefore?: string;
@@ -32,14 +29,6 @@ export type GetWorkspaceTasksOptions = {
   sortOrder?: "asc" | "desc";
   status?: string;
 };
-
-const priorityCaseExpr = sql<number>`CASE
-  WHEN ${taskTable.priority} = 'urgent' THEN 4
-  WHEN ${taskTable.priority} = 'high' THEN 3
-  WHEN ${taskTable.priority} = 'medium' THEN 2
-  WHEN ${taskTable.priority} = 'low' THEN 1
-  ELSE 0
-END`;
 
 function buildSortExpr(
   sortBy: GetWorkspaceTasksOptions["sortBy"],
@@ -83,11 +72,10 @@ async function getWorkspaceTasks(
 
   if (options.noDueDate === "true") {
     conditions.push(isNull(taskTable.dueDate));
-  } else {
+  } else if (options.dueBefore || options.dueAfter) {
     if (options.dueBefore) {
       conditions.push(lte(taskTable.dueDate, new Date(options.dueBefore)));
     }
-
     if (options.dueAfter) {
       conditions.push(gte(taskTable.dueDate, new Date(options.dueAfter)));
     }
@@ -142,68 +130,8 @@ async function getWorkspaceTasks(
 
   const taskIds = rows.map((task) => task.id);
 
-  const labelsData =
-    taskIds.length > 0
-      ? await db
-          .select({
-            id: labelTable.id,
-            name: labelTable.name,
-            color: labelTable.color,
-            taskId: labelTable.taskId,
-          })
-          .from(labelTable)
-          .where(inArray(labelTable.taskId, taskIds))
-      : [];
-
-  const externalLinksData =
-    taskIds.length > 0
-      ? await db
-          .select()
-          .from(externalLinkTable)
-          .where(inArray(externalLinkTable.taskId, taskIds))
-      : [];
-
-  const taskLabelsMap = new Map<
-    string,
-    Array<{ id: string; name: string; color: string }>
-  >();
-  for (const label of labelsData) {
-    if (label.taskId) {
-      if (!taskLabelsMap.has(label.taskId)) {
-        taskLabelsMap.set(label.taskId, []);
-      }
-      taskLabelsMap.get(label.taskId)?.push({
-        id: label.id,
-        name: label.name,
-        color: label.color,
-      });
-    }
-  }
-
-  const taskExternalLinksMap = new Map<
-    string,
-    Array<{
-      id: string;
-      taskId: string;
-      integrationId: string;
-      resourceType: string;
-      externalId: string;
-      url: string;
-      title: string | null;
-      metadata: Record<string, unknown> | null;
-    }>
-  >();
-  for (const externalLink of externalLinksData) {
-    if (!taskExternalLinksMap.has(externalLink.taskId)) {
-      taskExternalLinksMap.set(externalLink.taskId, []);
-    }
-    taskExternalLinksMap.get(externalLink.taskId)?.push({
-      ...externalLink,
-      metadata: externalLink.metadata
-        ? JSON.parse(externalLink.metadata)
-        : null,
-    });
-  }
+  const { taskLabelsMap, taskExternalLinksMap } =
+    await fetchTaskLabelsAndLinks(taskIds);
 
   return {
     data: rows.map((task) => ({

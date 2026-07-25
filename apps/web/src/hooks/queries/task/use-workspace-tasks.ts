@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import getWorkspaceTasks, {
   type GetWorkspaceTasksParams,
 } from "@/fetchers/task/get-workspace-tasks";
@@ -22,6 +22,9 @@ export function useWorkspaceTasks(
       lastPage.pagination.page < lastPage.pagination.totalPages
         ? lastPage.pagination.page + 1
         : undefined,
+    // Keep the previous filter's rows on screen while the new filter fetches,
+    // so the list (and any open task sheet) doesn't flash empty.
+    placeholderData: keepPreviousData,
     enabled: !!workspaceId && (options?.enabled ?? true),
   });
 }

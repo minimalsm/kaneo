@@ -59,7 +59,10 @@ describe("API integration: global search", () => {
       mockAuthenticatedSession(member.user);
       const { app } = createApp();
 
-      const response = await searchRequest(app, { q: "Roadmap" });
+      const response = await searchRequest(app, {
+        q: "Roadmap",
+        workspaceId: member.workspace.id,
+      });
       expect(response.status).toBe(200);
       const payload = (await response.json()) as SearchResponse;
 
@@ -82,7 +85,10 @@ describe("API integration: global search", () => {
       mockAuthenticatedSession(member.user);
       const { app } = createApp();
 
-      const response = await searchRequest(app, { q: "launch checklist" });
+      const response = await searchRequest(app, {
+        q: "launch checklist",
+        workspaceId: member.workspace.id,
+      });
       expect(response.status).toBe(200);
       const payload = (await response.json()) as SearchResponse;
 
@@ -103,7 +109,10 @@ describe("API integration: global search", () => {
       mockAuthenticatedSession(member.user);
       const { app } = createApp();
 
-      const response = await searchRequest(app, { q: "Confidential" });
+      const response = await searchRequest(app, {
+        q: "Confidential",
+        workspaceId: member.workspace.id,
+      });
       expect(response.status).toBe(200);
       const payload = (await response.json()) as SearchResponse;
 
@@ -125,7 +134,10 @@ describe("API integration: global search", () => {
       mockAuthenticatedSession(member.user);
       const { app } = createApp();
 
-      const response = await searchRequest(app, { q: "Meeting Notes" });
+      const response = await searchRequest(app, {
+        q: "Meeting Notes",
+        workspaceId: member.workspace.id,
+      });
       expect(response.status).toBe(200);
       const payload = (await response.json()) as SearchResponse;
 
@@ -153,6 +165,7 @@ describe("API integration: global search", () => {
       const response = await searchRequest(app, {
         q: "Apollo",
         type: "documents",
+        workspaceId: member.workspace.id,
       });
       expect(response.status).toBe(200);
       const payload = (await response.json()) as SearchResponse;

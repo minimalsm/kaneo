@@ -294,6 +294,103 @@ describe("WorkspaceTasksView", () => {
     );
   });
 
+  it("keeps the sheet open via the clicked-row snapshot when a filter change drops the row", async () => {
+    getWorkspaceTasksMock.mockImplementation(
+      (params: GetWorkspaceTasksParams) => {
+        if (params.priority === "high") {
+          return Promise.resolve(makeResponse([]));
+        }
+        return Promise.resolve(
+          makeResponse([
+            makeRow({
+              id: "t-9",
+              title: "Clickable task",
+              projectId: "proj-x",
+            }),
+          ]),
+        );
+      },
+    );
+    renderView();
+    await screen.findByText("Clickable task");
+
+    // The route reflects the clicked task from here on.
+    searchMock.mockReturnValue({ taskId: "t-9" });
+    fireEvent.click(screen.getByText("Clickable task"));
+    const sheet = await screen.findByTestId("task-details-sheet-stub");
+    expect(sheet).toHaveAttribute("data-project-id", "proj-x");
+
+    // Filter change refetches with results that no longer contain the row.
+    fireEvent.click(screen.getByText("set-priority-high"));
+    await waitFor(() => {
+      expect(screen.queryByText("Clickable task")).not.toBeInTheDocument();
+    });
+
+    // The sheet survives on the snapshot, with the snapshot's projectId.
+    const survivingSheet = screen.getByTestId("task-details-sheet-stub");
+    expect(survivingSheet).toHaveAttribute("data-task-id", "t-9");
+    expect(survivingSheet).toHaveAttribute("data-project-id", "proj-x");
+    // And the URL was not force-cleared by the stale-taskId guard.
+    expect(navigate).not.toHaveBeenCalledWith({
+      to: ".",
+      search: {},
+      replace: true,
+    });
+  });
+
+  it("clears a settled taskId that resolves to no known task", async () => {
+    searchMock.mockReturnValue({ taskId: "ghost-task" });
+    getWorkspaceTasksMock.mockResolvedValue(makeResponse([makeRow()]));
+    renderView();
+
+    await screen.findByText("Task one");
+    expect(
+      screen.queryByTestId("task-details-sheet-stub"),
+    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith({
+        to: ".",
+        search: {},
+        replace: true,
+      });
+    });
+  });
+
+  it("renders a task only once when consecutive pages both contain it", async () => {
+    getWorkspaceTasksMock.mockImplementation(
+      (params: GetWorkspaceTasksParams) => {
+        if ((params.page ?? 1) === 1) {
+          return Promise.resolve(
+            makeResponse(
+              [
+                makeRow({ id: "t-1", title: "Alpha one" }),
+                makeRow({ id: "t-2", title: "Alpha two" }),
+              ],
+              { page: 1, totalPages: 2 },
+            ),
+          );
+        }
+        // Offset drift: page 2 repeats t-2 alongside the new row.
+        return Promise.resolve(
+          makeResponse(
+            [
+              makeRow({ id: "t-2", title: "Alpha two" }),
+              makeRow({ id: "t-3", title: "Alpha three" }),
+            ],
+            { page: 2, totalPages: 2 },
+          ),
+        );
+      },
+    );
+    renderView();
+
+    await screen.findByText("Alpha one");
+    fireEvent.click(screen.getByText("workspaceTasks:loadMore"));
+
+    await screen.findByText("Alpha three");
+    expect(screen.getAllByText("Alpha two")).toHaveLength(1);
+  });
+
   it("appends the next page on load-more without repeating project headers", async () => {
     getWorkspaceTasksMock.mockImplementation(
       (params: GetWorkspaceTasksParams) => {

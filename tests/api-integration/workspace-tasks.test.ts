@@ -34,16 +34,22 @@ type WorkspaceTasksResponse = {
   };
 };
 
+// `task.number` defaults to 1 and is unique per project, so direct inserts
+// must assign explicit numbers to seed more than one task in a project.
+let seededTaskNumber = 0;
+
 async function seedTask(
   projectId: string,
   overrides: Partial<typeof schema.taskTable.$inferInsert> = {},
 ) {
+  seededTaskNumber += 1;
   const [task] = await db
     .insert(schema.taskTable)
     .values({
       projectId,
       title: "Seeded Task",
       status: "to-do",
+      number: seededTaskNumber,
       ...overrides,
     })
     .returning();
@@ -189,6 +195,24 @@ describe("API integration: workspace tasks", () => {
     expect(payload.data.map((row) => row.id)).toEqual([early.id, late.id]);
   });
 
+  it("rejects malformed dueBefore/dueAfter values with 400", async () => {
+    const member = await createWorkspaceMember({ role: "member" });
+    await createProjectFixture({ workspaceId: member.workspace.id });
+
+    mockAuthenticatedSession(member.user);
+    const { app } = createApp();
+
+    const badBefore = await fetchWorkspaceTasks(app, member.workspace.id, {
+      dueBefore: "garbage",
+    });
+    expect(badBefore.status).toBe(400);
+
+    const badAfter = await fetchWorkspaceTasks(app, member.workspace.id, {
+      dueAfter: "not-a-date",
+    });
+    expect(badAfter.status).toBe(400);
+  });
+
   it("paginates with a correct total and page contents", async () => {
     const member = await createWorkspaceMember({ role: "member" });
     const { project } = await createProjectFixture({
@@ -270,6 +294,7 @@ describe("API integration: workspace tasks", () => {
       name: "bug",
       color: "red",
       taskId: task.id,
+      workspaceId: member.workspace.id,
     });
 
     mockAuthenticatedSession(member.user);

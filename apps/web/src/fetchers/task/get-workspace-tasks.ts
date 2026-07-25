@@ -15,7 +15,6 @@ export type GetWorkspaceTasksParams = {
   dueAfter?: string;
   noDueDate?: boolean;
   sortBy?: WorkspaceTasksSortBy;
-  sortOrder?: "asc" | "desc";
   page?: number;
   limit?: number;
 };
@@ -29,7 +28,6 @@ async function getWorkspaceTasks({
   dueAfter,
   noDueDate,
   sortBy,
-  sortOrder,
   page,
   limit,
 }: GetWorkspaceTasksParams) {
@@ -43,7 +41,6 @@ async function getWorkspaceTasks({
       ...(dueAfter ? { dueAfter } : {}),
       ...(noDueDate ? { noDueDate: "true" } : {}),
       ...(sortBy ? { sortBy } : {}),
-      ...(sortOrder ? { sortOrder } : {}),
       ...(page ? { page: String(page) } : {}),
       ...(limit ? { limit: String(limit) } : {}),
     },

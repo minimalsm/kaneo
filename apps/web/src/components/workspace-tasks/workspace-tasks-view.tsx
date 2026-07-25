@@ -114,6 +114,7 @@ export function WorkspaceTasksView({ workspaceId }: WorkspaceTasksViewProps) {
   const {
     data,
     isLoading,
+    isFetching,
     isError,
     refetch,
     fetchNextPage,
@@ -121,20 +122,35 @@ export function WorkspaceTasksView({ workspaceId }: WorkspaceTasksViewProps) {
     isFetchingNextPage,
   } = useWorkspaceTasks(workspaceId, queryFilters, { enabled: canQuery });
 
-  const rows = useMemo(
-    () => data?.pages.flatMap((page) => page.data) ?? [],
-    [data],
-  );
+  const rows = useMemo(() => {
+    // Dedupe by id (later pages win) so offset drift between page fetches
+    // can never produce duplicate React keys.
+    const byId = new Map<string, WorkspaceTaskRowData>();
+    for (const page of data?.pages ?? []) {
+      for (const row of page.data) {
+        byId.set(row.id, row);
+      }
+    }
+    return [...byId.values()];
+  }, [data]);
   const groups = useMemo(() => groupByProject(rows), [rows]);
+
+  // Snapshot of the row the user clicked, so the details sheet survives
+  // filter changes that drop the row from the (refetched) list.
+  const [openedTask, setOpenedTask] = useState<WorkspaceTaskRowData | null>(
+    null,
+  );
 
   const openTask = useCallback(
     (task: WorkspaceTaskRowData) => {
+      setOpenedTask(task);
       navigate({ to: ".", search: { taskId: task.id } });
     },
     [navigate],
   );
 
   const closeTask = useCallback(() => {
+    setOpenedTask(null);
     navigate({ to: ".", search: {}, replace: true });
   }, [navigate]);
 
@@ -142,6 +158,21 @@ export function WorkspaceTasksView({ workspaceId }: WorkspaceTasksViewProps) {
     () => rows.find((row) => row.id === search.taskId),
     [rows, search.taskId],
   );
+
+  const sheetTask =
+    selectedTask ??
+    (openedTask && openedTask.id === search.taskId ? openedTask : undefined);
+
+  // Stale deep-link: once the query has settled and the taskId resolves to
+  // nothing we know about, drop it from the URL instead of carrying a dead ref.
+  const hasStaleTaskId =
+    !!search.taskId && !sheetTask && canQuery && !isLoading && !isFetching;
+
+  useEffect(() => {
+    if (hasStaleTaskId) {
+      navigate({ to: ".", search: {}, replace: true });
+    }
+  }, [hasStaleTaskId, navigate]);
 
   const isEmptyDefault =
     rows.length === 0 && isDefaultWorkspaceTasksFilters(filters);
@@ -219,10 +250,10 @@ export function WorkspaceTasksView({ workspaceId }: WorkspaceTasksViewProps) {
           </>
         )}
       </div>
-      {search.taskId && selectedTask ? (
+      {search.taskId && sheetTask ? (
         <TaskDetailsSheet
           taskId={search.taskId}
-          projectId={selectedTask.projectId}
+          projectId={sheetTask.projectId}
           workspaceId={workspaceId}
           onClose={closeTask}
         />

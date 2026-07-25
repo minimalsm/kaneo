@@ -78,6 +78,49 @@ describe("buildDueBounds", () => {
     expect(buildDueBounds("noDueDate", 1, now)).toEqual({ noDueDate: true });
   });
 
+  describe("exact week boundaries", () => {
+    // Wednesday, July 22 2026, noon *local time* — the weekday (and thus the
+    // computed week window) is identical in every timezone.
+    const localNow = new Date(2026, 6, 22, 12, 0, 0);
+    const iso = (
+      year: number,
+      month: number,
+      day: number,
+      end = false,
+    ): string =>
+      end
+        ? new Date(year, month, day, 23, 59, 59, 999).toISOString()
+        : new Date(year, month, day, 0, 0, 0, 0).toISOString();
+
+    it("dueThisWeek with weekStartsOn=1 spans Mon Jul 20 00:00 to Sun Jul 26 23:59:59.999", () => {
+      expect(buildDueBounds("dueThisWeek", 1, localNow)).toEqual({
+        dueAfter: iso(2026, 6, 20),
+        dueBefore: iso(2026, 6, 26, true),
+      });
+    });
+
+    it("dueThisWeek with weekStartsOn=0 spans Sun Jul 19 00:00 to Sat Jul 25 23:59:59.999", () => {
+      expect(buildDueBounds("dueThisWeek", 0, localNow)).toEqual({
+        dueAfter: iso(2026, 6, 19),
+        dueBefore: iso(2026, 6, 25, true),
+      });
+    });
+
+    it("dueNextWeek with weekStartsOn=1 spans Mon Jul 27 00:00 to Sun Aug 2 23:59:59.999", () => {
+      expect(buildDueBounds("dueNextWeek", 1, localNow)).toEqual({
+        dueAfter: iso(2026, 6, 27),
+        dueBefore: iso(2026, 7, 2, true),
+      });
+    });
+
+    it("dueNextWeek with weekStartsOn=0 spans Sun Jul 26 00:00 to Sat Aug 1 23:59:59.999", () => {
+      expect(buildDueBounds("dueNextWeek", 0, localNow)).toEqual({
+        dueAfter: iso(2026, 6, 26),
+        dueBefore: iso(2026, 7, 1, true),
+      });
+    });
+  });
+
   it("maps dueThisWeek/dueNextWeek to week bounds", () => {
     const thisWeek = buildDueBounds("dueThisWeek", 1, now);
     expect(thisWeek.dueAfter).toBeDefined();

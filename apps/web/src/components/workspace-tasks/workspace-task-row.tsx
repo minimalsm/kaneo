@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Calendar, CalendarClock, CalendarX } from "lucide-react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { WorkspaceTaskRow as WorkspaceTaskRowData } from "@/fetchers/task/get-workspace-tasks";
@@ -12,7 +13,10 @@ type WorkspaceTaskRowProps = {
   onOpen: (task: WorkspaceTaskRowData) => void;
 };
 
-export function WorkspaceTaskRow({ task, onOpen }: WorkspaceTaskRowProps) {
+export const WorkspaceTaskRow = memo(function WorkspaceTaskRow({
+  task,
+  onOpen,
+}: WorkspaceTaskRowProps) {
   const { t } = useTranslation();
 
   const dueDateStatus = getDueDateStatus(
@@ -86,6 +90,6 @@ export function WorkspaceTaskRow({ task, onOpen }: WorkspaceTaskRowProps) {
       </div>
     </div>
   );
-}
+});
 
 export default WorkspaceTaskRow;

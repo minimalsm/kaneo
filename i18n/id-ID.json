@@ -2018,6 +2018,10 @@
 		"editor": {
 			"ariaLabel": "Editor dokumen",
 			"contentLabel": "Konten dokumen",
+			"dragHandle": {
+				"label": "Seret untuk memindahkan blok",
+				"tooltip": "Seret untuk memindahkan blok ini. Keyboard: Alt+Panah atas / Alt+Panah bawah"
+			},
 			"titleLabel": "Judul dokumen",
 			"titlePlaceholder": "Tanpa judul",
 			"placeholder": "Mulai menulis, atau ketik '/' untuk perintah…",

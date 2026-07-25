@@ -1870,6 +1870,10 @@
 		"editor": {
 			"ariaLabel": "문서 편집기",
 			"contentLabel": "문서 내용",
+			"dragHandle": {
+				"label": "드래그하여 블록 이동",
+				"tooltip": "드래그하여 이 블록을 이동합니다. 키보드: Alt+위쪽 화살표 / Alt+아래쪽 화살표"
+			},
 			"titleLabel": "문서 제목",
 			"titlePlaceholder": "제목 없음",
 			"placeholder": "글을 작성하거나 '/'를 입력해 명령어를 사용하세요…",

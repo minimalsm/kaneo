@@ -1642,6 +1642,10 @@
 		"editor": {
 			"ariaLabel": "Editor de documentos",
 			"contentLabel": "Contenido del documento",
+			"dragHandle": {
+				"label": "Arrastra para mover el bloque",
+				"tooltip": "Arrastra para mover este bloque. Teclado: Alt+Flecha arriba / Alt+Flecha abajo"
+			},
 			"titleLabel": "Título del documento",
 			"titlePlaceholder": "Sin título",
 			"placeholder": "Empieza a escribir o escribe '/' para ver comandos…",

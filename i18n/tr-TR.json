@@ -1870,6 +1870,10 @@
 		"editor": {
 			"ariaLabel": "Belge düzenleyici",
 			"contentLabel": "Belge içeriği",
+			"dragHandle": {
+				"label": "Bloğu taşımak için sürükleyin",
+				"tooltip": "Bu bloğu taşımak için sürükleyin. Klavye: Alt+Yukarı ok / Alt+Aşağı ok"
+			},
 			"titleLabel": "Belge başlığı",
 			"titlePlaceholder": "Adsız",
 			"placeholder": "Yazmaya başlayın veya komutlar için '/' yazın…",

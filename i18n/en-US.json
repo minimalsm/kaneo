@@ -2084,6 +2084,10 @@
 		"editor": {
 			"ariaLabel": "Doc editor",
 			"contentLabel": "Doc content",
+			"dragHandle": {
+				"label": "Drag to move block",
+				"tooltip": "Drag to move this block. Keyboard: Alt+ArrowUp / Alt+ArrowDown"
+			},
 			"titleLabel": "Doc title",
 			"titlePlaceholder": "Untitled",
 			"placeholder": "Start writing, or type '/' for commands…",

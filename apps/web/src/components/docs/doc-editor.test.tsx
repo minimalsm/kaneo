@@ -6,6 +6,7 @@ import {
   screen,
 } from "@testing-library/react";
 import type { Editor } from "@tiptap/core";
+import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DocEditor } from "./doc-editor";
 
@@ -73,6 +74,33 @@ vi.mock("./board-picker-dialog", () => ({
 // under test here.
 vi.mock("@tiptap/react/menus", () => ({
   BubbleMenu: () => null,
+}));
+
+// The DragHandle component portals into a floating-ui-positioned element and
+// registers a hover-driven ProseMirror plugin — both jsdom-hostile. The mock
+// pins the wiring contract instead: rendered only for editors, className
+// carries the hidden state, onNodeChange drives kaneoBoard suppression.
+const dragHandleProps = vi.hoisted(() => ({
+  current: null as null | {
+    className?: string;
+    editor: unknown;
+    onNodeChange?: (data: {
+      editor: unknown;
+      node: { type: { name: string } } | null;
+      pos: number;
+    }) => void;
+    children?: ReactNode;
+  },
+}));
+vi.mock("@tiptap/extension-drag-handle-react", () => ({
+  DragHandle: (props: NonNullable<typeof dragHandleProps.current>) => {
+    dragHandleProps.current = props;
+    return (
+      <div className={props.className} data-testid="drag-handle">
+        {props.children}
+      </div>
+    );
+  },
 }));
 
 // Minimal layout polyfills so ProseMirror's view can mount under jsdom.
@@ -173,6 +201,7 @@ beforeEach(() => {
   vi.useFakeTimers();
   vi.clearAllMocks();
   pickerPropsRef.current = null;
+  dragHandleProps.current = null;
   permissions.canUpdateDocuments.mockReturnValue(true);
   mutateAsync.mockResolvedValue(makeDoc());
   mockDocument();
@@ -386,5 +415,78 @@ describe("DocEditor", () => {
     const json = JSON.stringify(editor.getJSON());
     expect(json).not.toContain("kaneoBoard");
     expect(editor.getText()).not.toContain("/board");
+  });
+
+  describe("drag handle", () => {
+    it("renders the drag handle wired to the editor when editable", async () => {
+      const { editor } = await renderEditor();
+
+      expect(screen.getByTestId("drag-handle")).toBeInTheDocument();
+      expect(dragHandleProps.current?.editor).toBe(editor);
+      expect(typeof dragHandleProps.current?.onNodeChange).toBe("function");
+    });
+
+    it("does not render the drag handle for read-only viewers", async () => {
+      permissions.canUpdateDocuments.mockReturnValue(false);
+
+      await renderEditor();
+
+      expect(screen.queryByTestId("drag-handle")).toBeNull();
+      expect(dragHandleProps.current).toBeNull();
+    });
+
+    it("labels the handle with the i18n aria-label and Alt+Arrow tooltip", async () => {
+      await renderEditor();
+
+      const grip = screen.getByLabelText("documents:editor.dragHandle.label");
+      expect(grip).toBeInTheDocument();
+      expect(grip).toHaveAttribute(
+        "title",
+        "documents:editor.dragHandle.tooltip",
+      );
+    });
+
+    it("hides the handle while hovering a kaneoBoard block and shows it again for a paragraph", async () => {
+      const { editor } = await renderEditor();
+
+      expect(screen.getByTestId("drag-handle")).not.toHaveClass("is-hidden");
+
+      act(() => {
+        dragHandleProps.current?.onNodeChange?.({
+          editor,
+          node: { type: { name: "kaneoBoard" } },
+          pos: 0,
+        });
+      });
+      expect(screen.getByTestId("drag-handle")).toHaveClass("is-hidden");
+
+      act(() => {
+        dragHandleProps.current?.onNodeChange?.({
+          editor,
+          node: { type: { name: "paragraph" } },
+          pos: 0,
+        });
+      });
+      expect(screen.getByTestId("drag-handle")).not.toHaveClass("is-hidden");
+    });
+
+    it("hides the handle while the slash menu is open", async () => {
+      const { editor } = await renderEditor();
+
+      act(() => {
+        editor.commands.focus("end");
+      });
+      typeText(editor, " /");
+
+      await vi.waitFor(() => {
+        expect(screen.getByTestId("drag-handle")).toHaveClass("is-hidden");
+      });
+
+      // Escape closes the slash menu; the handle becomes available again.
+      act(() => {
+        fireEvent.keyDown(window, { key: "Escape" });
+      });
+      expect(screen.getByTestId("drag-handle")).not.toHaveClass("is-hidden");
+    });
   });
 });

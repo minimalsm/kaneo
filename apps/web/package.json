@@ -46,6 +46,8 @@
 		"@tanstack/router-plugin": "^1.168.22",
 		"@tiptap/core": "^3.28.0",
 		"@tiptap/extension-code-block-lowlight": "^3.28.0",
+		"@tiptap/extension-drag-handle": "3.28.0",
+		"@tiptap/extension-drag-handle-react": "3.28.0",
 		"@tiptap/extension-image": "^3.28.0",
 		"@tiptap/extension-link": "^3.28.0",
 		"@tiptap/extension-list": "^3.28.0",

@@ -1643,6 +1643,10 @@
 		"editor": {
 			"ariaLabel": "Documenteditor",
 			"contentLabel": "Documentinhoud",
+			"dragHandle": {
+				"label": "Sleep om het blok te verplaatsen",
+				"tooltip": "Sleep om dit blok te verplaatsen. Toetsenbord: Alt+Pijl omhoog / Alt+Pijl omlaag"
+			},
 			"titleLabel": "Documenttitel",
 			"titlePlaceholder": "Zonder titel",
 			"placeholder": "Begin met schrijven of typ '/' voor opdrachten…",

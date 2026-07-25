@@ -8,6 +8,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
@@ -16,6 +17,7 @@ import {
   Bold,
   Braces,
   Code,
+  GripVertical,
   Heading2,
   Italic,
   Link2,
@@ -30,6 +32,8 @@ import {
 } from "lucide-react";
 import {
   Fragment,
+  lazy,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -48,6 +52,15 @@ import { debounceWithFlush } from "@/lib/debounce";
 import { BoardPickerDialog } from "./board-picker-dialog";
 import { DocVersionHistory } from "./doc-version-history";
 import { KaneoBoard } from "./extensions/kaneo-board";
+
+// Lazy: the drag-handle package statically pulls the collaboration/yjs
+// modules (~40 kB gzip) this app doesn't otherwise use. Splitting it keeps
+// that cost off the docs-route chunk and away from read-only viewers.
+const DragHandle = lazy(() =>
+  import("@tiptap/extension-drag-handle-react").then((module) => ({
+    default: module.DragHandle,
+  })),
+);
 
 const SAVE_DEBOUNCE_MS = 700;
 
@@ -284,6 +297,9 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
   const [title, setTitle] = useState("");
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [slashMenu, setSlashMenu] = useState<SlashMenuState | null>(null);
+  // The board embed's header grip owns dragging that node (R2); the gutter
+  // handle suppresses itself while hovering a kaneoBoard block.
+  const [isDragHandleSuppressed, setIsDragHandleSuppressed] = useState(false);
   // Doc position where /board was typed; non-null while the picker is open.
   const [boardPickerPos, setBoardPickerPos] = useState<number | null>(null);
   // The editor only accepts commands once its view is mounted (onCreate).
@@ -457,6 +473,15 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
       setTitle(document.title);
     }
   }, [editor, isEditorReady, document, documentId, hasPendingEdits]);
+
+  // Stable identity: the DragHandle component re-registers its ProseMirror
+  // plugin whenever onNodeChange changes.
+  const handleDragHandleNodeChange = useCallback(
+    ({ node }: { node: ProseMirrorNode | null }) => {
+      setIsDragHandleSuppressed(node?.type.name === "kaneoBoard");
+    },
+    [],
+  );
 
   const setLink = useCallback(() => {
     if (!editor) return;
@@ -766,6 +791,35 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
               <Link2 className="size-3.5" />
             </Button>
           </BubbleMenu>
+        )}
+
+        {editor && canEdit && (
+          // Component-only registration: <DragHandle> registers the
+          // ProseMirror plugin itself; adding the extension to the editor's
+          // extensions list as well would crash on the duplicate PluginKey.
+          // The plugin already shows the handle only next to the hovered
+          // block (tap-to-reveal on touch), so no extra hover gating is
+          // layered on top; `is-hidden` handles the two suppression cases.
+          <Suspense fallback={null}>
+            <DragHandle
+              className={cn(
+                "kaneo-tiptap-drag-handle",
+                (isDragHandleSuppressed || slashMenu !== null) && "is-hidden",
+              )}
+              editor={editor}
+              onNodeChange={handleDragHandleNodeChange}
+            >
+              <button
+                aria-label={t("documents:editor.dragHandle.label")}
+                className="kaneo-tiptap-drag-handle-grip"
+                tabIndex={-1}
+                title={t("documents:editor.dragHandle.tooltip")}
+                type="button"
+              >
+                <GripVertical className="size-4" />
+              </button>
+            </DragHandle>
+          </Suspense>
         )}
 
         {editor && canEdit && slashMenu && (

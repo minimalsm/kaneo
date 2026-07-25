@@ -1886,6 +1886,10 @@
 		"editor": {
 			"ariaLabel": "Éditeur de document",
 			"contentLabel": "Contenu du document",
+			"dragHandle": {
+				"label": "Glisser pour déplacer le bloc",
+				"tooltip": "Glissez pour déplacer ce bloc. Clavier : Alt+Flèche haut / Alt+Flèche bas"
+			},
 			"titleLabel": "Titre du document",
 			"titlePlaceholder": "Sans titre",
 			"placeholder": "Commencez à écrire ou tapez '/' pour les commandes…",

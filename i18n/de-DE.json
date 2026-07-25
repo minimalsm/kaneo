@@ -1910,6 +1910,10 @@
 		"editor": {
 			"ariaLabel": "Dokument-Editor",
 			"contentLabel": "Dokumentinhalt",
+			"dragHandle": {
+				"label": "Ziehen, um den Block zu verschieben",
+				"tooltip": "Ziehen, um diesen Block zu verschieben. Tastatur: Alt+Pfeil nach oben / Alt+Pfeil nach unten"
+			},
 			"titleLabel": "Dokumenttitel",
 			"titlePlaceholder": "Ohne Titel",
 			"placeholder": "Schreibe los oder tippe '/' für Befehle …",

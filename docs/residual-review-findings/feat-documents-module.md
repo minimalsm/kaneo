@@ -1,5 +1,15 @@
 # Residual Review Findings — feat/documents-module
 
+## Cross-project Tasks view — run `20260725-144228-cf1bb942`
+
+Verdict: Ready with fixes. Four validated findings applied (date-param validation, sheet resilience incl. deep-link cleanup + placeholderData, page-append dedupe, exact week-bounds tests). Bonus fixes this run: a pre-existing upstream API bug (`GET /search` 400'd whenever `limit` was omitted — numeric default fed to a string pipe) and Phase 1's search integration tests corrected to send the required `workspaceId`. **The full integration suite (14 files / 117 tests, all phases) now executes locally against Postgres and passes — first complete run.** Remaining advisories:
+
+- P3 — priority sort lists urgent last (asc weight); a per-key default direction or a client sort-direction control would fix it (client `sortOrder` plumbing was deliberately dropped until a UI exists).
+- P3 — well-typed-but-stale localStorage filter values (e.g. removed member id) survive normalization and can pin an empty list until filters are touched; vocabulary validation suggested.
+- Residual notes: COUNT re-runs per load-more page (accepted; drift between total and rows while paging is possible); one-frame stale-filters query on workspace switch (self-corrects).
+- Browser smoke passed: two projects seeded, "assigned to me" default shows both my tasks under correct project headers, hides unassigned, task sheet opens from a row.
+
+
 ## Block drag handles — run `20260725-124236-49880f12`
 
 Verdict: Ready with fixes. Four findings validated and all four applied (`fix(review)` commit: chunk-failure fallback, post-drag NodeRangeSelection branch, real-mount smoke test, real key-event binding test). Remaining advisories (no tracker sink; this file is the durable record):

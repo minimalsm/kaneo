@@ -51,6 +51,7 @@ import { cn } from "@/lib/cn";
 import { debounceWithFlush } from "@/lib/debounce";
 import { BoardPickerDialog } from "./board-picker-dialog";
 import { DocVersionHistory } from "./doc-version-history";
+import { BlockMove } from "./extensions/block-move";
 import { KaneoBoard } from "./extensions/kaneo-board";
 
 // Lazy: the drag-handle package statically pulls the collaboration/yjs
@@ -417,6 +418,7 @@ export function DocEditor({ documentId, onEditorReady }: DocEditorProps) {
         TableHeader,
         TableCell,
         KaneoBoard,
+        BlockMove,
       ],
       editorProps: {
         attributes: {

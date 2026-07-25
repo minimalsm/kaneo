@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
-import { ChevronRight, FileText } from "lucide-react";
+import { CheckSquare, ChevronRight, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   Collapsible,
@@ -50,6 +50,15 @@ export function NavMain() {
       ),
       badge: null,
       icon: FileText,
+    },
+    {
+      title: t("navigation:sidebar.tasks"),
+      url: `/dashboard/workspace/${workspace.id}/tasks`,
+      isActive: window.location.pathname.startsWith(
+        `/dashboard/workspace/${workspace.id}/tasks`,
+      ),
+      badge: null,
+      icon: CheckSquare,
     },
     {
       title: t("navigation:sidebar.members"),

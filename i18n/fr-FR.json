@@ -1053,7 +1053,8 @@
 			"invitations": "Invitations",
 			"more": "Plus",
 			"backToBoard": "Retour au tableau",
-			"docs": "Documents"
+			"docs": "Documents",
+			"tasks": "Tâches"
 		},
 		"projectList": {
 			"viewProject": "Voir le projet",
@@ -1948,6 +1949,39 @@
 				"description": "Le contenu actuel du document sera enregistré comme nouvelle version avant la restauration.",
 				"confirm": "Restaurer"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Tâches",
+		"loadMore": "Charger plus",
+		"filters": {
+			"toolbarLabel": "Filtres des tâches",
+			"me": "Moi",
+			"everyone": "Tout le monde",
+			"allStatuses": "Tous les statuts",
+			"allPriorities": "Toutes les priorités",
+			"dueLabel": "Date d'échéance",
+			"sortLabel": "Trier par",
+			"due": {
+				"any": "Toute date d'échéance",
+				"dueThisWeek": "À échéance cette semaine",
+				"dueNextWeek": "À échéance la semaine prochaine",
+				"noDueDate": "Sans date d'échéance"
+			},
+			"sort": {
+				"dueDate": "Date d'échéance",
+				"priority": "Priorité",
+				"createdAt": "Créé",
+				"title": "Titre"
+			}
+		},
+		"empty": {
+			"assignedToMe": "Aucune tâche ne vous est assignée",
+			"noMatch": "Aucune tâche ne correspond aux filtres actuels"
+		},
+		"error": {
+			"description": "Échec du chargement des tâches",
+			"retry": "Réessayer"
 		}
 	}
 }

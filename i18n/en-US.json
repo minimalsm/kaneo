@@ -1231,7 +1231,8 @@
 			"invitations": "Invitations",
 			"more": "More",
 			"backToBoard": "Back to board",
-			"docs": "Docs"
+			"docs": "Docs",
+			"tasks": "Tasks"
 		},
 		"projectList": {
 			"viewProject": "View Project",
@@ -2146,6 +2147,39 @@
 				"description": "The doc's current content will be saved as a new version before restoring.",
 				"confirm": "Restore"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Tasks",
+		"loadMore": "Load more",
+		"filters": {
+			"toolbarLabel": "Task filters",
+			"me": "Me",
+			"everyone": "Everyone",
+			"allStatuses": "All statuses",
+			"allPriorities": "All priorities",
+			"dueLabel": "Due date",
+			"sortLabel": "Sort by",
+			"due": {
+				"any": "Any due date",
+				"dueThisWeek": "Due this week",
+				"dueNextWeek": "Due next week",
+				"noDueDate": "No due date"
+			},
+			"sort": {
+				"dueDate": "Due date",
+				"priority": "Priority",
+				"createdAt": "Created",
+				"title": "Title"
+			}
+		},
+		"empty": {
+			"assignedToMe": "No tasks assigned to you",
+			"noMatch": "No tasks match the current filters"
+		},
+		"error": {
+			"description": "Failed to load tasks",
+			"retry": "Retry"
 		}
 	}
 }

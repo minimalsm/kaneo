@@ -835,7 +835,8 @@
 			"invitations": "Uitnodigingen",
 			"more": "Meer",
 			"backToBoard": "Terug naar bord",
-			"docs": "Documenten"
+			"docs": "Documenten",
+			"tasks": "Taken"
 		},
 		"projectList": {
 			"viewProject": "Project bekijken",
@@ -1705,6 +1706,39 @@
 				"description": "De huidige inhoud van het document wordt vóór het herstellen als nieuwe versie opgeslagen.",
 				"confirm": "Herstellen"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Taken",
+		"loadMore": "Meer laden",
+		"filters": {
+			"toolbarLabel": "Taakfilters",
+			"me": "Ik",
+			"everyone": "Iedereen",
+			"allStatuses": "Alle statussen",
+			"allPriorities": "Alle prioriteiten",
+			"dueLabel": "Vervaldatum",
+			"sortLabel": "Sorteren op",
+			"due": {
+				"any": "Elke vervaldatum",
+				"dueThisWeek": "Deze week te doen",
+				"dueNextWeek": "Volgende week te doen",
+				"noDueDate": "Geen vervaldatum"
+			},
+			"sort": {
+				"dueDate": "Vervaldatum",
+				"priority": "Prioriteit",
+				"createdAt": "Aangemaakt",
+				"title": "Titel"
+			}
+		},
+		"empty": {
+			"assignedToMe": "Er zijn geen taken aan je toegewezen",
+			"noMatch": "Geen taken komen overeen met de huidige filters"
+		},
+		"error": {
+			"description": "Taken laden mislukt",
+			"retry": "Opnieuw proberen"
 		}
 	}
 }

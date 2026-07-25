@@ -1067,7 +1067,8 @@
 			"invitations": "Einladungen",
 			"more": "Mehr",
 			"backToBoard": "Zurück zum Board",
-			"docs": "Dokumente"
+			"docs": "Dokumente",
+			"tasks": "Aufgaben"
 		},
 		"projectList": {
 			"viewProject": "Projekt ansehen",
@@ -1972,6 +1973,39 @@
 				"description": "Der aktuelle Inhalt des Dokuments wird vor der Wiederherstellung als neue Version gespeichert.",
 				"confirm": "Wiederherstellen"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Aufgaben",
+		"loadMore": "Mehr laden",
+		"filters": {
+			"toolbarLabel": "Aufgabenfilter",
+			"me": "Ich",
+			"everyone": "Alle",
+			"allStatuses": "Alle Status",
+			"allPriorities": "Alle Prioritäten",
+			"dueLabel": "Fälligkeitsdatum",
+			"sortLabel": "Sortieren nach",
+			"due": {
+				"any": "Beliebiges Fälligkeitsdatum",
+				"dueThisWeek": "Diese Woche fällig",
+				"dueNextWeek": "Nächste Woche fällig",
+				"noDueDate": "Kein Fälligkeitsdatum"
+			},
+			"sort": {
+				"dueDate": "Fälligkeitsdatum",
+				"priority": "Priorität",
+				"createdAt": "Erstellt",
+				"title": "Titel"
+			}
+		},
+		"empty": {
+			"assignedToMe": "Dir sind keine Aufgaben zugewiesen",
+			"noMatch": "Keine Aufgaben entsprechen den aktuellen Filtern"
+		},
+		"error": {
+			"description": "Aufgaben konnten nicht geladen werden",
+			"retry": "Erneut versuchen"
 		}
 	}
 }

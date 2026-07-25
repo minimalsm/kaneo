@@ -1052,7 +1052,8 @@
 			"invitations": "Davetler",
 			"more": "Daha fazla",
 			"backToBoard": "Panoya dön",
-			"docs": "Belgeler"
+			"docs": "Belgeler",
+			"tasks": "Görevler"
 		},
 		"projectList": {
 			"viewProject": "Projeyi Görüntüle",
@@ -1932,6 +1933,39 @@
 				"description": "Geri yüklemeden önce belgenin mevcut içeriği yeni bir sürüm olarak kaydedilecek.",
 				"confirm": "Geri yükle"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Görevler",
+		"loadMore": "Daha fazla yükle",
+		"filters": {
+			"toolbarLabel": "Görev filtreleri",
+			"me": "Ben",
+			"everyone": "Herkes",
+			"allStatuses": "Tüm durumlar",
+			"allPriorities": "Tüm öncelikler",
+			"dueLabel": "Bitiş tarihi",
+			"sortLabel": "Sırala",
+			"due": {
+				"any": "Herhangi bir bitiş tarihi",
+				"dueThisWeek": "Bu hafta bitiyor",
+				"dueNextWeek": "Gelecek hafta bitiyor",
+				"noDueDate": "Bitiş tarihi yok"
+			},
+			"sort": {
+				"dueDate": "Bitiş tarihi",
+				"priority": "Öncelik",
+				"createdAt": "Oluşturulma",
+				"title": "Başlık"
+			}
+		},
+		"empty": {
+			"assignedToMe": "Size atanmış görev yok",
+			"noMatch": "Mevcut filtrelerle eşleşen görev yok"
+		},
+		"error": {
+			"description": "Görevler yüklenemedi",
+			"retry": "Tekrar dene"
 		}
 	}
 }

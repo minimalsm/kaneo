@@ -1051,7 +1051,8 @@
 			"invitations": "초대",
 			"more": "더 보기",
 			"backToBoard": "보드로 돌아가기",
-			"docs": "문서"
+			"docs": "문서",
+			"tasks": "작업"
 		},
 		"projectList": {
 			"viewProject": "프로젝트 보기",
@@ -1932,6 +1933,39 @@
 				"description": "복원하기 전에 문서의 현재 콘텐츠가 새 버전으로 저장됩니다.",
 				"confirm": "복원"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "작업",
+		"loadMore": "더 보기",
+		"filters": {
+			"toolbarLabel": "작업 필터",
+			"me": "나",
+			"everyone": "모두",
+			"allStatuses": "모든 상태",
+			"allPriorities": "모든 우선순위",
+			"dueLabel": "마감일",
+			"sortLabel": "정렬 기준",
+			"due": {
+				"any": "모든 마감일",
+				"dueThisWeek": "이번 주 마감",
+				"dueNextWeek": "다음 주 마감",
+				"noDueDate": "마감일 없음"
+			},
+			"sort": {
+				"dueDate": "마감일",
+				"priority": "우선순위",
+				"createdAt": "생성일",
+				"title": "제목"
+			}
+		},
+		"empty": {
+			"assignedToMe": "나에게 할당된 작업이 없습니다",
+			"noMatch": "현재 필터와 일치하는 작업이 없습니다"
+		},
+		"error": {
+			"description": "작업을 불러오지 못했습니다",
+			"retry": "다시 시도"
 		}
 	}
 }

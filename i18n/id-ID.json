@@ -1190,7 +1190,8 @@
 			"invitations": "Undangan",
 			"more": "Lainnya",
 			"backToBoard": "Kembali ke papan",
-			"docs": "Dokumen"
+			"docs": "Dokumen",
+			"tasks": "Tugas"
 		},
 		"projectList": {
 			"viewProject": "Lihat Proyek",
@@ -2080,6 +2081,39 @@
 				"description": "Konten dokumen saat ini akan disimpan sebagai versi baru sebelum pemulihan.",
 				"confirm": "Pulihkan"
 			}
+		}
+	},
+	"workspaceTasks": {
+		"pageTitle": "Tugas",
+		"loadMore": "Muat lebih banyak",
+		"filters": {
+			"toolbarLabel": "Filter tugas",
+			"me": "Saya",
+			"everyone": "Semua orang",
+			"allStatuses": "Semua status",
+			"allPriorities": "Semua prioritas",
+			"dueLabel": "Tanggal tenggat",
+			"sortLabel": "Urutkan berdasarkan",
+			"due": {
+				"any": "Semua tanggal tenggat",
+				"dueThisWeek": "Tenggat minggu ini",
+				"dueNextWeek": "Tenggat minggu depan",
+				"noDueDate": "Tanpa tanggal tenggat"
+			},
+			"sort": {
+				"dueDate": "Tanggal tenggat",
+				"priority": "Prioritas",
+				"createdAt": "Dibuat",
+				"title": "Judul"
+			}
+		},
+		"empty": {
+			"assignedToMe": "Tidak ada tugas yang ditugaskan kepada Anda",
+			"noMatch": "Tidak ada tugas yang cocok dengan filter saat ini"
+		},
+		"error": {
+			"description": "Gagal memuat tugas",
+			"retry": "Coba lagi"
 		}
 	}
 }

@@ -227,6 +227,9 @@ describe("DocBoardEmbed", () => {
     await screen.findByTestId("kanban-board-stub");
 
     const handles = view.container.querySelectorAll("[data-drag-handle]");
+    // Native HTML5 drag only initiates from draggable elements — without this
+    // attribute the grip renders but the node can never actually be dragged.
+    expect(handles[0]?.getAttribute("draggable")).toBe("true");
     expect(handles.length).toBe(1);
     expect(
       handles[0].closest('[data-testid="doc-board-embed-header"]'),

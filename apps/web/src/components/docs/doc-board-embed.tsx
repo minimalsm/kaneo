@@ -162,6 +162,7 @@ export function DocBoardEmbed({
           className="cursor-grab text-muted-foreground"
           contentEditable={false}
           data-drag-handle
+          draggable="true"
           aria-label={t("documents:boardEmbed.dragHandleLabel")}
         >
           <GripVertical className="size-4" />

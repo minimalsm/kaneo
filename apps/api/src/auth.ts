@@ -685,9 +685,12 @@ export const auth = betterAuth({
       }
     }),
     after: createAuthMiddleware(async (ctx) => {
-      // `/two-factor/verify-*` completes a 2FA-challenged sign-in (the
-      // twoFactor plugin nulls `newSession` on the challenged sign-in leg,
-      // so only the verified completion reaches the stamping below).
+      // `/two-factor/verify-*` completes a 2FA-challenged sign-in. Note:
+      // in better-auth 1.6.23 this options-level `hooks.after` runs BEFORE
+      // plugin after-hooks, so on the challenged sign-in leg we stamp a
+      // temporary session that the twoFactor plugin then deletes (harmless).
+      // The stamping that actually takes effect happens on the
+      // `/two-factor/verify-*` completion leg.
       if (
         ctx.path.startsWith("/sign-up") ||
         ctx.path.startsWith("/sign-in") ||

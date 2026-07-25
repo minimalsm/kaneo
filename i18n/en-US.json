@@ -11,7 +11,8 @@
 			"remove": "Remove",
 			"reset": "Reset",
 			"filter": "Filter",
-			"clearAllFilters": "Clear all filters"
+			"clearAllFilters": "Clear all filters",
+			"copyFailed": "Failed to copy to clipboard"
 		},
 		"a11y": {
 			"toggleSidebar": "Toggle sidebar"

@@ -1,5 +1,5 @@
 {
-	"id": "54f08539-08f8-4210-a3ea-b5943b20b7ca",
+	"id": "c4553623-5540-477b-b0a0-b93e5701639b",
 	"prevId": "23a6a155-cc84-4f52-9edf-26df8e8930bc",
 	"version": "7",
 	"dialect": "postgresql",
@@ -3013,21 +3013,6 @@
 				}
 			},
 			"indexes": {
-				"two_factor_secret_idx": {
-					"name": "two_factor_secret_idx",
-					"columns": [
-						{
-							"expression": "secret",
-							"isExpression": false,
-							"asc": true,
-							"nulls": "last"
-						}
-					],
-					"isUnique": false,
-					"concurrently": false,
-					"method": "btree",
-					"with": {}
-				},
 				"two_factor_userId_idx": {
 					"name": "two_factor_userId_idx",
 					"columns": [

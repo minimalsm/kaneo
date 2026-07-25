@@ -1,5 +1,7 @@
 import { Check, Copy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/lib/toast";
 
 type CopyButtonProps = {
   text: string;
@@ -16,9 +18,15 @@ export function CopyButton({
   copyLabel,
   copiedLabel,
 }: CopyButtonProps) {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    onCopied();
+  const { t } = useTranslation();
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      onCopied();
+    } catch {
+      toast.error(t("common:actions.copyFailed"));
+    }
   };
 
   return (

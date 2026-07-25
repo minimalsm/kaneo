@@ -185,8 +185,9 @@ describe("TwoFactorSettings", () => {
       TEST_BACKUP_CODES.join("\n"),
     );
 
+    // The clipboard write is awaited, so the done button appears async.
     fireEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: "settings:twoFactor.backupCodesModal.done",
       }),
     );
@@ -325,5 +326,63 @@ describe("TwoFactorSettings", () => {
     for (const code of newCodes) {
       expect(screen.getByText(code)).toBeDefined();
     }
+  });
+
+  it("cannot be dismissed before saving the backup codes", async () => {
+    render(<TwoFactorSettings />);
+    await enterQrStep();
+    await verifyEnrollment();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("settings:twoFactor.backupCodesModal.title"),
+      ).toBeDefined();
+    });
+
+    // The default close X is hidden.
+    expect(
+      screen.queryByRole("button", { name: "common:actions.close" }),
+    ).toBeNull();
+
+    // ESC before saving does not close the modal.
+    fireEvent.keyDown(
+      screen.getByText("settings:twoFactor.backupCodesModal.title"),
+      { key: "Escape" },
+    );
+    expect(
+      screen.getByText("settings:twoFactor.backupCodesModal.title"),
+    ).toBeDefined();
+  });
+
+  it("can be dismissed after the codes are copied or downloaded", async () => {
+    render(<TwoFactorSettings />);
+    await enterQrStep();
+    await verifyEnrollment();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("settings:twoFactor.backupCodesModal.title"),
+      ).toBeDefined();
+    });
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "settings:twoFactor.backupCodesModal.copy",
+      }),
+    );
+    // The clipboard write is awaited; wait for saved state.
+    await screen.findByRole("button", {
+      name: "settings:twoFactor.backupCodesModal.done",
+    });
+
+    fireEvent.keyDown(
+      screen.getByText("settings:twoFactor.backupCodesModal.title"),
+      { key: "Escape" },
+    );
+    await waitFor(() => {
+      expect(
+        screen.queryByText("settings:twoFactor.backupCodesModal.title"),
+      ).toBeNull();
+    });
   });
 });

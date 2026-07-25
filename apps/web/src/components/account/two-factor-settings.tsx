@@ -39,8 +39,10 @@ function getSecretFromTotpUri(totpURI: string): string | null {
   try {
     const url = new URL(totpURI);
     return url.searchParams.get("secret");
-  } catch (error) {
-    console.error("Failed to parse TOTP URI", error);
+  } catch {
+    // Do not log the error object: Firefox's URL TypeError message embeds
+    // the full otpauth URI, including the secret.
+    console.error("Failed to parse TOTP URI");
     return null;
   }
 }
@@ -163,8 +165,8 @@ function BackupCodesModal({ backupCodes, onClose }: BackupCodesModalProps) {
   };
 
   return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-[446px]">
+    <Dialog open onOpenChange={() => saved && onClose()}>
+      <DialogContent className="max-w-[446px]" showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>
             {t("settings:twoFactor.backupCodesModal.title")}

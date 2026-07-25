@@ -75,10 +75,7 @@ export const twoFactorTable = pgTable(
     failedVerificationCount: integer("failed_verification_count").default(0),
     lockedUntil: timestamp("locked_until", { mode: "date" }),
   },
-  (table) => [
-    index("two_factor_secret_idx").on(table.secret),
-    index("two_factor_userId_idx").on(table.userId),
-  ],
+  (table) => [index("two_factor_userId_idx").on(table.userId)],
 );
 
 export const accountTable = pgTable(

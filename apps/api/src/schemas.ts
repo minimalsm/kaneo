@@ -71,6 +71,55 @@ export const taskSchema = v.object({
   createdAt: v.date(),
 });
 
+export const workspaceTaskRowSchema = v.object({
+  id: v.string(),
+  title: v.string(),
+  number: v.nullable(v.number()),
+  description: v.nullable(v.string()),
+  status: v.string(),
+  priority: v.nullable(v.string()),
+  startDate: v.nullable(v.date()),
+  dueDate: v.nullable(v.date()),
+  createdAt: v.date(),
+  userId: v.nullable(v.string()),
+  assigneeId: v.nullable(v.string()),
+  assigneeName: v.nullable(v.string()),
+  assigneeImage: v.nullable(v.string()),
+  projectId: v.string(),
+  projectSlug: v.string(),
+  projectName: v.string(),
+  projectIcon: v.nullable(v.string()),
+  labels: v.array(
+    v.object({
+      id: v.string(),
+      name: v.string(),
+      color: v.string(),
+    }),
+  ),
+  externalLinks: v.array(
+    v.object({
+      id: v.string(),
+      taskId: v.string(),
+      integrationId: v.string(),
+      resourceType: v.string(),
+      externalId: v.string(),
+      url: v.string(),
+      title: v.nullable(v.string()),
+      metadata: v.nullable(v.record(v.string(), v.unknown())),
+    }),
+  ),
+});
+
+export const workspaceTasksResponseSchema = v.object({
+  data: v.array(workspaceTaskRowSchema),
+  pagination: v.object({
+    total: v.number(),
+    page: v.number(),
+    pageSize: v.number(),
+    totalPages: v.number(),
+  }),
+});
+
 export const activitySchema = v.object({
   id: v.string(),
   taskId: v.string(),

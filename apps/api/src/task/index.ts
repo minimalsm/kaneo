@@ -10,7 +10,7 @@ import {
   taskTable,
   workspaceTable,
 } from "../database/schema";
-import { taskSchema } from "../schemas";
+import { taskSchema, workspaceTasksResponseSchema } from "../schemas";
 import {
   assertTaskImageKeyMatchesContext,
   createTaskImageUploadUrl,
@@ -26,6 +26,7 @@ import deleteTask from "./controllers/delete-task";
 import exportTasks from "./controllers/export-tasks";
 import getTask from "./controllers/get-task";
 import getTasks from "./controllers/get-tasks";
+import getWorkspaceTasks from "./controllers/get-workspace-tasks";
 import importTasks from "./controllers/import-tasks";
 import moveTask from "./controllers/move-task";
 import updateTask from "./controllers/update-task";
@@ -89,6 +90,52 @@ const task = new Hono<{
       const filters = c.req.valid("query") || {};
 
       const tasks = await getTasks(projectId, filters);
+
+      return c.json(tasks);
+    },
+  )
+  .get(
+    "/workspace-tasks",
+    describeRoute({
+      operationId: "listWorkspaceTasks",
+      tags: ["Tasks"],
+      description:
+        "Get a flat, filtered, paginated list of tasks across every project in a workspace",
+      responses: {
+        200: {
+          description:
+            "Flat list of tasks with project context and pagination metadata",
+          content: {
+            "application/json": {
+              schema: resolver(workspaceTasksResponseSchema),
+            },
+          },
+        },
+      },
+    }),
+    validator(
+      "query",
+      v.object({
+        workspaceId: v.string(),
+        assigneeId: v.optional(v.string()),
+        status: v.optional(v.string()),
+        priority: v.optional(v.string()),
+        dueBefore: v.optional(v.string()),
+        dueAfter: v.optional(v.string()),
+        noDueDate: v.optional(v.string()),
+        page: v.optional(v.pipe(v.string(), v.transform(Number))),
+        limit: v.optional(v.pipe(v.string(), v.transform(Number))),
+        sortBy: v.optional(
+          v.picklist(["dueDate", "priority", "createdAt", "title"]),
+        ),
+        sortOrder: v.optional(v.picklist(["asc", "desc"])),
+      }),
+    ),
+    workspaceAccess.fromQuery(),
+    async (c) => {
+      const { workspaceId, ...filters } = c.req.valid("query");
+
+      const tasks = await getWorkspaceTasks(workspaceId, filters);
 
       return c.json(tasks);
     },
